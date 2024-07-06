@@ -1,13 +1,18 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  min-height: 100vh;
   padding: 20px;
   box-sizing: border-box;
   position: relative;
+}
+
+.content {
+  text-align: center;
+  border: none;
+  margin: auto;
 }
 
 .chat-toggle-button {

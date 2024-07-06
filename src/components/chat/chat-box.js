@@ -5,7 +5,7 @@ function Chatbox({ messages, input, setInput, handleSend, handleKeyPress, toggle
         <div className="chat-container">
             <div className="chat-header">
                 💬ChatBot
-                <button className="chat-header-minimalize icon-button" onClick={toggleChatVisibility}>−</button>
+                <button className="chat-header-minimalize icon-button" onClick={toggleChatVisibility}>-</button>
             </div>
             <div className="messages">
                 {messages.map((msg, index) => (

@@ -42,18 +42,11 @@ function App() {
         <div className="App">
 
             <div className="content">
-                Vitaj na mojej stránke
+                <h1>Mirko's App with ChatBot</h1>
             </div>
 
             {showChat ? (
-                <Chatbox
-                    messages={messages}
-                    input={input}
-                    setInput={setInput}
-                    handleSend={handleSend}
-                    handleKeyPress={handleKeyPress}
-                    toggleChatVisibility={toggleChatVisibility}
-                />
+                <Chatbox messages={messages} input={input} setInput={setInput} handleKeyPress={handleKeyPress} toggleChatVisibility={toggleChatVisibility}/>
             ) : (
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
                     💬
