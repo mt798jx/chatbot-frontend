@@ -1,4 +1,4 @@
-import "./chat-box.css";
+import "./ChatBox.css";
 
 function Chatbox({ messages, input, setInput, handleSend, handleKeyPress, toggleChatVisibility }) {
     return (

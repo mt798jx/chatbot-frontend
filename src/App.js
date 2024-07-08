@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from "react";
 import { fetchResult } from "./components/services-react/_api/chat-service";
-import Chatbox from "./components/chat/chat-box";
+import Chatbox from "./components/chat/ChatBox";
 
 function App() {
     const [messages, setMessages] = useState([]);
