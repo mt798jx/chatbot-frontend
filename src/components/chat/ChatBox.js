@@ -1,6 +1,37 @@
 import "./ChatBox.css";
+import {fetchResult} from "../services-react/_api/chat-service";
+import {useState} from "react";
 
-function Chatbox({ messages, input, setInput, handleSend, handleKeyPress, toggleChatVisibility }) {
+function Chatbox({toggleChatVisibility }) {
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState("");
+
+    const handleSend = async () => {
+        if (input.trim() === "") return;
+
+        const userMessage = { from: "user", text: input };
+        setMessages(prevMessages => {
+            return [...prevMessages, userMessage];
+        });
+
+        try {
+            const response = await fetchResult(input);
+            const botMessage = { from: "bot", text: response.data };
+            setMessages(prevMessages => {
+                return [...prevMessages, botMessage];
+            });
+        } catch (error) {
+            console.error('Error fetching response:', error);
+        }
+        setInput("");
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleSend();
+        }
+    };
+
     return (
         <div className="chat-container">
             <div className="chat-header">

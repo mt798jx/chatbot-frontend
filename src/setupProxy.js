@@ -16,4 +16,12 @@ module.exports = function(app) {
             changeOrigin: true,
         })
     );
+
+    app.use(
+        '/bot/',
+        createProxyMiddleware({
+            target: 'https://147.232.205.178:8443',
+            changeOrigin: true,
+        })
+    );
 };
