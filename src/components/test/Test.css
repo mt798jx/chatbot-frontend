@@ -1,5 +1,5 @@
 .test-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -11,10 +11,15 @@
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #007bff;
 }
 
 .question-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.question-container:last-child {
+    margin-bottom: 0;
 }
 
 .submit-container {
@@ -30,6 +35,7 @@ h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
@@ -38,6 +44,43 @@ h2 {
 
 .form-control {
     height: 100px;
-    width: 300px;
+    width: 100%;
     resize: vertical;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+.result-container {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.result-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+.result-value {
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .test-container {
+        padding: 10px;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
 }
