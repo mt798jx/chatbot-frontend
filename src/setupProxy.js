@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
     app.use(
-        '/bot/',
+        ['/bot', '/api'],
         createProxyMiddleware({
             target: 'https://localhost:8443',
             changeOrigin: true,
@@ -10,7 +10,7 @@ module.exports = function(app) {
     );
 
     app.use(
-        '/bot/',
+        ['/bot', '/api'],
         createProxyMiddleware({
             target: 'https://192.168.1.23:8443',
             changeOrigin: true,
@@ -18,7 +18,7 @@ module.exports = function(app) {
     );
 
     app.use(
-        '/bot/',
+        ['/bot', '/api'],
         createProxyMiddleware({
             target: 'https://147.232.205.178:8443',
             changeOrigin: true,

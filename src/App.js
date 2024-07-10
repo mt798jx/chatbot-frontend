@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from "react";
 import Chatbox from "./components/chat/ChatBox";
+import Test from "./components/test/Test";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
@@ -11,9 +12,10 @@ function App() {
 
     return (
         <div className="App">
+            <h1>Mirko's App with ChatBot</h1>
 
             <div className="content">
-                <h1>Mirko's App with ChatBot</h1>
+                <Test/>
             </div>
 
             {showChat ? (
