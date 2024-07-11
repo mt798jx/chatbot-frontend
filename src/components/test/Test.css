@@ -15,7 +15,7 @@ h2 {
 }
 
 .question-container {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .question-container:last-child {
@@ -38,8 +38,9 @@ h2 {
     transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
-    background-color: #0056b3;
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .form-control {
@@ -48,7 +49,6 @@ h2 {
     resize: vertical;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 10px;
     font-size: 16px;
 }
 
@@ -66,21 +66,9 @@ h2 {
 
 .result-label {
     font-weight: bold;
-    margin-bottom: 5px;
-    color: #007bff;
+    margin-right: 5px;
 }
 
 .result-value {
-    margin-top: 5px;
-    font-size: 16px;
-}
-
-@media (max-width: 600px) {
-    .test-container {
-        padding: 10px;
-    }
-
-    .form-control {
-        font-size: 14px;
-    }
+    display: inline;
 }

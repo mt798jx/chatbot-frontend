@@ -6,14 +6,20 @@ import { fetchQuestionAndAnswer, fetchResult } from "../services-react/_api/test
 function Test() {
     const [QandA, setQandA] = useState([]);
     const [results, setResults] = useState([]);
+    const [allAnswered, setAllAnswered] = useState(false);
 
     useEffect(() => {
         fetchQandA();
     }, []);
 
+    useEffect(() => {
+        const allAnswered = QandA.every(question => question.userAnswer.trim() !== "");
+        setAllAnswered(allAnswered);
+    }, [QandA]);
+
     const fetchQandA = async () => {
         try {
-            const Ids = Id(2);
+            const Ids = Id(3);
             const responses = await Promise.all(Ids.map(id => fetchQuestionAndAnswer(id)));
             const data = responses.map((response, index) => ({
                 id: Ids[index],
@@ -46,7 +52,7 @@ function Test() {
         e.preventDefault();
         try {
             const resultsArray = await Promise.all(QandA.map(question =>
-                fetchResult(question.id, question.userAnswer, question.correctAnswer)
+                fetchResult(question.id, question.userAnswer.trim() === '' ? 'dont know' : question.userAnswer, question.correctAnswer)
             ));
             setResults(resultsArray);
         } catch (error) {
@@ -76,7 +82,7 @@ function Test() {
                     </div>
                 ))}
                 <div className="submit-container">
-                    <button type="submit" className="submit-button">Submit</button>
+                    <button type="submit" className="submit-button" disabled={!allAnswered}>Submit</button>
                 </div>
             </Form>
         </div>
