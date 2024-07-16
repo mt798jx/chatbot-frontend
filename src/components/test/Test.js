@@ -62,7 +62,7 @@ function Test() {
 
     return (
         <div className="test-container">
-            <h2>Exam Test Form</h2>
+            <h2>Operačné systémy</h2>
 
             <Form onSubmit={handleSubmit}>
                 {QandA.map((questionData, index) => (
@@ -71,12 +71,12 @@ function Test() {
                             <Form.Label>{questionData.question}</Form.Label>
                         </Form.Group>
                         <Form.Group controlId={`answer${index + 1}`}>
-                            <Form.Control as="textarea" rows={3} value={questionData.userAnswer} onChange={(e) => handleUsersAnswer(index, e.target.value)} placeholder="Enter your answer"/>
+                            <Form.Control as="textarea" rows={3} value={questionData.userAnswer} onChange={(e) => handleUsersAnswer(index, e.target.value)} placeholder="Zadaj odpoveď"/>
                         </Form.Group>
                         {results.length > 0 && (
                             <div className="result-container">
                                 <p className="result-label">Result:</p>
-                                <p className="result-value">{results[index].data}</p>
+                                <p className="result-value">{results[index].data} / 2</p>
                             </div>
                         )}
                     </div>
