@@ -75,7 +75,7 @@ function Test() {
                         {results.length > 0 && (
                             <div className="result-container">
                                 <p className="result-label">Result:</p>
-                                <p className="result-value">{results[index].data} / 2</p>
+                                <p className="result-value">{results[index].data / 100} / 1</p>
                             </div>
                         )}
                     </div>
