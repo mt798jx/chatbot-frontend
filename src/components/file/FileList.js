@@ -8,7 +8,8 @@ const FileList = () => {
     const [error, setError] = useState('');
     const [previewContent, setPreviewContent] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
-    const [processResults, setProcessResults] = useState(null); // Added state for process results
+    const [processResults, setProcessResults] = useState(null);
+    const [processing, setProcessing] = useState(false);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -67,17 +68,23 @@ const FileList = () => {
     };
 
     const handleProcess = async () => {
+        if (processing) {
+            return;
+        }
+        setProcessing(true);
         try {
             const encodedFileName = encodeURIComponent(selectedFile);
             const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
             if (response.ok) {
-                const content = await response.text();
+                const content = await response.json();
                 setProcessResults(content);
             } else {
                 setError('Failed to process file');
             }
         } catch (error) {
             setError('Error processing file');
+        } finally {
+            setProcessing(false);
         }
     };
 
@@ -117,7 +124,9 @@ const FileList = () => {
                                 <pre>{previewContent}</pre>
                                 <div className="preview-buttons">
                                     <button onClick={handleClosePreview}>Exit</button>
-                                    <button onClick={handleProcess}>Process</button>
+                                    <button onClick={handleProcess} disabled={processing}>
+                                        {processing ? 'Processing...' : 'Process'}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +141,12 @@ const FileList = () => {
                                     <button onClick={handleClosePreview}>Exit</button>
                                 </div>
                             </div>
+                        </div>
+                    )}
+
+                    {processing && (
+                        <div className="processing-indicator">
+                            <p>Processing in progress...</p>
                         </div>
                     )}
                 </>
