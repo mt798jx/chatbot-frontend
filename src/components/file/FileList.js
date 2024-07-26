@@ -10,6 +10,7 @@ const FileList = () => {
     const [selectedFile, setSelectedFile] = useState('');
     const [processResults, setProcessResults] = useState(null);
     const [processing, setProcessing] = useState(false);
+    const [processingFile, setProcessingFile] = useState('');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -72,6 +73,7 @@ const FileList = () => {
             return;
         }
         setProcessing(true);
+        setProcessingFile(selectedFile);
         try {
             const encodedFileName = encodeURIComponent(selectedFile);
             const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
@@ -104,10 +106,10 @@ const FileList = () => {
                                     <span className="file-name">{file}</span>
                                     <div className="button-group">
                                         <button className="preview-button" onClick={() => handlePreview(file)}>
-                                            👁️ {/* Unicode for "Eye" symbol */}
+                                            👁️
                                         </button>
-                                        <button className="delete-button" onClick={() => handleDelete(file)}>
-                                            &#10005; {/* Unicode for "X" symbol */}
+                                        <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing}>
+                                            &#10005;
                                         </button>
                                     </div>
                                 </li>
@@ -123,8 +125,10 @@ const FileList = () => {
                                 <h3>Preview of {selectedFile}</h3>
                                 <pre>{previewContent}</pre>
                                 <div className="preview-buttons">
-                                    <button onClick={handleClosePreview}>Exit</button>
-                                    <button onClick={handleProcess} disabled={processing}>
+                                    <button className="exit-button" onClick={handleClosePreview}>
+                                        Exit
+                                    </button>
+                                    <button className="process-button" onClick={handleProcess} disabled={processing}>
                                         {processing ? 'Processing...' : 'Process'}
                                     </button>
                                 </div>
@@ -138,7 +142,7 @@ const FileList = () => {
                                 <h3>Processing Results for {selectedFile}</h3>
                                 <pre>{processResults}</pre>
                                 <div className="preview-buttons">
-                                    <button onClick={handleClosePreview}>Exit</button>
+                                    <button className="exit-button" onClick={handleClosePreview}>Exit</button>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +150,8 @@ const FileList = () => {
 
                     {processing && (
                         <div className="processing-indicator">
-                            <p>Processing in progress...</p>
+                            <div className="spinner"></div>
+                            <p>Processing file: {processingFile}</p>
                         </div>
                     )}
                 </>

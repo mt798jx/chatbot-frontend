@@ -49,7 +49,12 @@ button {
     outline: none;
 }
 
-button:hover {
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button:hover:not(:disabled) {
     transform: scale(1.1);
 }
 
@@ -58,7 +63,7 @@ button:hover {
     background-color: #ff4d4d;
 }
 
-.delete-button:hover {
+.delete-button:hover:not(:disabled) {
     background-color: #ff1a1a;
 }
 
@@ -67,7 +72,7 @@ button:hover {
     background-color: #4d79ff;
 }
 
-.preview-button:hover {
+.preview-button:hover:not(:disabled) {
     background-color: #1a53ff;
 }
 
@@ -126,7 +131,7 @@ button:hover {
     color: white;
 }
 
-.preview-buttons .process-button:hover {
+.preview-buttons .process-button:hover:not(:disabled) {
     background-color: #218838;
 }
 
@@ -135,6 +140,49 @@ button:hover {
     color: white;
 }
 
-.preview-buttons .exit-button:hover {
+.preview-buttons .exit-button:hover:not(:disabled) {
     background-color: #0056b3;
+}
+
+.processing-indicator {
+    background: #ffffff;
+    color: #333333;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 300px;
+    z-index: 1000;
+    border: 1px solid #dddddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.processing-indicator p {
+    margin: 0;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.processing-indicator .spinner {
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-top: 6px solid #4CAF50;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
