@@ -6,6 +6,7 @@ const FileList = () => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [previewContent, setPreviewContent] = useState(null);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -41,6 +42,10 @@ const FileList = () => {
         }
     };
 
+    const handlePreview = async (fileName) => {
+
+    };
+
     return (
         <div className="file-list-container">
             <h2>Uploaded CSV Files</h2>
@@ -49,20 +54,27 @@ const FileList = () => {
             ) : error ? (
                 <p className="error">{error}</p>
             ) : (
-                <ul>
-                    {fileList.length > 0 ? (
-                        fileList.map((file, index) => (
-                            <li key={index}>
-                                {file}
-                                <button className="delete-button" onClick={() => handleDelete(file)}>
-                                    &#10005; {/* Unicode for "X" symbol */}
-                                </button>
-                            </li>
-                        ))
-                    ) : (
-                        <p>No CSV files found.</p>
-                    )}
-                </ul>
+                <>
+                    <ul>
+                        {fileList.length > 0 ? (
+                            fileList.map((file, index) => (
+                                <li key={index} className="file-item">
+                                    <span className="file-name">{file}</span>
+                                    <div className="button-group">
+                                        <button className="preview-button" onClick={() => handlePreview(file)}>
+                                            👁️ {/* Unicode for "Eye" symbol */}
+                                        </button>
+                                        <button className="delete-button" onClick={() => handleDelete(file)}>
+                                            &#10005; {/* Unicode for "X" symbol */}
+                                        </button>
+                                    </div>
+                                </li>
+                            ))
+                        ) : (
+                            <p>No CSV files found.</p>
+                        )}
+                    </ul>
+                </>
             )}
         </div>
     );
