@@ -7,9 +7,14 @@ import FileList from "./components/file/FileList";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
+    const [refreshFileList, setRefreshFileList] = useState(false);
 
     const toggleChatVisibility = () => {
         setShowChat(!showChat);
+    };
+
+    const handleUploadSuccess = () => {
+        setRefreshFileList(prev => !prev);
     };
 
     return (
@@ -17,15 +22,15 @@ function App() {
             <h1>Mirko's App with ChatBot</h1>
 
             <div className="content">
-                <FileList/>
-                <FileUpload/>
+                <FileList key={refreshFileList} />
+                <FileUpload onUploadSuccess={handleUploadSuccess} />
             </div>
 
             {showChat ? (
-                    <div className="content">
-                        <Test/>
-                        <Chatbox toggleChatVisibility={toggleChatVisibility}/>
-                    </div>
+                <div className="content">
+                    <Test/>
+                    <Chatbox toggleChatVisibility={toggleChatVisibility}/>
+                </div>
             ) : (
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
                     💬

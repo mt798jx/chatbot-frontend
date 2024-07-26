@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './FileUpload.css';
 
-const FileUpload = () => {
+const FileUpload = ({ onUploadSuccess }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState('');
     const [isLabelDisabled, setIsLabelDisabled] = useState(false);
@@ -44,6 +44,8 @@ const FileUpload = () => {
                     setMessage('');
                     setIsLabelDisabled(false);
                 }, 3000);
+
+                if (onUploadSuccess) onUploadSuccess();
             } else {
                 const errorText = await response.text();
                 setMessage(`File upload failed: ${errorText}`);
