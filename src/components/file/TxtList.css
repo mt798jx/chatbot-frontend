@@ -1,0 +1,37 @@
+.txt-list-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.txt-list-container h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.txt-list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.txt-list-container .file-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.txt-list-container .file-name {
+    font-size: 16px;
+    color: #333;
+}
+
+.error {
+    color: #d9534f;
+}

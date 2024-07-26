@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchFiles } from './file-service';
 import './FileList.css';
 
-const FileList = () => {
+const FileList = ({ onProcessingComplete, refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -27,7 +27,7 @@ const FileList = () => {
 
     useEffect(() => {
         updateFileList();
-    }, []);
+    }, [refreshTrigger]);
 
     const handleDelete = async (fileName) => {
         try {
@@ -80,6 +80,7 @@ const FileList = () => {
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
+                onProcessingComplete();
             } else {
                 setError('Failed to process file');
             }
