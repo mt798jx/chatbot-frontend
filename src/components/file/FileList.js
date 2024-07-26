@@ -13,6 +13,7 @@ const FileList = () => {
                 if (response.ok) {
                     const files = await response.json();
                     setFileList(files);
+                    setError('');
                 } else {
                     setError('Failed to load file list');
                 }
@@ -24,6 +25,8 @@ const FileList = () => {
         };
 
         fetchFiles();
+        const interval = setInterval(fetchFiles, 3000);
+        return () => clearInterval(interval);
     }, []);
 
     return (
