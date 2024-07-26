@@ -6,6 +6,8 @@ const TxtList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [previewContent, setPreviewContent] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -24,9 +26,30 @@ const TxtList = ({ refreshTrigger }) => {
         updateFileList();
     }, [refreshTrigger]);
 
+    const handlePreview = async (fileName) => {
+        try {
+            const encodedFileName = encodeURIComponent(fileName);
+            const response = await fetch(`https://147.232.205.178:8443/previewtext?fileName=${encodedFileName}`);
+            if (response.ok) {
+                const content = await response.text();
+                setSelectedFile(fileName);
+                setPreviewContent(content);
+            } else {
+                setError('Failed to fetch file preview');
+            }
+        } catch (error) {
+            setError('Error fetching file preview');
+        }
+    };
+
+    const handleClosePreview = () => {
+        setPreviewContent(null);
+        setSelectedFile('');
+    };
+
     return (
-        <div className="txt-list-container">
-            <h2>TXT Files</h2>
+        <div className="file-list-container">
+            <h2>Created TXT Files</h2>
             {loading ? (
                 <p>Loading files...</p>
             ) : error ? (
@@ -38,12 +61,31 @@ const TxtList = ({ refreshTrigger }) => {
                             fileList.map((file, index) => (
                                 <li key={index} className="file-item">
                                     <span className="file-name">{file}</span>
+                                    <div className="button-group">
+                                        <button className="preview-button" onClick={() => handlePreview(file)}>
+                                            👁️
+                                        </button>
+                                    </div>
                                 </li>
                             ))
                         ) : (
                             <p>No TXT files found.</p>
                         )}
                     </ul>
+
+                    {previewContent && (
+                        <div className="preview-modal">
+                            <div className="preview-content">
+                                <h3>Preview of {selectedFile}</h3>
+                                <pre>{previewContent}</pre>
+                                <div className="preview-buttons">
+                                    <button className="exit-button" onClick={handleClosePreview}>
+                                        Exit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </div>
