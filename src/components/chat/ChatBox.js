@@ -36,7 +36,7 @@ function Chatbox({toggleChatVisibility }) {
         <div className="chat-container">
             <div className="chat-header">
                 💬ChatBot
-                <button className="chat-header-minimalize icon-button" onClick={toggleChatVisibility}>
+                <button className="chat-header-minimalize" onClick={toggleChatVisibility}>
                     &#10005; {/* Unicode for "X" symbol */}
                 </button>
             </div>

@@ -33,19 +33,7 @@
     border: none;
     color: white;
     cursor: pointer;
-    font-size: 20px;
-}
-
-.icon-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: white;
-    color: #0084ff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 25px;
 }
 
 .messages {
