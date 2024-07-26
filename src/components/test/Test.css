@@ -15,7 +15,7 @@ h2 {
 }
 
 .question-container {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .question-container:last-child {
@@ -44,12 +44,14 @@ h2 {
 }
 
 .form-control {
-    height: 100px;
+    height: 120px;
     width: 100%;
-    resize: vertical;
+    resize: none;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .form-control::placeholder {
