@@ -1,0 +1,29 @@
+.file-list-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.file-list-container h2 {
+    margin-bottom: 10px;
+}
+
+.file-list-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.file-list-container li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.file-list-container li:last-child {
+    border-bottom: none;
+}
+
+.error {
+    color: red;
+}
