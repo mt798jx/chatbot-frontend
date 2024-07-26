@@ -7,6 +7,7 @@ const FileList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [previewContent, setPreviewContent] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -43,7 +44,29 @@ const FileList = () => {
     };
 
     const handlePreview = async (fileName) => {
+        try {
+            const encodedFileName = encodeURIComponent(fileName);
+            const response = await fetch(`https://147.232.205.178:8443/preview?fileName=${encodedFileName}`);
+            if (response.ok) {
+                const content = await response.text();
+                setSelectedFile(fileName);
+                setPreviewContent(content);
+            } else {
+                setError('Failed to fetch file preview');
+            }
+        } catch (error) {
+            setError('Error fetching file preview');
+        }
+    };
 
+    const handleClosePreview = () => {
+        setPreviewContent(null);
+        setSelectedFile('');
+    };
+
+    const handleProcess = () => {
+        alert(`Processing file: ${selectedFile}`);
+        handleClosePreview();
     };
 
     return (
@@ -74,6 +97,19 @@ const FileList = () => {
                             <p>No CSV files found.</p>
                         )}
                     </ul>
+
+                    {previewContent && (
+                        <div className="preview-modal">
+                            <div className="preview-content">
+                                <h3>Preview of {selectedFile}</h3>
+                                <pre>{previewContent}</pre>
+                                <div className="preview-buttons">
+                                    <button onClick={handleClosePreview}>Exit</button>
+                                    <button onClick={handleProcess}>Process</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </div>
