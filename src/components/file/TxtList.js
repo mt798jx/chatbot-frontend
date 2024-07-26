@@ -8,6 +8,7 @@ const TxtList = ({ refreshTrigger }) => {
     const [error, setError] = useState('');
     const [previewContent, setPreviewContent] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
+    const [processing, setProcessing] = useState(false);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -47,8 +48,28 @@ const TxtList = ({ refreshTrigger }) => {
         setSelectedFile('');
     };
 
+    const handleProcess = async () => {
+        if (processing) {
+            return;
+        }
+        setProcessing(true);
+        try {
+            const encodedFileName = encodeURIComponent(selectedFile);
+            const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
+            if (response.ok) {
+                alert(`Processing started for ${selectedFile}`);
+            } else {
+                setError('Failed to process file');
+            }
+        } catch (error) {
+            setError('Error processing file');
+        } finally {
+            setProcessing(false);
+        }
+    };
+
     return (
-        <div className="file-list-container">
+        <div className="txt-list-container">
             <h2>Created TXT Files</h2>
             {loading ? (
                 <p>Loading files...</p>
@@ -81,6 +102,10 @@ const TxtList = ({ refreshTrigger }) => {
                                 <div className="preview-buttons">
                                     <button className="exit-button" onClick={handleClosePreview}>
                                         Exit
+                                    </button>
+                                    <button className="process-button" onClick={handleProcess}
+                                            disabled={processing || !selectedFile}>
+                                        {processing ? 'Creating CSV...' : 'Create CSV'}
                                     </button>
                                 </div>
                             </div>

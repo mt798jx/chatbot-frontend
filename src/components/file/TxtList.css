@@ -1,4 +1,4 @@
-.file-list-container {
+.txt-list-container {
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -7,16 +7,16 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.file-list-container h2 {
+.txt-list-container h2 {
     margin-bottom: 10px;
 }
 
-.file-list-container ul {
+.txt-list-container ul {
     list-style: none;
     padding: 0;
 }
 
-.file-list-container li {
+.txt-list-container .file-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,7 +24,7 @@
     border-bottom: 1px solid #ddd;
 }
 
-.file-list-container li:last-child {
+.txt-list-container .file-item:last-child {
     border-bottom: none;
 }
 
@@ -68,6 +68,15 @@ button:hover:not(:disabled) {
     background-color: #1a53ff;
 }
 
+.process-button {
+    color: white;
+    background-color: #28a745;
+}
+
+.process-button:hover:not(:disabled) {
+    background-color: #218838;
+}
+
 .error {
     color: red;
 }
@@ -107,7 +116,7 @@ button:hover:not(:disabled) {
 
 .preview-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
 }
 
