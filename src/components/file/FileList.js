@@ -8,6 +8,7 @@ const FileList = () => {
     const [error, setError] = useState('');
     const [previewContent, setPreviewContent] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
+    const [processResults, setProcessResults] = useState(null); // Added state for process results
 
     const updateFileList = async () => {
         setLoading(true);
@@ -62,11 +63,22 @@ const FileList = () => {
     const handleClosePreview = () => {
         setPreviewContent(null);
         setSelectedFile('');
+        setProcessResults(null);
     };
 
-    const handleProcess = () => {
-        alert(`Processing file: ${selectedFile}`);
-        handleClosePreview();
+    const handleProcess = async () => {
+        try {
+            const encodedFileName = encodeURIComponent(selectedFile);
+            const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
+            if (response.ok) {
+                const content = await response.text();
+                setProcessResults(content);
+            } else {
+                setError('Failed to process file');
+            }
+        } catch (error) {
+            setError('Error processing file');
+        }
     };
 
     return (
@@ -106,6 +118,18 @@ const FileList = () => {
                                 <div className="preview-buttons">
                                     <button onClick={handleClosePreview}>Exit</button>
                                     <button onClick={handleProcess}>Process</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {processResults && (
+                        <div className="preview-modal">
+                            <div className="preview-content">
+                                <h3>Processing Results for {selectedFile}</h3>
+                                <pre>{processResults}</pre>
+                                <div className="preview-buttons">
+                                    <button onClick={handleClosePreview}>Exit</button>
                                 </div>
                             </div>
                         </div>
