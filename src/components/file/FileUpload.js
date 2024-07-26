@@ -4,7 +4,6 @@ import './FileUpload.css';
 const FileUpload = ({ onUploadSuccess }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState('');
-    const [isLabelDisabled, setIsLabelDisabled] = useState(false);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -35,15 +34,9 @@ const FileUpload = ({ onUploadSuccess }) => {
 
             if (response.ok) {
                 const result = await response.text();
-                setMessage(result);
+                alert(result);
                 setSelectedFile(null);
                 document.getElementById('file-upload').value = '';
-
-                setIsLabelDisabled(true);
-                setTimeout(() => {
-                    setMessage('');
-                    setIsLabelDisabled(false);
-                }, 3000);
 
                 if (onUploadSuccess) onUploadSuccess();
             } else {
@@ -58,20 +51,20 @@ const FileUpload = ({ onUploadSuccess }) => {
     const getMessageClass = () => {
         if (message === 'No file selected.') return 'warning';
         if (message.startsWith('File upload failed') || message === 'Error uploading file') return 'error';
-        return 'success';
+        return '';
     };
 
     return (
         <div className="file-upload-container">
             <form onSubmit={handleSubmit}>
                 <div className="file-input-wrapper">
-                    <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload" disabled={isLabelDisabled}/>
-                    <label htmlFor="file-upload" className={`file-upload-label ${isLabelDisabled ? 'disabled' : ''}`}>
+                    <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload"/>
+                    <label htmlFor="file-upload" className="file-upload-label">
                         {selectedFile ? selectedFile.name : 'Choose a CSV file'}
                     </label>
                 </div>
                 {message && <div className={`message ${getMessageClass()}`}>{message}</div>}
-                <button type="submit" className="upload-button" disabled={isLabelDisabled}>
+                <button type="submit" className="upload-button">
                     Upload
                 </button>
             </form>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchFiles } from './file-service';
+import './FileList.css';
 
 const FileList = () => {
     const [fileList, setFileList] = useState([]);
@@ -20,7 +21,7 @@ const FileList = () => {
     };
 
     useEffect(() => {
-        updateFileList(); // Fetch files initially
+        updateFileList();
     }, []);
 
     const handleDelete = async (fileName) => {
@@ -53,7 +54,9 @@ const FileList = () => {
                         fileList.map((file, index) => (
                             <li key={index}>
                                 {file}
-                                <button onClick={() => handleDelete(file)}>Delete</button>
+                                <button className="delete-button" onClick={() => handleDelete(file)}>
+                                    &#10005; {/* Unicode for "X" symbol */}
+                                </button>
                             </li>
                         ))
                     ) : (

@@ -18,6 +18,9 @@
 .file-list-container li {
     padding: 5px 0;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .file-list-container li:last-child {
@@ -26,4 +29,18 @@
 
 .error {
     color: red;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.delete-button:hover {
+    color: darkred;
+    transform: scale(1.1);
 }

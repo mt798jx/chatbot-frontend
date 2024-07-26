@@ -89,13 +89,7 @@ input[type="file"] {
     cursor: not-allowed;
 }
 
-.file-upload-label.disabled {
-    color: #cccccc;
-    cursor: not-allowed;
-}
-
-
-.file-upload-label.disabled {
-    pointer-events: none;
-    opacity: 0.5;
+.upload-button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
 }
