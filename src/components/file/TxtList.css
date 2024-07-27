@@ -6,16 +6,25 @@
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 250px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .txt-list-container h2 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    color: #4d79ff;
+}
+
+.file-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 15px;
 }
 
 .txt-list-container ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .txt-list-container .file-item {
@@ -93,6 +102,7 @@ button:hover:not(:disabled) {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1000;
 }
 
 .preview-content {

@@ -58,7 +58,7 @@ const GeneratedList = ({ refreshTrigger }) => {
             ) : error ? (
                 <p className="error">{error}</p>
             ) : (
-                <>
+                <div className="file-list">
                     <ul>
                         {fileList.length > 0 ? (
                             fileList.map((file, index) => (
@@ -75,7 +75,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                             <p>No CSV files found.</p>
                         )}
                     </ul>
-                </>
+                </div>
             )}
         </div>
     );

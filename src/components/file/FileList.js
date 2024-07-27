@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {fetchFiles} from './file-service';
+import { fetchFiles } from './file-service';
 import './FileList.css';
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
@@ -128,74 +128,78 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     return (
         <div className="file-list-container">
-            <h2>Uploaded CSV Files</h2>
-            {loading ? (
-                <p>Loading files...</p>
-            ) : error ? (
-                <p className="error">{error}</p>
-            ) : (
-                <>
-                    <ul>
-                        {fileList.length > 0 ? (
-                            fileList.map((file, index) => (
-                                <li key={index} className="file-item">
-                                    <span className="file-name">{file}</span>
-                                    <div className="button-group">
-                                        <button className="preview-button" onClick={() => handlePreview(file)}>
-                                            👁️
-                                        </button>
-                                        <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing}>
-                                            &#10005;
-                                        </button>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <p>No CSV files found.</p>
-                        )}
-                    </ul>
+            <div className="file-list-header">
+                <h2>Uploaded CSV Files</h2>
+            </div>
+            <div className="file-list-content">
+                {loading ? (
+                    <p>Loading files...</p>
+                ) : error ? (
+                    <p className="error">{error}</p>
+                ) : (
+                    <>
+                        <ul>
+                            {fileList.length > 0 ? (
+                                fileList.map((file, index) => (
+                                    <li key={index} className="file-item">
+                                        <span className="file-name">{file}</span>
+                                        <div className="button-group">
+                                            <button className="preview-button" onClick={() => handlePreview(file)}>
+                                                👁️
+                                            </button>
+                                            <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing}>
+                                                &#10005;
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No CSV files found.</p>
+                            )}
+                        </ul>
+                    </>
+                )}
+            </div>
 
-                    {previewContent && (
-                        <div className="preview-modal">
-                            <div className="preview-content">
-                                <h3>Preview of {selectedFile}</h3>
-                                <pre>{previewContent}</pre>
-                                <div className="preview-buttons">
-                                    <button className="exit-button" onClick={handleClosePreview}>
-                                        Exit
-                                    </button>
-                                    <button className="process-button" onClick={handleProcess} disabled={processing}>
-                                        {processing ? 'Processing...' : 'Process'}
-                                    </button>
-                                </div>
-                            </div>
+            {previewContent && (
+                <div className="preview-modal">
+                    <div className="preview-content">
+                        <h3>Preview of {selectedFile}</h3>
+                        <pre>{previewContent}</pre>
+                        <div className="preview-buttons">
+                            <button className="exit-button" onClick={handleClosePreview}>
+                                Exit
+                            </button>
+                            <button className="process-button" onClick={handleProcess} disabled={processing}>
+                                {processing ? 'Processing...' : 'Process'}
+                            </button>
                         </div>
-                    )}
+                    </div>
+                </div>
+            )}
 
-                    {processResults && (
-                        <div className="preview-modal">
-                            <div className="preview-content">
-                                <h3>Processed Results for {selectedFile}</h3>
-                                <pre>{processResults}</pre>
-                                <div className="preview-buttons">
-                                    <button className="exit-button" onClick={handleClosePreviewFinal}>
-                                        Exit
-                                    </button>
-                                    <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>
-                                        {isCreating ? 'Creating CSV...' : (csvCreated) ? 'CSV Created' : 'Create CSV'}
-                                    </button>
-                                </div>
-                            </div>
+            {processResults && (
+                <div className="preview-modal">
+                    <div className="preview-content">
+                        <h3>Processed Results for {selectedFile}</h3>
+                        <pre>{processResults}</pre>
+                        <div className="preview-buttons">
+                            <button className="exit-button" onClick={handleClosePreviewFinal}>
+                                Exit
+                            </button>
+                            <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>
+                                {isCreating ? 'Creating CSV...' : (csvCreated) ? 'CSV Created' : 'Create CSV'}
+                            </button>
                         </div>
-                    )}
+                    </div>
+                </div>
+            )}
 
-                    {processing && (
-                        <div className="processing-indicator">
-                            <div className="spinner"></div>
-                            <p>Processing file: {processingFile}</p>
-                        </div>
-                    )}
-                </>
+            {processing && (
+                <div className="processing-indicator">
+                    <div className="spinner"></div>
+                    <p>Processing file: {processingFile}</p>
+                </div>
             )}
         </div>
     );

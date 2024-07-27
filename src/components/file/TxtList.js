@@ -87,22 +87,24 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                 <p className="error">{error}</p>
             ) : (
                 <>
-                    <ul>
-                        {fileList.length > 0 ? (
-                            fileList.map((file, index) => (
-                                <li key={index} className="file-item">
-                                    <span className="file-name">{file}</span>
-                                    <div className="button-group">
-                                        <button className="preview-button" onClick={() => handlePreview(file)}>
-                                            👁️
-                                        </button>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <p>No TXT files found.</p>
-                        )}
-                    </ul>
+                    <div className="file-list">
+                        <ul>
+                            {fileList.length > 0 ? (
+                                fileList.map((file, index) => (
+                                    <li key={index} className="file-item">
+                                        <span className="file-name">{file}</span>
+                                        <div className="button-group">
+                                            <button className="preview-button" onClick={() => handlePreview(file)}>
+                                                👁️
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No TXT files found.</p>
+                            )}
+                        </ul>
+                    </div>
 
                     {previewContent && (
                         <div className="preview-modal">
