@@ -10,16 +10,12 @@ function Chatbox({toggleChatVisibility }) {
         if (input.trim() === "") return;
 
         const userMessage = { from: "user", text: input };
-        setMessages(prevMessages => {
-            return [...prevMessages, userMessage];
-        });
+        setMessages(prevMessages => [...prevMessages, userMessage]);
 
         try {
             const response = await fetchResult(input);
             const botMessage = { from: "bot", text: response.data };
-            setMessages(prevMessages => {
-                return [...prevMessages, botMessage];
-            });
+            setMessages(prevMessages => [...prevMessages, botMessage]);
         } catch (error) {
             console.error('Error fetching response:', error);
         }
@@ -35,10 +31,10 @@ function Chatbox({toggleChatVisibility }) {
     return (
         <div className="chat-container">
             <div className="chat-header">
-                💬ChatBot
-                <button className="chat-header-minimalize" onClick={toggleChatVisibility}>
-                    &#10005; {/* Unicode for "X" symbol */}
-                </button>
+                <div className="chat-title">
+                    <span role="img" aria-label="Chat">💬</span> ChatBot
+                </div>
+                <button className="chat-header-close" onClick={toggleChatVisibility}>✖</button>
             </div>
             <div className="messages">
                 {messages.map((msg, index) => (
