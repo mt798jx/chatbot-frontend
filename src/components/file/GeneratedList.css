@@ -12,6 +12,7 @@
 }
 
 .generated-list-container h2 {
+    margin-top: 0;
     margin-bottom: 20px;
     color: #4d79ff;
 }
