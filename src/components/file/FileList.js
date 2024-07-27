@@ -127,7 +127,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
         setCsvCreated(false);
 
         try {
-            const baseName = selectedFile.replace('.csv', '-results.txt');
+            const baseName = selectedFile.replace('.csv', '-results.csv');
             const response = await fetch(`https://147.232.205.178:8443/create?fileName=${baseName}`);
             if (response.ok) {
                 setCsvCreated(true);
