@@ -32,6 +32,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     }, [refreshTrigger]);
 
     const handleDelete = async (fileName) => {
+        if (processing && fileName === processingFile) {
+            return;
+        }
         try {
             const encodedFileName = encodeURIComponent(fileName);
             const response = await fetch(`https://147.232.205.178:8443/delete?fileName=${encodedFileName}`, {
@@ -147,7 +150,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                             <button className="preview-button" onClick={() => handlePreview(file)}>
                                                 👁️
                                             </button>
-                                            <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing}>
+                                            <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing && file === processingFile}>
                                                 &#10005;
                                             </button>
                                         </div>
