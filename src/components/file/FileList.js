@@ -15,6 +15,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
+    const [dragging, setDragging] = useState(false);
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const [position, setPosition] = useState({ top: '50%', left: '50%' });
 
     const updateFileList = async () => {
         setLoading(true);
@@ -141,6 +144,37 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
         }
     };
 
+    const startDrag = (e) => {
+        setDragging(true);
+        setOffset({ x: e.clientX - e.currentTarget.getBoundingClientRect().left, y: e.clientY - e.currentTarget.getBoundingClientRect().top });
+    };
+
+    const duringDrag = (e) => {
+        if (dragging) {
+            const newX = e.clientX - offset.x;
+            const newY = e.clientY - offset.y;
+            setPosition({ top: `${newY}px`, left: `${newX}px` });
+        }
+    };
+
+    const endDrag = () => {
+        setDragging(false);
+    };
+
+    useEffect(() => {
+        if (dragging) {
+            document.addEventListener('mousemove', duringDrag);
+            document.addEventListener('mouseup', endDrag);
+        } else {
+            document.removeEventListener('mousemove', duringDrag);
+            document.removeEventListener('mouseup', endDrag);
+        }
+        return () => {
+            document.removeEventListener('mousemove', duringDrag);
+            document.removeEventListener('mouseup', endDrag);
+        };
+    }, [dragging]);
+
     return (
         <div className="file-list-container">
             <div className="file-list-header">
@@ -211,7 +245,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <div className="processing-indicator">
+                <div
+                    className="processing-indicator"
+                    style={{ top: position.top, left: position.left }}
+                    onMouseDown={startDrag}
+                >
                     <div className="spinner"></div>
                     <p>Processing file: {processingFile}</p>
                 </div>
