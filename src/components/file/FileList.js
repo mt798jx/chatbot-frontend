@@ -66,8 +66,16 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     const handleClosePreview = () => {
         setPreviewContent(null);
+    };
+
+    const handleClosePreviewFinal = () => {
+        setPreviewContent(null);
         setSelectedFile('');
         setProcessResults(null);
+        setProcessing(false);
+        setProcessingFile('');
+        setIsCreating(false);
+        setCsvCreated(false);
     };
 
     const handleProcess = async () => {
@@ -107,7 +115,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                 setCsvCreated(true);
                 onCsvCreated();
                 alert(`CSV file created: ${baseName}`);
-                handleClosePreview();
+                handleClosePreviewFinal();
             } else {
                 setError('Failed to create CSV file');
             }
@@ -167,10 +175,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                     {processResults && (
                         <div className="preview-modal">
                             <div className="preview-content">
-                                <h3>Processing Results for {selectedFile}</h3>
+                                <h3>Processed Results for {selectedFile}</h3>
                                 <pre>{processResults}</pre>
                                 <div className="preview-buttons">
-                                    <button className="exit-button" onClick={handleClosePreview}>
+                                    <button className="exit-button" onClick={handleClosePreviewFinal}>
                                         Exit
                                     </button>
                                     <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>

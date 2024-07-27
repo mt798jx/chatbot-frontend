@@ -47,6 +47,8 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const handleClosePreview = () => {
         setPreviewContent(null);
         setSelectedFile('');
+        setProcessing(false);
+        setCsvCreated(false);
     };
 
     const handleProcess = async () => {
