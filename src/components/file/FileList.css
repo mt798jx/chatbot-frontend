@@ -176,7 +176,7 @@ button:hover:not(:disabled) {
     font-size: 18px;
     font-weight: bold;
     position: fixed;
-    top: 50%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 300px;

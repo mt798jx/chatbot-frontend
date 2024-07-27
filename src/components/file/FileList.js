@@ -8,6 +8,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [error, setError] = useState('');
     const [previewContent, setPreviewContent] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
+    const [previewContentProcessing, setPreviewContentProcessing] = useState(null);
+    const [selectedFileProcessing, setSelectedFileProcessing] = useState('');
     const [processResults, setProcessResults] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [processingFile, setProcessingFile] = useState('');
@@ -57,8 +59,15 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             const response = await fetch(`https://147.232.205.178:8443/preview?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
-                setSelectedFile(fileName);
-                setPreviewContent(content);
+                if (processing) {
+                    setSelectedFileProcessing(fileName);
+                    setPreviewContentProcessing(content);
+                } else {
+                    setSelectedFile(fileName);
+                    setPreviewContent(content);
+                    setSelectedFileProcessing(fileName);
+                    setPreviewContentProcessing(content);
+                }
             } else {
                 setError('Failed to fetch file preview');
             }
@@ -69,11 +78,14 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     const handleClosePreview = () => {
         setPreviewContent(null);
+        setPreviewContentProcessing(null);
     };
 
     const handleClosePreviewFinal = () => {
         setPreviewContent(null);
+        setPreviewContentProcessing(null);
         setSelectedFile('');
+        setSelectedFileProcessing('');
         setProcessResults(null);
         setProcessing(false);
         setProcessingFile('');
@@ -86,9 +98,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             return;
         }
         setProcessing(true);
-        setProcessingFile(selectedFile);
+        setProcessingFile(selectedFileProcessing);
         try {
-            const encodedFileName = encodeURIComponent(selectedFile);
+            const encodedFileName = encodeURIComponent(selectedFileProcessing);
             const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
@@ -164,16 +176,16 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                 )}
             </div>
 
-            {previewContent && (
+            {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <h3>Preview of {selectedFile}</h3>
-                        <pre>{previewContent}</pre>
+                        <h3>Preview of {processing ? selectedFileProcessing : selectedFile}</h3>
+                        <pre>{processing ? previewContentProcessing : previewContent}</pre>
                         <div className="preview-buttons">
                             <button className="exit-button" onClick={handleClosePreview}>
                                 Exit
                             </button>
-                            <button className="process-button" onClick={handleProcess} disabled={processing}>
+                            <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 {processing ? 'Processing...' : 'Process'}
                             </button>
                         </div>
@@ -191,7 +203,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                 Exit
                             </button>
                             <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>
-                                {isCreating ? 'Creating CSV...' : (csvCreated) ? 'CSV Created' : 'Create CSV'}
+                                {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
                             </button>
                         </div>
                     </div>
