@@ -11,6 +11,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger }) => {
     const [processResults, setProcessResults] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [processingFile, setProcessingFile] = useState('');
+    const [isCreating, setIsCreating] = useState(false);
+    const [csvCreated, setCsvCreated] = useState(false);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -91,6 +93,31 @@ const FileList = ({ onProcessingComplete, refreshTrigger }) => {
         }
     };
 
+    const handleCreateCsv = async () => {
+        if (isCreating) {
+            return;
+        }
+        setIsCreating(true);
+        setCsvCreated(false);
+
+        try {
+            //const encodedFileName = encodeURIComponent(selectedFile);
+            const baseName = selectedFile.replace('.csv', '-results.txt');
+            const response = await fetch(`https://147.232.205.178:8443/create?fileName=${baseName}`);
+            if (response.ok) {
+                setCsvCreated(true);
+                alert(`CSV file created: ${baseName}`);
+                handleClosePreview();
+            } else {
+                setError('Failed to create CSV file');
+            }
+        } catch (error) {
+            setError('Error creating CSV file');
+        } finally {
+            setIsCreating(false);
+        }
+    };
+
     return (
         <div className="file-list-container">
             <h2>Uploaded CSV Files</h2>
@@ -143,7 +170,12 @@ const FileList = ({ onProcessingComplete, refreshTrigger }) => {
                                 <h3>Processing Results for {selectedFile}</h3>
                                 <pre>{processResults}</pre>
                                 <div className="preview-buttons">
-                                    <button className="exit-button" onClick={handleClosePreview}>Exit</button>
+                                    <button className="exit-button" onClick={handleClosePreview}>
+                                        Exit
+                                    </button>
+                                    <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>
+                                        {isCreating ? 'Creating CSV...' : (csvCreated) ? 'CSV Created' : 'Create CSV'}
+                                    </button>
                                 </div>
                             </div>
                         </div>

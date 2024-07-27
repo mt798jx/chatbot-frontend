@@ -4,6 +4,9 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 .file-list-container h2 {
@@ -185,4 +188,13 @@ button:hover:not(:disabled) {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.create-csv-button {
+    color: white;
+    background-color: #28a745;
+}
+
+.create-csv-button:hover:not(:disabled) {
+    background-color: #218838;
 }

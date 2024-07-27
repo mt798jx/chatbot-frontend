@@ -61,7 +61,8 @@ const TxtList = ({ refreshTrigger }) => {
             const response = await fetch(`https://147.232.205.178:8443/create?fileName=${encodedFileName}`);
             if (response.ok) {
                 setCsvCreated(true);
-                alert(`CSV file created: ${selectedFile}-results.csv`);
+                const baseName = selectedFile.substring(0, selectedFile.lastIndexOf('.'));
+                alert(`CSV file created: ${baseName}.csv`);
                 handleClosePreview();
             } else {
                 setError('Failed to create CSV file');

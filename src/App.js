@@ -5,6 +5,7 @@ import Test from "./components/test/Test";
 import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
+import GeneratedList from "./components/file/GeneratedList";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
@@ -30,6 +31,7 @@ function App() {
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={refreshTrigger} />
                 <FileUpload onUploadSuccess={handleUploadSuccess} />
                 <TxtList refreshTrigger={refreshTrigger} />
+                <GeneratedList/>
             </div>
 
             {showChat ? (
