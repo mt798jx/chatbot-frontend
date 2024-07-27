@@ -66,9 +66,11 @@ function Test() {
             <Form onSubmit={handleSubmit}>
                 {Questions.map((questionData, index) => (
                     <div key={index} className="question-container">
-                        <Form.Group controlId={`question${index + 1}`}>
-                            <Form.Label>{questionData.question}</Form.Label>
-                        </Form.Group>
+                        <div className="question">
+                            <Form.Group controlId={`question${index + 1}`}>
+                                <Form.Label>{questionData.question}</Form.Label>
+                            </Form.Group>
+                        </div>
                         <Form.Group controlId={`answer${index + 1}`}>
                             <Form.Control as="textarea" rows={3} value={questionData.userAnswer} onChange={(e) => handleUsersAnswer(index, e.target.value)} placeholder="Zadaj odpoveď"/>
                         </Form.Group>
