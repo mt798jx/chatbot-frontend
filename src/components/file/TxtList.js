@@ -9,6 +9,7 @@ const TxtList = ({ refreshTrigger }) => {
     const [previewContent, setPreviewContent] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
     const [processing, setProcessing] = useState(false);
+    const [csvCreated, setCsvCreated] = useState(false);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -53,16 +54,20 @@ const TxtList = ({ refreshTrigger }) => {
             return;
         }
         setProcessing(true);
+        setCsvCreated(false);
+
         try {
             const encodedFileName = encodeURIComponent(selectedFile);
-            const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
+            const response = await fetch(`https://147.232.205.178:8443/create?fileName=${encodedFileName}`);
             if (response.ok) {
-                alert(`Processing started for ${selectedFile}`);
+                setCsvCreated(true);
+                alert(`CSV file created: ${selectedFile}-results.csv`);
+                handleClosePreview();
             } else {
-                setError('Failed to process file');
+                setError('Failed to create CSV file');
             }
         } catch (error) {
-            setError('Error processing file');
+            setError('Error creating CSV file');
         } finally {
             setProcessing(false);
         }
@@ -103,9 +108,8 @@ const TxtList = ({ refreshTrigger }) => {
                                     <button className="exit-button" onClick={handleClosePreview}>
                                         Exit
                                     </button>
-                                    <button className="process-button" onClick={handleProcess}
-                                            disabled={processing || !selectedFile}>
-                                        {processing ? 'Creating CSV...' : 'Create CSV'}
+                                    <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile}>
+                                        {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
                                     </button>
                                 </div>
                             </div>
