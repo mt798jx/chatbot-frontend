@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {fetchCsv} from './file-service';
+import { fetchCsv } from './file-service';
 import './GeneratedList.css';
 
 const GeneratedList = ({ refreshTrigger }) => {
@@ -24,9 +24,30 @@ const GeneratedList = ({ refreshTrigger }) => {
         updateFileList();
     }, [refreshTrigger]);
 
-    const handleAction = (fileName) => {
+    const handleDownload = async (fileName) => {
+        try {
+            const encodedFileName = encodeURIComponent(fileName);
+            const response = await fetch(`https://147.232.205.178:8443/download?fileName=${encodedFileName}`, {
+                method: 'GET',
+            });
 
-        alert(`Action on file: ${fileName}`);
+            if (!response.ok) throw new Error('Failed to fetch file');
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            alert(`File "${fileName}" has been successfully downloaded. Check your default downloads folder.`);
+
+        } catch (error) {
+            setError(`Error downloading file: ${error.message}`);
+        }
     };
 
     return (
@@ -44,7 +65,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                                 <li key={index} className="file-item">
                                     <span className="file-name">{file}</span>
                                     <div className="button-group">
-                                        <button className="action-button" onClick={() => handleAction(file)}>
+                                        <button className="action-button" onClick={() => handleDownload(file)}>
                                             Download
                                         </button>
                                     </div>
