@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchTxt } from './file-service';
 import './TxtList.css';
 
-const TxtList = ({ refreshTrigger }) => {
+const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -62,8 +62,10 @@ const TxtList = ({ refreshTrigger }) => {
             if (response.ok) {
                 setCsvCreated(true);
                 const baseName = selectedFile.substring(0, selectedFile.lastIndexOf('.'));
+                onCsvCreated();
                 alert(`CSV file created: ${baseName}.csv`);
                 handleClosePreview();
+
             } else {
                 setError('Failed to create CSV file');
             }

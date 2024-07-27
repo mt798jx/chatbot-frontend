@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { fetchFiles } from './file-service';
+import {fetchFiles} from './file-service';
 import './FileList.css';
 
-const FileList = ({ onProcessingComplete, refreshTrigger }) => {
+const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -101,11 +101,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger }) => {
         setCsvCreated(false);
 
         try {
-            //const encodedFileName = encodeURIComponent(selectedFile);
             const baseName = selectedFile.replace('.csv', '-results.txt');
             const response = await fetch(`https://147.232.205.178:8443/create?fileName=${baseName}`);
             if (response.ok) {
                 setCsvCreated(true);
+                onCsvCreated();
                 alert(`CSV file created: ${baseName}`);
                 handleClosePreview();
             } else {
