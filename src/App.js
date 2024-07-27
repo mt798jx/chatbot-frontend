@@ -8,7 +8,7 @@ import GeneratedList from "./components/file/GeneratedList";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
-    const [refreshTrigger, setRefreshTrigger] = useState(false);
+    const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
 
     const toggleChatVisibility = () => {
@@ -16,11 +16,11 @@ function App() {
     };
 
     const handleUploadSuccess = () => {
-        setRefreshTrigger(prev => !prev);
+        setFileListRefreshTrigger(prev => !prev);
     };
 
     const handleProcessingComplete = useCallback(() => {
-        setRefreshTrigger(prev => !prev);
+        setFileListRefreshTrigger(prev => !prev);
     }, []);
 
     const handleCsvCreated = useCallback(() => {
@@ -32,9 +32,9 @@ function App() {
             <h1>Mirko's App with ChatBot</h1>
 
             <div className="content">
-                <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={refreshTrigger} onCsvCreated={handleCsvCreated}/>
+                <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}/>
                 <FileUpload onUploadSuccess={handleUploadSuccess} />
-                <TxtList refreshTrigger={refreshTrigger} onCsvCreated={handleCsvCreated} />
+                <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated} />
                 <GeneratedList refreshTrigger={csvRefreshTrigger} />
             </div>
 
