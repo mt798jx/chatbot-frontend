@@ -205,7 +205,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                             <button className="exit-button" onClick={handleClosePreviewFinal}>
                                 Exit
                             </button>
-                            <button className="create-csv-button" onClick={handleCreateCsv} disabled={isCreating}>
+                            <button className="process-button" onClick={handleCreateCsv} disabled={isCreating}>
                                 {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
                             </button>
                         </div>
