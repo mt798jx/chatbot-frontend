@@ -147,6 +147,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     };
 
     const startDrag = (e) => {
+        e.preventDefault();
         const rect = reference.current.getBoundingClientRect();
         setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         setDragging(true);
@@ -154,6 +155,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     const duringDrag = (e) => {
         if (dragging) {
+            e.preventDefault();
             const newX = e.clientX - offset.x;
             const newY = e.clientY - offset.y;
             setPosition({ top: `${newY}px`, left: `${newX}px` });
