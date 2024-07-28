@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { fetchFiles } from './file-service';
+import React, { useEffect, useState, useRef } from 'react';
 import './FileList.css';
+import {fetchFiles} from "./file-service";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -18,6 +18,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [dragging, setDragging] = useState(false);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [position, setPosition] = useState({ top: '50%', left: '50%' });
+
+    const reference = useRef(null);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -145,8 +147,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     };
 
     const startDrag = (e) => {
+        const rect = reference.current.getBoundingClientRect();
+        setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         setDragging(true);
-        setOffset({ x: e.clientX - e.currentTarget.getBoundingClientRect().left, y: e.clientY - e.currentTarget.getBoundingClientRect().top });
     };
 
     const duringDrag = (e) => {
@@ -247,6 +250,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processing && (
                 <div
                     className="processing-indicator"
+                    ref={reference}
                     style={{ top: position.top, left: position.left }}
                     onMouseDown={startDrag}
                 >
