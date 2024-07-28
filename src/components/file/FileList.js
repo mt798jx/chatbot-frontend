@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import {fetchFiles} from "./file-service";
@@ -16,8 +16,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
-    const [draggablePosition, setDraggablePosition] = useState({ x: 0, y: 0 });
-    const processingIndicatorRef = useRef(null);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -35,16 +33,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     useEffect(() => {
         updateFileList();
     }, [refreshTrigger]);
-
-    useEffect(() => {
-        if (processing && processingIndicatorRef.current) {
-            const width = processingIndicatorRef.current.offsetWidth;
-            const height = processingIndicatorRef.current.offsetHeight;
-            const x = (window.innerWidth - width) / 2;
-            const y = (window.innerHeight - height) / 2;
-            setDraggablePosition({ x, y });
-        }
-    }, [processing]);
 
     const handleDelete = async (fileName) => {
         if (processing && fileName === processingFile) {
@@ -224,8 +212,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <Draggable defaultPosition={draggablePosition}>
-                    <div className="processing-indicator" ref={processingIndicatorRef}>
+                <Draggable>
+                    <div className="processing-indicator">
                         <div className="spinner"></div>
                         <p>Processing file: {processingFile}</p>
                     </div>
