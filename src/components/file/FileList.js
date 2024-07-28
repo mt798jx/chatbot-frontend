@@ -212,12 +212,20 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <Draggable>
-                    <div className="processing-indicator">
-                        <div className="spinner"></div>
-                        <p>Processing file: {processingFile}</p>
-                    </div>
-                </Draggable>
+                <div className="processing-wrapper">
+                    <Draggable
+                        handle=".processing-indicator" // Ensure this selector correctly matches the draggable handle
+                        defaultPosition={{ x: 0, y: 0 }}
+                        position={null}
+                        grid={[1, 1]}
+                        scale={1}
+                    >
+                        <div className="processing-indicator">
+                            <div className="spinner"></div>
+                            <p>Processing file: {processingFile}</p>
+                        </div>
+                    </Draggable>
+                </div>
             )}
         </div>
     );
