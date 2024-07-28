@@ -15,11 +15,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
-    const [dragging, setDragging] = useState(false);
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
-    const [position, setPosition] = useState({ top: '50%', left: '50%' });
-
-    const reference = useRef(null);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -146,42 +141,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
         }
     };
 
-    const startDrag = (e) => {
-        e.preventDefault();
-        if (reference.current) {
-            const rect = reference.current.getBoundingClientRect();
-            setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-            setDragging(true);
-        }
-    };
-
-    const duringDrag = (e) => {
-        if (dragging) {
-            e.preventDefault();
-            const newX = e.clientX - offset.x;
-            const newY = e.clientY - offset.y;
-            setPosition({ top: `${newY}px`, left: `${newX}px` });
-        }
-    };
-
-    const endDrag = () => {
-        setDragging(false);
-    };
-
-    useEffect(() => {
-        if (dragging) {
-            document.addEventListener('mousemove', duringDrag);
-            document.addEventListener('mouseup', endDrag);
-        } else {
-            document.removeEventListener('mousemove', duringDrag);
-            document.removeEventListener('mouseup', endDrag);
-        }
-        return () => {
-            document.removeEventListener('mousemove', duringDrag);
-            document.removeEventListener('mouseup', endDrag);
-        };
-    }, [dragging]);
-
     return (
         <div className="file-list-container">
             <div className="file-list-header">
@@ -252,14 +211,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <div
-                    className="processing-indicator"
-                    ref={reference}
-                    style={{ top: position.top, left: position.left }}
-                >
-                    <div className="drag-handle" onMouseDown={startDrag}>
-                        Drag here
-                    </div>
+                <div className="processing-indicator">
                     <div className="spinner"></div>
                     <p>Processing file: {processingFile}</p>
                 </div>
