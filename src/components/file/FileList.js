@@ -148,9 +148,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     const startDrag = (e) => {
         e.preventDefault();
-        const rect = reference.current.getBoundingClientRect();
-        setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-        setDragging(true);
+        if (reference.current) {
+            const rect = reference.current.getBoundingClientRect();
+            setOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+            setDragging(true);
+        }
     };
 
     const duringDrag = (e) => {

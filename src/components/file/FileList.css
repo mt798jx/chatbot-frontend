@@ -190,7 +190,7 @@ button:hover:not(:disabled) {
     align-items: center;
     justify-content: center;
     user-select: none;
-    position: absolute;
+    position: fixed;
     cursor: grab;
 }
 
