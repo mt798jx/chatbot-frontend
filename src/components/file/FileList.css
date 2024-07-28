@@ -182,6 +182,10 @@ button:hover:not(:disabled) {
 }
 
 .processing-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: #ffffff;
     color: #333333;
     padding: 20px;
