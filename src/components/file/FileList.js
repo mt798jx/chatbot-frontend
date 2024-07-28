@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import Draggable from 'react-draggable';
 import './FileList.css';
 import {fetchFiles} from "./file-service";
 
@@ -211,10 +212,12 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <div className="processing-indicator">
-                    <div className="spinner"></div>
-                    <p>Processing file: {processingFile}</p>
-                </div>
+                <Draggable>
+                    <div className="processing-indicator">
+                        <div className="spinner"></div>
+                        <p>Processing file: {processingFile}</p>
+                    </div>
+                </Draggable>
             )}
         </div>
     );
