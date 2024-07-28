@@ -256,8 +256,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                     className="processing-indicator"
                     ref={reference}
                     style={{ top: position.top, left: position.left }}
-                    onMouseDown={startDrag}
                 >
+                    <div className="drag-handle" onMouseDown={startDrag}>
+                        Drag here
+                    </div>
                     <div className="spinner"></div>
                     <p>Processing file: {processingFile}</p>
                 </div>

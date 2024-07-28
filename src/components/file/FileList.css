@@ -223,3 +223,18 @@ button:hover:not(:disabled) {
 .create-csv-button:hover:not(:disabled) {
     background-color: #218838;
 }
+
+.drag-handle {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 5px;
+    text-align: center;
+    cursor: grab;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
+}
+
+.drag-handle:hover {
+    background-color: #e0e0e0;
+}
