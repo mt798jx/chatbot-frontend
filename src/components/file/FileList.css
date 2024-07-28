@@ -170,6 +170,19 @@ button:hover:not(:disabled) {
     background-color: #0056b3;
 }
 
+.processing-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
 .processing-indicator {
     background: #ffffff;
     color: #333333;
@@ -179,18 +192,8 @@ button:hover:not(:disabled) {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    max-width: 300px;
-    z-index: 1000;
     border: 1px solid #dddddd;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     user-select: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .processing-indicator p {
@@ -211,16 +214,4 @@ button:hover:not(:disabled) {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-.processing-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
 }

@@ -163,7 +163,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                             <button className="preview-button" onClick={() => handlePreview(file)}>
                                                 👁️
                                             </button>
-                                            <button className="delete-button" onClick={() => handleDelete(file)} disabled={processing && file === processingFile}>
+                                            <button className="delete-button" onClick={() => handleDelete(file)}
+                                                    disabled={processing && file === processingFile}>
                                                 &#10005;
                                             </button>
                                         </div>
@@ -186,7 +187,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                             <button className="exit-button" onClick={handleClosePreview}>
                                 Exit
                             </button>
-                            <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
+                            <button className="process-button" onClick={handleProcess}
+                                    disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 {processing ? 'Processing...' : 'Process'}
                             </button>
                         </div>
@@ -212,14 +214,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             )}
 
             {processing && (
-                <div className="processing-wrapper">
-                    <Draggable
-                        handle=".processing-indicator" // Ensure this selector correctly matches the draggable handle
-                        defaultPosition={{ x: 0, y: 0 }}
-                        position={null}
-                        grid={[1, 1]}
-                        scale={1}
-                    >
+                <div className="processing-container">
+                    <Draggable>
                         <div className="processing-indicator">
                             <div className="spinner"></div>
                             <p>Processing file: {processingFile}</p>
