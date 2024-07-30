@@ -32,7 +32,7 @@ function Chatbox({toggleChatVisibility }) {
         <div className="chat-container">
             <div className="chat-header">
                 <div className="chat-title">
-                    <span role="img" aria-label="Chat">💬</span> ChatBot
+                    <span role="img" aria-label="Chat">💭</span> ChatBot
                 </div>
                 <button className="chat-header-close" onClick={toggleChatVisibility}>✖</button>
             </div>

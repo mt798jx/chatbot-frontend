@@ -44,7 +44,7 @@ function App() {
                 </div>
             ) : (
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
-                    💬
+                    💭
                 </button>
             )}
         </div>
