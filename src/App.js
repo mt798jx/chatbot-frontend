@@ -29,7 +29,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Mirko's App with ChatBot</h1>
+            <h1>Operating Systems</h1>
 
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}/>
