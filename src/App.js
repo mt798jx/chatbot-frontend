@@ -32,21 +32,26 @@ function App() {
             <h1>Operating Systems</h1>
 
             <div className="content">
-                <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}/>
-                <FileUpload onUploadSuccess={handleUploadSuccess} />
-                <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated} />
-                <GeneratedList refreshTrigger={csvRefreshTrigger} />
+                <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
+                          onCsvCreated={handleCsvCreated}/>
+                <FileUpload onUploadSuccess={handleUploadSuccess}/>
+                <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated}/>
+                <GeneratedList refreshTrigger={csvRefreshTrigger}/>
             </div>
 
             {showChat ? (
                 <div className="content">
-                    <Chatbox toggleChatVisibility={toggleChatVisibility} />
+                    <Chatbox toggleChatVisibility={toggleChatVisibility}/>
                 </div>
             ) : (
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
                     💭
                 </button>
             )}
+
+            <div className="footer">
+                <p>© {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.</p>
+            </div>
         </div>
     );
 }

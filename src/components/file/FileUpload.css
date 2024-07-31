@@ -93,3 +93,9 @@ input[type="file"] {
     outline: 2px solid #0056b3;
     outline-offset: 2px;
 }
+
+@media (max-width: 600px) {
+    .file-input-wrapper {
+        width: 70%;
+    }
+}

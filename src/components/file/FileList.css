@@ -195,7 +195,6 @@ button:hover:not(:disabled) {
     font-size: 18px;
     font-weight: bold;
     border: 1px solid #dddddd;
-    user-select: none;
 }
 
 .processing-indicator p {
