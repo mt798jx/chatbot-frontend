@@ -49,3 +49,9 @@ h1 {
 .chat-toggle-button:focus {
   outline: none;
 }
+
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+}
