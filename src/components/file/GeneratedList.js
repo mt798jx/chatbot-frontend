@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv } from './file-service';
 import './GeneratedList.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 const GeneratedList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
@@ -66,7 +68,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                                     <span className="file-name">{file}</span>
                                     <div className="button-group">
                                         <button className="action-button" onClick={() => handleDownload(file)}>
-                                            Download
+                                            <FontAwesomeIcon icon={faDownload} />
                                         </button>
                                     </div>
                                 </li>
