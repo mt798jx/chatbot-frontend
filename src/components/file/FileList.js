@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import {fetchFiles} from "./file-service";
+import {CircularProgress} from "@mui/material";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -218,6 +219,20 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                     <Draggable>
                         <div className="processing-indicator">
                             <div className="spinner"></div>
+                            <React.Fragment>
+                                <svg width={0} height={0}>
+                                    <defs>
+                                        <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stopColor="#e01cd5"/>
+                                            <stop offset="100%" stopColor="#1CB5E0"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                <CircularProgress disableShrink
+                                                  size={55}
+                                                  thickness={4}
+                                                  sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
+                            </React.Fragment>
                             <p>Processing file: {processingFile}</p>
                         </div>
                     </Draggable>
