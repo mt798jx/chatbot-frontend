@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from '../services-react/_api/file-service';
 import './TxtList.css';
-import {Typography, useMediaQuery} from '@mui/material';
+import {IconButton, Typography, useMediaQuery} from '@mui/material';
+import EditIcon from "@mui/icons-material/Edit";
 
 const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -97,9 +98,15 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     fileList.map((file, index) => (
                                         <li key={index}>
                                             <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                                <button className="preview-button" onClick={() => handlePreview(file)}>
-                                                    👁️
-                                                </button>
+                                            <IconButton aria-label="edit"
+                                                        size="small"
+                                                        className="icon-button"
+                                                        onClick={() => handlePreview(file)}>
+                                                <EditIcon
+                                                    color="primary"
+                                                    fontSize={isSmallScreen ? "inherit" : "small"}
+                                                />
+                                            </IconButton>
                                         </li>
                                     ))
                                 ) : (

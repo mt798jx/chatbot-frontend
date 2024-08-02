@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv } from '../services-react/_api/file-service';
 import './GeneratedList.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { Typography, useMediaQuery } from "@mui/material";
+import {IconButton, Typography, useMediaQuery} from "@mui/material";
+import DownloadIcon from '@mui/icons-material/Download';
 
 const GeneratedList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
@@ -70,9 +69,15 @@ const GeneratedList = ({ refreshTrigger }) => {
                             fileList.map((file, index) => (
                                 <li key={index}>
                                     <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                    <button className="download-button" onClick={() => handleDownload(file)}>
-                                        <FontAwesomeIcon icon={faDownload} />
-                                    </button>
+                                    <IconButton aria-label="download"
+                                                size="small"
+                                                className="icon-button"
+                                                onClick={() => handleDownload(file)}>
+                                        <DownloadIcon
+                                            color="success"
+                                            fontSize={isSmallScreen ? "inherit" : "small"}
+                                        />
+                                    </IconButton>
                                 </li>
                             ))
                         ) : (
