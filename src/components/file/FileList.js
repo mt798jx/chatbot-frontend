@@ -202,7 +202,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                             Preview of {processing ? selectedFileProcessing : selectedFile}
                         </Typography>
-                        <pre>{processing ? previewContentProcessing : previewContent}</pre>
+                        <Typography variant={isSmallScreen ? "body2" : "body1"}
+                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                        >
+                            {processing ? previewContentProcessing : previewContent}
+                        </Typography>
                         <div className="preview-buttons">
                             <button className="exit-button" onClick={handleClosePreview}>
                                 Exit
@@ -222,7 +226,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                             Processed Results for {selectedFile}
                         </Typography>
-                        <pre>{processResults}</pre>
+                        <Typography variant={isSmallScreen ? "body2" : "body1"}
+                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                        >
+                            {processResults}
+                        </Typography>
                         <div className="preview-buttons">
                             <button className="exit-button" onClick={handleClosePreviewFinal}>
                                 Exit

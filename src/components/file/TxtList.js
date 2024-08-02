@@ -121,7 +121,11 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                                         Preview of {selectedFile}
                                     </Typography>
-                                    <pre>{previewContent}</pre>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"}
+                                                style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                                    >
+                                        {previewContent}
+                                    </Typography>
                                     <div className="preview-buttons">
                                         <button className="exit-button" onClick={handleClosePreview}>
                                             Exit
