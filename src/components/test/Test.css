@@ -17,12 +17,11 @@
 }
 
 .question {
-    text-align: left;
     padding-bottom: 10px;
 }
 
-.question-container:last-child {
-    margin-bottom: 0;
+.question .MuiFormControl-root {
+    width: 100%;
 }
 
 .submit-container {
