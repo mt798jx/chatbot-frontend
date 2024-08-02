@@ -54,7 +54,7 @@ function App() {
             )}
 
             <div className="footer">
-                <Typography variant="body1">
+                <Typography variant={isSmallScreen ? "body2" : "body1"}>
                     © {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.
                 </Typography>
             </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from './file-service';
 import './TxtList.css';
-import { Typography } from '@mui/material';
+import {Typography, useMediaQuery} from '@mui/material';
 
 const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -11,6 +11,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [selectedFile, setSelectedFile] = useState('');
     const [processing, setProcessing] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -80,14 +81,14 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
 
     return (
         <div className="txt-list-container">
-            <Typography variant="h5" gutterBottom>
+            <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 Created TXT Files
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant="body1">Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"}>Loading files...</Typography>
                 ) : error ? (
-                    <Typography variant="body1" className="error">{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="error">{error}</Typography>
                 ) : (
                     <>
                         <div className="file-list">
@@ -95,7 +96,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                 {fileList.length > 0 ? (
                                     fileList.map((file, index) => (
                                         <li key={index}>
-                                            <Typography variant="body1" className="file-name">{file}</Typography>
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
                                             <div className="button-group">
                                                 <button className="preview-button" onClick={() => handlePreview(file)}>
                                                     👁️
@@ -104,7 +105,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                         </li>
                                     ))
                                 ) : (
-                                    <Typography variant="body1">No TXT files found.</Typography>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"}>No TXT files found.</Typography>
                                 )}
                             </ul>
                         </div>
@@ -112,7 +113,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                         {previewContent && (
                             <div className="preview-modal">
                                 <div className="preview-content">
-                                    <Typography variant="h6">
+                                    <Typography variant={isSmallScreen ? "h7" : "h6"}>
                                         Preview of {selectedFile}
                                     </Typography>
                                     <pre>{previewContent}</pre>

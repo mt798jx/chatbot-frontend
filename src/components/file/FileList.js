@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "./file-service";
-import { CircularProgress, Typography } from "@mui/material";
+import {CircularProgress, Typography, useMediaQuery} from "@mui/material";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -17,6 +17,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -145,21 +146,21 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     return (
         <div className="file-list-container">
-            <Typography variant="h5" gutterBottom>
+            <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 Uploaded CSV Files
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant="body1">Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"}>Loading files...</Typography>
                 ) : error ? (
-                    <Typography variant="body1" className="error">{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="error">{error}</Typography>
                 ) : (
                     <>
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index}>
-                                        <Typography variant="body1" className="file-name">{file}</Typography>
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="preview-button"
                                                     onClick={() => handlePreview(file)}>
@@ -174,7 +175,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     </li>
                                 ))
                             ) : (
-                                <Typography variant="body1">No CSV files found.</Typography>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
                             )}
                         </ul>
                     </>
@@ -184,7 +185,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant="h6">
+                        <Typography variant={isSmallScreen ? "h7" : "h6"}>
                             Preview of {processing ? selectedFileProcessing : selectedFile}
                         </Typography>
                         <pre>{processing ? previewContentProcessing : previewContent}</pre>
@@ -204,7 +205,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processResults && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant="h6">
+                        <Typography variant={isSmallScreen ? "h7" : "h6"}>
                             Processed Results for {selectedFile}
                         </Typography>
                         <pre>{processResults}</pre>
@@ -239,7 +240,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                                   thickness={4}
                                                   sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
                             </React.Fragment>
-                            <Typography variant="body1">Processing file: {processingFile}</Typography>
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>Processing file: {processingFile}</Typography>
                         </div>
                     </Draggable>
                 </div>

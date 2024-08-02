@@ -3,12 +3,13 @@ import { fetchCsv } from './file-service';
 import './GeneratedList.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { Typography } from "@mui/material";
+import {Typography, useMediaQuery} from "@mui/material";
 
 const GeneratedList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -55,21 +56,21 @@ const GeneratedList = ({ refreshTrigger }) => {
 
     return (
         <div className="generated-list-container">
-            <Typography variant="h5" gutterBottom>
+            <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 Generated CSV Files
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant="body1">Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"}>Loading files...</Typography>
                 ) : error ? (
-                    <Typography variant="body1" className="error">{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="error">{error}</Typography>
                 ) : (
                     <div className="file-list">
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index}>
-                                        <Typography variant="body1" className="file-name">{file}</Typography>
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="action-button" onClick={() => handleDownload(file)}>
                                                 <FontAwesomeIcon icon={faDownload} />
@@ -78,7 +79,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                                     </li>
                                 ))
                             ) : (
-                                <Typography variant="body1">No CSV files found.</Typography>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
                             )}
                         </ul>
                     </div>

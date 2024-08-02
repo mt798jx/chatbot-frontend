@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import './FileUpload.css';
+import {useMediaQuery} from "@mui/material";
 
 const FileUpload = ({ onUploadSuccess }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState('');
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -61,13 +63,13 @@ const FileUpload = ({ onUploadSuccess }) => {
                 <div className="file-input-wrapper">
                     <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload" />
                     <label htmlFor="file-upload" className="file-upload-label">
-                        <Typography variant="body1">
+                        <Typography variant={isSmallScreen ? "body2" : "body1"}>
                             {selectedFile ? selectedFile.name : 'Choose a CSV file'}
                         </Typography>
                     </label>
                 </div>
                 {message && (
-                    <Typography className={`message ${getMessageClass()}`} variant="body1">
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} className={`message ${getMessageClass()}`}>
                         {message}
                     </Typography>
                 )}
