@@ -41,18 +41,6 @@
     margin-right: 10px;
 }
 
-button {
-    background: none;
-    border: none;
-    padding: 3px 6px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    font-size: 16px;
-    outline: none;
-    z-index: 1;
-}
-
 .button-group {
     display: flex;
     gap: 10px;
