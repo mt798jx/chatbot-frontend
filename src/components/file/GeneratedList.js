@@ -58,32 +58,34 @@ const GeneratedList = ({ refreshTrigger }) => {
             <Typography variant="h5" gutterBottom>
                 Generated CSV Files
             </Typography>
-            {loading ? (
-                <Typography variant="body1">Loading files...</Typography>
-            ) : error ? (
-                <Typography variant="body1" className="error">{error}</Typography>
-            ) : (
-                <div className="file-list">
-                    <ul>
-                        {fileList.length > 0 ? (
-                            fileList.map((file, index) => (
-                                <li key={index} className="file-item">
-                                    <Typography variant="body1" className="file-name">{file}</Typography>
-                                    <div className="button-group">
-                                        <button className="action-button" onClick={() => handleDownload(file)}>
-                                            <FontAwesomeIcon icon={faDownload} />
-                                        </button>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <Typography variant="body1">No CSV files found.</Typography>
-                        )}
-                    </ul>
-                </div>
-            )}
+            <div className="file-list-content">
+                {loading ? (
+                    <Typography variant="body1">Loading files...</Typography>
+                ) : error ? (
+                    <Typography variant="body1" className="error">{error}</Typography>
+                ) : (
+                    <div className="file-list">
+                        <ul>
+                            {fileList.length > 0 ? (
+                                fileList.map((file, index) => (
+                                    <li key={index} className="file-item">
+                                        <Typography variant="body1" className="file-name">{file}</Typography>
+                                        <div className="button-group">
+                                            <button className="action-button" onClick={() => handleDownload(file)}>
+                                                <FontAwesomeIcon icon={faDownload} />
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <Typography variant="body1">No CSV files found.</Typography>
+                            )}
+                        </ul>
+                    </div>
+                )}
+            </div>
         </div>
     );
-};
+}
 
 export default GeneratedList;

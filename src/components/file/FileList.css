@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-direction: column;
     max-height: 250px;
+    overflow: hidden;
 }
 
 .file-list-content {
