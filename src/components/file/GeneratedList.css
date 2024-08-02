@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-.file-list {
+.file-list-content {
     flex: 1;
     overflow-y: auto;
     padding-right: 15px;
@@ -39,11 +39,6 @@
     flex-grow: 1;
     text-align: left;
     margin-right: 10px;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
 }
 
 .action-button {

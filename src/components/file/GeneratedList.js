@@ -3,7 +3,7 @@ import { fetchCsv } from './file-service';
 import './GeneratedList.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import {Typography, useMediaQuery} from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 
 const GeneratedList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
@@ -65,22 +65,20 @@ const GeneratedList = ({ refreshTrigger }) => {
                 ) : error ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} className="error">{error}</Typography>
                 ) : (
-                    <div className="file-list">
-                        <ul>
-                            {fileList.length > 0 ? (
-                                fileList.map((file, index) => (
-                                    <li key={index}>
-                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                            <button className="action-button" onClick={() => handleDownload(file)}>
-                                                <FontAwesomeIcon icon={faDownload} />
-                                            </button>
-                                    </li>
-                                ))
-                            ) : (
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
-                            )}
-                        </ul>
-                    </div>
+                    <ul className="file-list">
+                        {fileList.length > 0 ? (
+                            fileList.map((file, index) => (
+                                <li key={index}>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
+                                    <button className="action-button" onClick={() => handleDownload(file)}>
+                                        <FontAwesomeIcon icon={faDownload} />
+                                    </button>
+                                </li>
+                            ))
+                        ) : (
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
+                        )}
+                    </ul>
                 )}
             </div>
         </div>
