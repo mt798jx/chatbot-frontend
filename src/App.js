@@ -5,7 +5,7 @@ import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
-import Test from "./components/test/Test";
+import Typography from '@mui/material/Typography';
 
 function App() {
     const [showChat, setShowChat] = useState(false);
@@ -30,8 +30,9 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Operating Systems</h1>
-            <Test/>
+            <Typography variant="h3" gutterBottom className="header">
+                Operating Systems
+            </Typography>
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                           onCsvCreated={handleCsvCreated}/>
@@ -51,7 +52,9 @@ function App() {
             )}
 
             <div className="footer">
-                <p>© {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.</p>
+                <Typography variant="body+">
+                    © {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.
+                </Typography>
             </div>
         </div>
     );

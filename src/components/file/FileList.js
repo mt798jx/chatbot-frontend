@@ -150,16 +150,16 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography>Loading files...</Typography>
+                    <Typography variant="body1">Loading files...</Typography>
                 ) : error ? (
-                    <Typography className="error">{error}</Typography>
+                    <Typography variant="body1" className="error">{error}</Typography>
                 ) : (
                     <>
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index} className="file-item">
-                                        <Typography className="file-name">{file}</Typography>
+                                        <Typography variant="body1" className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="preview-button"
                                                     onClick={() => handlePreview(file)}>
@@ -174,7 +174,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     </li>
                                 ))
                             ) : (
-                                <Typography>No CSV files found.</Typography>
+                                <Typography variant="body1">No CSV files found.</Typography>
                             )}
                         </ul>
                     </>
@@ -239,7 +239,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                                   thickness={4}
                                                   sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
                             </React.Fragment>
-                            <Typography>Processing file: {processingFile}</Typography>
+                            <Typography variant="body1">Processing file: {processingFile}</Typography>
                         </div>
                     </Draggable>
                 </div>
