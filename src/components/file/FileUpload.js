@@ -58,7 +58,7 @@ const FileUpload = ({ onUploadSuccess }) => {
     };
 
     return (
-        <div className="file-upload-container">
+        <div className="file-list-container">
             <form onSubmit={handleSubmit}>
                 <div className="file-input-wrapper">
                     <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload" />

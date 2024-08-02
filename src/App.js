@@ -1,11 +1,12 @@
 import './App.css';
 import { useState, useCallback } from "react";
-import FileUpload from "./components/file/upload/FileUpload";
+import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
 import Typography from '@mui/material/Typography';
 import {useMediaQuery} from "@mui/material";
+import './components/file/_universal_style/File.css';
 
 function App() {
     const [showChat, setShowChat] = useState(false);
