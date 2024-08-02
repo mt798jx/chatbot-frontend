@@ -16,9 +16,10 @@
     width: 100%;
 }
 
-.question {
-    padding-bottom: 10px;
+.full-width-input {
     width: 100%;
+    box-sizing: border-box;
+    resize: none;
 }
 
 .submit-container {

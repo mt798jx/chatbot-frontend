@@ -69,13 +69,11 @@ function Test() {
             <Form onSubmit={handleSubmit}>
                 {Questions.map((questionData, index) => (
                     <div key={index} className="question-container">
-                        <div className="question">
-                            <Form.Group controlId={`question${index + 1}`}>
-                                <Form.Label>
-                                    <Typography variant="h6">{questionData.question}</Typography>
-                                </Form.Label>
-                            </Form.Group>
-                        </div>
+                        <Form.Group controlId={`question${index + 1}`}>
+                            <Form.Label>
+                                <Typography variant="h6">{questionData.question}</Typography>
+                            </Form.Label>
+                        </Form.Group>
                         <Form.Group controlId={`answer${index + 1}`}>
                             <Form.Control
                                 as="textarea"
@@ -83,6 +81,7 @@ function Test() {
                                 value={questionData.userAnswer}
                                 onChange={(e) => handleUserAnswer(index, e.target.value)}
                                 placeholder="Zadaj odpoveď"
+                                className="full-width-input"
                             />
                         </Form.Group>
                         {results.length > 0 && (
