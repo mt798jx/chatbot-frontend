@@ -1,6 +1,5 @@
 import './App.css';
 import { useState, useCallback } from "react";
-import Chatbox from "./components/chat/ChatBox";
 import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
@@ -43,6 +42,10 @@ function App() {
                 <GeneratedList refreshTrigger={csvRefreshTrigger}/>
             </div>
 
+            {/*
+            <div className="content">
+                <Test/>
+            <div/>
             {showChat ? (
                 <div className="content">
                     <Chatbox toggleChatVisibility={toggleChatVisibility}/>
@@ -52,6 +55,7 @@ function App() {
                     💭
                 </button>
             )}
+            */}
 
             <div className="footer">
                 <Typography variant={isSmallScreen ? "body2" : "body1"}>

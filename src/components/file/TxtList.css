@@ -1,16 +1,3 @@
-.txt-list-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 250px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
 .file-list-content {
     flex: 1;
     overflow-y: auto;

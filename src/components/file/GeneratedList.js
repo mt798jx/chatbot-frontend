@@ -55,7 +55,7 @@ const GeneratedList = ({ refreshTrigger }) => {
     };
 
     return (
-        <div className="generated-list-container">
+        <div className="file-list-container">
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 Generated CSV Files
             </Typography>

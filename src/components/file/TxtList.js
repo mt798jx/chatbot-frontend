@@ -80,7 +80,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     };
 
     return (
-        <div className="txt-list-container">
+        <div className="file-list-container">
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 Created TXT Files
             </Typography>
