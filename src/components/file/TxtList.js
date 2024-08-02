@@ -68,7 +68,6 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                 onCsvCreated();
                 alert(`CSV file created: ${baseName}.csv`);
                 handleClosePreview();
-
             } else {
                 setError('Failed to create CSV file');
             }
@@ -84,51 +83,53 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
             <Typography variant="h5" gutterBottom>
                 Created TXT Files
             </Typography>
-            {loading ? (
-                <Typography variant="body1">Loading files...</Typography>
-            ) : error ? (
-                <Typography variant="body1" className="error">{error}</Typography>
-            ) : (
-                <>
-                    <div className="file-list">
-                        <ul>
-                            {fileList.length > 0 ? (
-                                fileList.map((file, index) => (
-                                    <li key={index} className="file-item">
-                                        <Typography variant="body1" className="file-name">{file}</Typography>
-                                        <div className="button-group">
-                                            <button className="preview-button" onClick={() => handlePreview(file)}>
-                                                👁️
-                                            </button>
-                                        </div>
-                                    </li>
-                                ))
-                            ) : (
-                                <Typography variant="body1">No TXT files found.</Typography>
-                            )}
-                        </ul>
-                    </div>
+            <div className="file-list-content">
+                {loading ? (
+                    <Typography variant="body1">Loading files...</Typography>
+                ) : error ? (
+                    <Typography variant="body1" className="error">{error}</Typography>
+                ) : (
+                    <>
+                        <div className="file-list">
+                            <ul>
+                                {fileList.length > 0 ? (
+                                    fileList.map((file, index) => (
+                                        <li key={index}>
+                                            <Typography variant="body1" className="file-name">{file}</Typography>
+                                            <div className="button-group">
+                                                <button className="preview-button" onClick={() => handlePreview(file)}>
+                                                    👁️
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <Typography variant="body1">No TXT files found.</Typography>
+                                )}
+                            </ul>
+                        </div>
 
-                    {previewContent && (
-                        <div className="preview-modal">
-                            <div className="preview-content">
-                                <Typography variant="h6">
-                                    Preview of {selectedFile}
-                                </Typography>
-                                <pre>{previewContent}</pre>
-                                <div className="preview-buttons">
-                                    <button className="exit-button" onClick={handleClosePreview}>
-                                        Exit
-                                    </button>
-                                    <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile}>
-                                        {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
-                                    </button>
+                        {previewContent && (
+                            <div className="preview-modal">
+                                <div className="preview-content">
+                                    <Typography variant="h6">
+                                        Preview of {selectedFile}
+                                    </Typography>
+                                    <pre>{previewContent}</pre>
+                                    <div className="preview-buttons">
+                                        <button className="exit-button" onClick={handleClosePreview}>
+                                            Exit
+                                        </button>
+                                        <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile}>
+                                            {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
-                </>
-            )}
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 };

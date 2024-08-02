@@ -11,28 +11,16 @@
     overflow: hidden;
 }
 
-.file-list {
+.file-list-content {
     flex: 1;
     overflow-y: auto;
     padding-right: 15px;
 }
 
-.txt-list-container ul {
+.file-list {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.txt-list-container .file-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.txt-list-container .file-item:last-child {
-    border-bottom: none;
 }
 
 .file-name {

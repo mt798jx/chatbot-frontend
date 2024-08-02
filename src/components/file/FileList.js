@@ -158,7 +158,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
-                                    <li key={index} className="file-item">
+                                    <li key={index}>
                                         <Typography variant="body1" className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="preview-button"
