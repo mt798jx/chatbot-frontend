@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
-import {fetchFiles} from "./file-service";
-import {CircularProgress} from "@mui/material";
+import { fetchFiles } from "./file-service";
+import { CircularProgress, Typography, Button } from "@mui/material";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -145,34 +145,34 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
 
     return (
         <div className="file-list-container">
-            <div className="file-list-header">
-                <h2>Uploaded CSV Files</h2>
-            </div>
+            <Typography variant="h5" gutterBottom>
+                Uploaded CSV Files
+            </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <p>Loading files...</p>
+                    <Typography>Loading files...</Typography>
                 ) : error ? (
-                    <p className="error">{error}</p>
+                    <Typography className="error">{error}</Typography>
                 ) : (
                     <>
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index} className="file-item">
-                                        <span className="file-name">{file}</span>
+                                        <Typography className="file-name">{file}</Typography>
                                         <div className="button-group">
-                                            <button className="preview-button" onClick={() => handlePreview(file)}>
+                                            <Button className="preview-button" onClick={() => handlePreview(file)}>
                                                 👁️
-                                            </button>
-                                            <button className="delete-button" onClick={() => handleDelete(file)}
+                                            </Button>
+                                            <Button className="delete-button" onClick={() => handleDelete(file)}
                                                     disabled={processing && file === processingFile}>
                                                 &#10005;
-                                            </button>
+                                            </Button>
                                         </div>
                                     </li>
                                 ))
                             ) : (
-                                <p>No CSV files found.</p>
+                                <Typography>No CSV files found.</Typography>
                             )}
                         </ul>
                     </>
@@ -182,16 +182,18 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <h3>Preview of {processing ? selectedFileProcessing : selectedFile}</h3>
+                        <Typography variant="h6">
+                            Preview of {processing ? selectedFileProcessing : selectedFile}
+                        </Typography>
                         <pre>{processing ? previewContentProcessing : previewContent}</pre>
                         <div className="preview-buttons">
-                            <button className="exit-button" onClick={handleClosePreview}>
+                            <Button className="exit-button" onClick={handleClosePreview}>
                                 Exit
-                            </button>
-                            <button className="process-button" onClick={handleProcess}
+                            </Button>
+                            <Button className="process-button" onClick={handleProcess}
                                     disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 {processing ? 'Processing...' : 'Process'}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -200,15 +202,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processResults && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <h3>Processed Results for {selectedFile}</h3>
+                        <Typography variant="h6">
+                            Processed Results for {selectedFile}
+                        </Typography>
                         <pre>{processResults}</pre>
                         <div className="preview-buttons">
-                            <button className="exit-button" onClick={handleClosePreviewFinal}>
+                            <Button className="exit-button" onClick={handleClosePreviewFinal}>
                                 Exit
-                            </button>
-                            <button className="process-button" onClick={handleCreateCsv} disabled={isCreating}>
+                            </Button>
+                            <Button className="process-button" onClick={handleCreateCsv} disabled={isCreating}>
                                 {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -233,7 +237,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                                   thickness={4}
                                                   sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
                             </React.Fragment>
-                            <p>Processing file: {processingFile}</p>
+                            <Typography>Processing file: {processingFile}</Typography>
                         </div>
                     </Draggable>
                 </div>
