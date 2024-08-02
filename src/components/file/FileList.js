@@ -85,6 +85,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     };
 
     const handleClosePreviewFinal = () => {
+        onCsvCreated();
         setPreviewContent(null);
         setPreviewContentProcessing(null);
         setSelectedFile('');
