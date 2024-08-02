@@ -8,6 +8,7 @@
     max-height: 250px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .file-list {
