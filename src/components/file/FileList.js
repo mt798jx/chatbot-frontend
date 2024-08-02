@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "../services-react/_api/file-service";
-import {CircularProgress, IconButton, Typography, useMediaQuery} from "@mui/material";
+import {Button, CircularProgress, IconButton, Typography, useMediaQuery} from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -208,13 +210,23 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                             {processing ? previewContentProcessing : previewContent}
                         </Typography>
                         <div className="preview-buttons">
-                            <button className="exit-button" onClick={handleClosePreview}>
-                                Exit
-                            </button>
-                            <button className="process-button" onClick={handleProcess}
-                                    disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
+                            <Button variant="outlined"
+                                    startIcon={<CloseIcon />}
+                                    className="icon-button"
+                                    color="error"
+                                    onClick={handleClosePreview}
+                            >
+                                Close
+                            </Button>
+                            <Button variant="outlined"
+                                    endIcon={<PlayArrowIcon />}
+                                    className="icon-button"
+                                    color="success"
+                                    onClick={handleProcess}
+                                    disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}
+                            >
                                 {processing ? 'Processing...' : 'Process'}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -232,13 +244,23 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                             {processResults}
                         </Typography>
                         <div className="preview-buttons">
-                            <button className="exit-button" onClick={handleClosePreviewFinal}>
-                                Exit
-                            </button>
-                            <button className="process-button" onClick={handleCreateCsv}
+                            <Button variant="outlined"
+                                    startIcon={<CloseIcon />}
+                                    className="icon-button"
+                                    color="error"
+                                    onClick={handleClosePreviewFinal}
+                            >
+                                Close
+                            </Button>
+                            <Button variant="outlined"
+                                    endIcon={<PlayArrowIcon />}
+                                    className="icon-button"
+                                    color="success"
+                                    onClick={handleCreateCsv}
                                     disabled={isCreating}>
+                            >
                                 {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

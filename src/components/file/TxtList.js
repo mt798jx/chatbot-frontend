@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from '../services-react/_api/file-service';
 import './TxtList.css';
-import {IconButton, Typography, useMediaQuery} from '@mui/material';
+import {Button, IconButton, Typography, useMediaQuery} from '@mui/material';
 import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
+import CreateIcon from '@mui/icons-material/Create';
 
 const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -127,12 +129,23 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                         {previewContent}
                                     </Typography>
                                     <div className="preview-buttons">
-                                        <button className="exit-button" onClick={handleClosePreview}>
-                                            Exit
-                                        </button>
-                                        <button className="process-button" onClick={handleProcess} disabled={processing || !selectedFile}>
+                                        <Button variant="outlined"
+                                                startIcon={<CloseIcon />}
+                                                className="icon-button"
+                                                color="error"
+                                                onClick={handleClosePreview}
+                                        >
+                                            Close
+                                        </Button>
+                                        <Button variant="outlined"
+                                                endIcon={<CreateIcon />}
+                                                className="icon-button"
+                                                color="success"
+                                                onClick={handleProcess}
+                                                disabled={processing || !selectedFile}
+                                        >
                                             {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
