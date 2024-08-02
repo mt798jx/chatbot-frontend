@@ -1,34 +1,4 @@
-.file-list-content {
-    flex: 1;
-    overflow-y: auto;
-    padding-right: 15px;
-}
-
-.generated-list-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.generated-list-container li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.generated-list-container li:last-child {
-    border-bottom: none;
-}
-
-.file-name {
-    flex-grow: 1;
-    text-align: left;
-    margin-right: 10px;
-}
-
-.action-button {
+.download-button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -40,7 +10,7 @@
     outline: none;
 }
 
-.action-button:hover {
+.download-button:hover {
     background-color: #45a049;
     transform: scale(1.1);
 }

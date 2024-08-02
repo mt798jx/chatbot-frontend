@@ -70,7 +70,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                             fileList.map((file, index) => (
                                 <li key={index}>
                                     <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                    <button className="action-button" onClick={() => handleDownload(file)}>
+                                    <button className="download-button" onClick={() => handleDownload(file)}>
                                         <FontAwesomeIcon icon={faDownload} />
                                     </button>
                                 </li>

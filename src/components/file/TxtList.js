@@ -97,11 +97,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     fileList.map((file, index) => (
                                         <li key={index}>
                                             <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                            <div className="button-group">
                                                 <button className="preview-button" onClick={() => handlePreview(file)}>
                                                     👁️
                                                 </button>
-                                            </div>
                                         </li>
                                     ))
                                 ) : (
