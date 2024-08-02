@@ -71,11 +71,9 @@ const GeneratedList = ({ refreshTrigger }) => {
                                 fileList.map((file, index) => (
                                     <li key={index}>
                                         <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
-                                        <div className="button-group">
                                             <button className="action-button" onClick={() => handleDownload(file)}>
                                                 <FontAwesomeIcon icon={faDownload} />
                                             </button>
-                                        </div>
                                     </li>
                                 ))
                             ) : (
