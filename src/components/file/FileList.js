@@ -186,7 +186,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"}>
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                             Preview of {processing ? selectedFileProcessing : selectedFile}
                         </Typography>
                         <pre>{processing ? previewContentProcessing : previewContent}</pre>
@@ -206,7 +206,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processResults && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"}>
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                             Processed Results for {selectedFile}
                         </Typography>
                         <pre>{processResults}</pre>

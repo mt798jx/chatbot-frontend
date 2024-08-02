@@ -32,7 +32,7 @@ function App() {
 
     return (
         <div className="App">
-            <Typography variant={isSmallScreen ? "h4" : "h3"} gutterBottom className="header">
+            <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
                 Operating Systems
             </Typography>
             <div className="content">

@@ -111,7 +111,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                         {previewContent && (
                             <div className="preview-modal">
                                 <div className="preview-content">
-                                    <Typography variant={isSmallScreen ? "h7" : "h6"}>
+                                    <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                                         Preview of {selectedFile}
                                     </Typography>
                                     <pre>{previewContent}</pre>
