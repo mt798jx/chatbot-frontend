@@ -77,10 +77,6 @@ button:hover:not(:disabled) {
     background-color: #218838;
 }
 
-.error {
-    color: red;
-}
-
 .preview-content {
     background-color: white;
     padding: 20px;

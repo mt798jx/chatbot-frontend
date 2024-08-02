@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useCallback } from "react";
-import FileUpload from "./components/file/FileUpload";
+import FileUpload from "./components/file/upload/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";

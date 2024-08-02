@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTxt } from './file-service';
+import { fetchTxt } from '../services-react/_api/file-service';
 import './TxtList.css';
 import {Typography, useMediaQuery} from '@mui/material';
 

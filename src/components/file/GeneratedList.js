@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchCsv } from './file-service';
+import { fetchCsv } from '../services-react/_api/file-service';
 import './GeneratedList.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";

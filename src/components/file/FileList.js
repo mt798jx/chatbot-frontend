@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
-import { fetchFiles } from "./file-service";
+import { fetchFiles } from "../services-react/_api/file-service";
 import {CircularProgress, Typography, useMediaQuery} from "@mui/material";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
