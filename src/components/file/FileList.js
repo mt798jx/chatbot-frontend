@@ -225,7 +225,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                 <div className="processing-container">
                     <Draggable>
                         <div className="processing-indicator">
-                            <div className="spinner"></div>
                             <React.Fragment>
                                 <svg width={0} height={0}>
                                     <defs>
