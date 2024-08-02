@@ -161,10 +161,12 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     <li key={index} className="file-item">
                                         <Typography className="file-name">{file}</Typography>
                                         <div className="button-group">
-                                            <Button className="preview-button" onClick={() => handlePreview(file)}>
+                                            <Button size="small" className="preview-button"
+                                                    onClick={() => handlePreview(file)}>
                                                 👁️
                                             </Button>
-                                            <Button className="delete-button" onClick={() => handleDelete(file)}
+                                            <Button size="small" className="delete-button"
+                                                    onClick={() => handleDelete(file)}
                                                     disabled={processing && file === processingFile}>
                                                 &#10005;
                                             </Button>
@@ -187,10 +189,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         </Typography>
                         <pre>{processing ? previewContentProcessing : previewContent}</pre>
                         <div className="preview-buttons">
-                            <Button className="exit-button" onClick={handleClosePreview}>
+                            <Button size="small" className="exit-button" onClick={handleClosePreview}>
                                 Exit
                             </Button>
-                            <Button className="process-button" onClick={handleProcess}
+                            <Button size="small" className="process-button" onClick={handleProcess}
                                     disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 {processing ? 'Processing...' : 'Process'}
                             </Button>
@@ -207,10 +209,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         </Typography>
                         <pre>{processResults}</pre>
                         <div className="preview-buttons">
-                            <Button className="exit-button" onClick={handleClosePreviewFinal}>
+                            <Button size="small" className="exit-button" onClick={handleClosePreviewFinal}>
                                 Exit
                             </Button>
-                            <Button className="process-button" onClick={handleCreateCsv} disabled={isCreating}>
+                            <Button size="small" className="process-button" onClick={handleCreateCsv}
+                                    disabled={isCreating}>
                                 {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
                             </Button>
                         </div>
