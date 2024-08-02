@@ -23,6 +23,24 @@
     margin: 0;
 }
 
+.txt-list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.txt-list-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.txt-list-container li:last-child {
+    border-bottom: none;
+}
+
 .file-name {
     flex-grow: 1;
     text-align: left;
@@ -74,19 +92,6 @@ button:hover:not(:disabled) {
 
 .error {
     color: red;
-}
-
-.preview-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
 }
 
 .preview-content {
