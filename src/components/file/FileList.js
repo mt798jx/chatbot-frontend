@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "./file-service";
-import { CircularProgress, Typography, Button } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -161,15 +161,15 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     <li key={index} className="file-item">
                                         <Typography className="file-name">{file}</Typography>
                                         <div className="button-group">
-                                            <Button size="small" className="preview-button"
+                                            <button className="preview-button"
                                                     onClick={() => handlePreview(file)}>
                                                 👁️
-                                            </Button>
-                                            <Button size="small" className="delete-button"
+                                            </button>
+                                            <button className="delete-button"
                                                     onClick={() => handleDelete(file)}
                                                     disabled={processing && file === processingFile}>
                                                 &#10005;
-                                            </Button>
+                                            </button>
                                         </div>
                                     </li>
                                 ))
@@ -189,13 +189,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         </Typography>
                         <pre>{processing ? previewContentProcessing : previewContent}</pre>
                         <div className="preview-buttons">
-                            <Button size="small" className="exit-button" onClick={handleClosePreview}>
+                            <button className="exit-button" onClick={handleClosePreview}>
                                 Exit
-                            </Button>
-                            <Button size="small" className="process-button" onClick={handleProcess}
+                            </button>
+                            <button className="process-button" onClick={handleProcess}
                                     disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 {processing ? 'Processing...' : 'Process'}
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -209,13 +209,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                         </Typography>
                         <pre>{processResults}</pre>
                         <div className="preview-buttons">
-                            <Button size="small" className="exit-button" onClick={handleClosePreviewFinal}>
+                            <button className="exit-button" onClick={handleClosePreviewFinal}>
                                 Exit
-                            </Button>
-                            <Button size="small" className="process-button" onClick={handleCreateCsv}
+                            </button>
+                            <button className="process-button" onClick={handleCreateCsv}
                                     disabled={isCreating}>
                                 {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 </div>
