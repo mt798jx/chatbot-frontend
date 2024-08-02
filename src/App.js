@@ -6,11 +6,13 @@ import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
 import Typography from '@mui/material/Typography';
+import {useMediaQuery} from "@mui/material";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const toggleChatVisibility = () => {
         setShowChat(!showChat);
@@ -30,7 +32,7 @@ function App() {
 
     return (
         <div className="App">
-            <Typography variant="h3" gutterBottom className="header">
+            <Typography variant={isSmallScreen ? "h4" : "h3"} gutterBottom className="header">
                 Operating Systems
             </Typography>
             <div className="content">
