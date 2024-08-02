@@ -125,3 +125,16 @@ button:hover:not(:disabled) {
 .preview-button:hover:not(:disabled) {
     background-color: #1a53ff;
 }
+
+.icon-button {
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.icon-button:hover:not(:disabled) {
+    transform: scale(1.15);
+}
+
+.icon-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

@@ -51,11 +51,6 @@ const FileUpload = ({ onUploadSuccess }) => {
         }
     };
 
-    const getMessageClass = () => {
-        if (message.startsWith('File upload failed') || message === 'Error uploading file') return 'error';
-        return '';
-    };
-
     return (
         <div className="file-list-container">
             <form onSubmit={handleSubmit}>

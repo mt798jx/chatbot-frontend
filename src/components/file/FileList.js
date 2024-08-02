@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "../services-react/_api/file-service";
-import {CircularProgress, Typography, useMediaQuery} from "@mui/material";
+import {CircularProgress, IconButton, Typography, useMediaQuery} from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -163,15 +165,26 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     <li key={index}>
                                         <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
                                         <div className="button-group">
-                                            <button className="preview-button"
-                                                    onClick={() => handlePreview(file)}>
-                                                👁️
-                                            </button>
-                                            <button className="delete-button"
-                                                    onClick={() => handleDelete(file)}
-                                                    disabled={processing && file === processingFile}>
-                                                &#10005;
-                                            </button>
+                                            <IconButton aria-label="edit"
+                                                        size="small"
+                                                        className="icon-button"
+                                                        onClick={() => handlePreview(file)}>
+                                                <EditIcon
+                                                    color="primary"
+                                                    fontSize={isSmallScreen ? "inherit" : "small"}
+                                                />
+                                            </IconButton>
+                                            <IconButton aria-label="delete"
+                                                        size="small"
+                                                        className="icon-button"
+                                                        onClick={() => handleDelete(file)}
+                                                        disabled={processing && file === processingFile}
+                                            >
+                                                <DeleteForeverIcon
+                                                    color="error"
+                                                    fontSize={isSmallScreen ? "inherit" : "small"}
+                                                />
+                                            </IconButton>
                                         </div>
                                     </li>
                                 ))
