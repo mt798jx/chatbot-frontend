@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import './FileUpload.css';
-import {useMediaQuery} from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 
 const FileUpload = ({ onUploadSuccess }) => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -52,7 +52,6 @@ const FileUpload = ({ onUploadSuccess }) => {
     };
 
     const getMessageClass = () => {
-        if (message === 'No file selected.') return 'warning';
         if (message.startsWith('File upload failed') || message === 'Error uploading file') return 'error';
         return '';
     };
@@ -69,11 +68,11 @@ const FileUpload = ({ onUploadSuccess }) => {
                     </label>
                 </div>
                 {message && (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} className={`message ${getMessageClass()}`}>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
                         {message}
                     </Typography>
                 )}
-                <button type="submit" className="upload-button">
+                <button type="submit" className="upload-button" disabled={!selectedFile}>
                     Upload
                 </button>
             </form>

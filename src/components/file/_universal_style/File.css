@@ -125,7 +125,3 @@ button:hover:not(:disabled) {
 .preview-button:hover:not(:disabled) {
     background-color: #1a53ff;
 }
-
-.error {
-    color: red;
-}

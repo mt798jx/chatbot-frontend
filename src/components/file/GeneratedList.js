@@ -61,9 +61,9 @@ const GeneratedList = ({ refreshTrigger }) => {
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"}>Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>Loading files...</Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="error">{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>{error}</Typography>
                 ) : (
                     <ul className="file-list">
                         {fileList.length > 0 ? (

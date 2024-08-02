@@ -36,29 +36,6 @@ input[type="file"] {
     background-color: #e7e7e7;
 }
 
-.message {
-    margin: 10px 0;
-    font-size: 16px;
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-}
-
-.message.success {
-    color: green;
-    margin-bottom: 10px;
-}
-
-.message.error {
-    color: red;
-   margin-bottom: 10px;
-}
-
-.message.warning {
-    color: orange;
-    margin-bottom: 10px;
-}
-
 .upload-button {
     padding: 10px 20px;
     font-size: 16px;
