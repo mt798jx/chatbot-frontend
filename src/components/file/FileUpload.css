@@ -58,6 +58,7 @@ input[type="file"] {
 
 .message.success {
     color: green;
+    margin-bottom: 10px;
 }
 
 .message.error {
@@ -67,6 +68,7 @@ input[type="file"] {
 
 .message.warning {
     color: orange;
+    margin-bottom: 10px;
 }
 
 .upload-button {

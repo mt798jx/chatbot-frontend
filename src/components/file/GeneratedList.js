@@ -59,16 +59,16 @@ const GeneratedList = ({ refreshTrigger }) => {
                 Generated CSV Files
             </Typography>
             {loading ? (
-                <Typography>Loading files...</Typography>
+                <Typography variant="body1">Loading files...</Typography>
             ) : error ? (
-                <Typography className="error">{error}</Typography>
+                <Typography variant="body1" className="error">{error}</Typography>
             ) : (
                 <div className="file-list">
                     <ul>
                         {fileList.length > 0 ? (
                             fileList.map((file, index) => (
                                 <li key={index} className="file-item">
-                                    <Typography className="file-name">{file}</Typography>
+                                    <Typography variant="body1" className="file-name">{file}</Typography>
                                     <div className="button-group">
                                         <button className="action-button" onClick={() => handleDownload(file)}>
                                             <FontAwesomeIcon icon={faDownload} />
@@ -77,7 +77,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                                 </li>
                             ))
                         ) : (
-                            <Typography>No CSV files found.</Typography>
+                            <Typography variant="body1">No CSV files found.</Typography>
                         )}
                     </ul>
                 </div>

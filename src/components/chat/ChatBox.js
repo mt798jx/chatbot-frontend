@@ -40,7 +40,7 @@ function Chatbox({ toggleChatVisibility }) {
             <div className="messages">
                 {messages.map((msg, index) => (
                     <div key={index} className={`message ${msg.from}`}>
-                        <Typography variant="body2" className="message-text">
+                        <Typography variant="body1" className="message-text">
                             {msg.text}
                         </Typography>
                     </div>

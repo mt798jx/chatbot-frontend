@@ -67,7 +67,7 @@ const FileUpload = ({ onUploadSuccess }) => {
                     </label>
                 </div>
                 {message && (
-                    <Typography className={`message ${getMessageClass()}`} variant="body2">
+                    <Typography className={`message ${getMessageClass()}`} variant="body1">
                         {message}
                     </Typography>
                 )}

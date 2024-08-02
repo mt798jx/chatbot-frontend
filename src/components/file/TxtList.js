@@ -85,9 +85,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                 Created TXT Files
             </Typography>
             {loading ? (
-                <Typography>Loading files...</Typography>
+                <Typography variant="body1">Loading files...</Typography>
             ) : error ? (
-                <Typography className="error">{error}</Typography>
+                <Typography variant="body1" className="error">{error}</Typography>
             ) : (
                 <>
                     <div className="file-list">
@@ -95,7 +95,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index} className="file-item">
-                                        <Typography className="file-name">{file}</Typography>
+                                        <Typography variant="body1" className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="preview-button" onClick={() => handlePreview(file)}>
                                                 👁️
@@ -104,7 +104,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     </li>
                                 ))
                             ) : (
-                                <Typography>No TXT files found.</Typography>
+                                <Typography variant="body1">No TXT files found.</Typography>
                             )}
                         </ul>
                     </div>

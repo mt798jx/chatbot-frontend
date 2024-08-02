@@ -52,7 +52,7 @@ function App() {
             )}
 
             <div className="footer">
-                <Typography variant="body+">
+                <Typography variant="body1">
                     © {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.
                 </Typography>
             </div>
