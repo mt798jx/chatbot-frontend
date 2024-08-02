@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Typography from '@mui/material/Typography';
 import './FileUpload.css';
 
 const FileUpload = ({ onUploadSuccess }) => {
@@ -58,12 +59,18 @@ const FileUpload = ({ onUploadSuccess }) => {
         <div className="file-upload-container">
             <form onSubmit={handleSubmit}>
                 <div className="file-input-wrapper">
-                    <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload"/>
+                    <input type="file" accept=".csv" onChange={handleFileChange} id="file-upload" />
                     <label htmlFor="file-upload" className="file-upload-label">
-                        {selectedFile ? selectedFile.name : 'Choose a CSV file'}
+                        <Typography variant="body1">
+                            {selectedFile ? selectedFile.name : 'Choose a CSV file'}
+                        </Typography>
                     </label>
                 </div>
-                {message && <div className={`message ${getMessageClass()}`}>{message}</div>}
+                {message && (
+                    <Typography className={`message ${getMessageClass()}`} variant="body2">
+                        {message}
+                    </Typography>
+                )}
                 <button type="submit" className="upload-button">
                     Upload
                 </button>

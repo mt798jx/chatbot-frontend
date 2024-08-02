@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from './file-service';
 import './TxtList.css';
+import { Typography } from '@mui/material';
 
 const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -80,11 +81,13 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
 
     return (
         <div className="txt-list-container">
-            <h2>Created TXT Files</h2>
+            <Typography variant="h5" gutterBottom>
+                Created TXT Files
+            </Typography>
             {loading ? (
-                <p>Loading files...</p>
+                <Typography>Loading files...</Typography>
             ) : error ? (
-                <p className="error">{error}</p>
+                <Typography className="error">{error}</Typography>
             ) : (
                 <>
                     <div className="file-list">
@@ -92,7 +95,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index} className="file-item">
-                                        <span className="file-name">{file}</span>
+                                        <Typography className="file-name">{file}</Typography>
                                         <div className="button-group">
                                             <button className="preview-button" onClick={() => handlePreview(file)}>
                                                 👁️
@@ -101,7 +104,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     </li>
                                 ))
                             ) : (
-                                <p>No TXT files found.</p>
+                                <Typography>No TXT files found.</Typography>
                             )}
                         </ul>
                     </div>
@@ -109,7 +112,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                     {previewContent && (
                         <div className="preview-modal">
                             <div className="preview-content">
-                                <h3>Preview of {selectedFile}</h3>
+                                <Typography variant="h6">
+                                    Preview of {selectedFile}
+                                </Typography>
                                 <pre>{previewContent}</pre>
                                 <div className="preview-buttons">
                                     <button className="exit-button" onClick={handleClosePreview}>

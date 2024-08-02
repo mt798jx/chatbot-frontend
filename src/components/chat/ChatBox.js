@@ -1,8 +1,9 @@
-import "./ChatBox.css";
-import {fetchResult} from "../services-react/_api/chat-service";
-import {useState} from "react";
+import React, { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import './ChatBox.css';
+import { fetchResult } from '../services-react/_api/chat-service';
 
-function Chatbox({toggleChatVisibility }) {
+function Chatbox({ toggleChatVisibility }) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
 
@@ -31,21 +32,28 @@ function Chatbox({toggleChatVisibility }) {
     return (
         <div className="chat-container">
             <div className="chat-header">
-                <div className="chat-title">
+                <Typography variant="h6" className="chat-title">
                     <span role="img" aria-label="Chat">💭</span> ChatBot
-                </div>
+                </Typography>
                 <button className="chat-header-close" onClick={toggleChatVisibility}>✖</button>
             </div>
             <div className="messages">
                 {messages.map((msg, index) => (
                     <div key={index} className={`message ${msg.from}`}>
-                        {msg.text}
+                        <Typography variant="body2" className="message-text">
+                            {msg.text}
+                        </Typography>
                     </div>
                 ))}
             </div>
             <div className="input-container">
-                <input type="text" value={input} onKeyPress={handleKeyPress} onChange={(e) => setInput(e.target.value)}
-                       placeholder="Type your message..."/>
+                <input
+                    type="text"
+                    value={input}
+                    onKeyPress={handleKeyPress}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Type your message..."
+                />
                 <button onClick={handleSend}>↑</button>
             </div>
         </div>

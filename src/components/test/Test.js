@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import Typography from '@mui/material/Typography';
 import './Test.css';
 import { fetchQuestion, fetchResult } from "../services-react/_api/test-service";
 
@@ -19,7 +20,7 @@ function Test() {
 
     const fetchQuestions = async () => {
         try {
-            const Ids = Id(3);
+            const Ids = generateIds(3);
             const responses = await Promise.all(Ids.map(id => fetchQuestion(id)));
             const data = responses.map((response, index) => ({
                 id: Ids[index],
@@ -28,11 +29,11 @@ function Test() {
             }));
             setQuestions(data);
         } catch (error) {
-            console.error('Error fetching QandA:', error);
+            console.error('Error fetching questions:', error);
         }
     };
 
-    const Id = (count) => {
+    const generateIds = (count) => {
         const ids = [];
         while (ids.length < count) {
             const randomId = Math.floor(Math.random() * 3) + 1;
@@ -41,10 +42,10 @@ function Test() {
         return ids;
     };
 
-    const handleUsersAnswer = (index, value) => {
-        const updatedQandA = [...Questions];
-        updatedQandA[index].userAnswer = value;
-        setQuestions(updatedQandA);
+    const handleUserAnswer = (index, value) => {
+        const updatedQuestions = [...Questions];
+        updatedQuestions[index].userAnswer = value;
+        setQuestions(updatedQuestions);
     };
 
     const handleSubmit = async (e) => {
@@ -61,29 +62,49 @@ function Test() {
 
     return (
         <div className="test-container">
-            <h2>Operačné systémy</h2>
+            <Typography variant="h4" gutterBottom>
+                Operačné systémy
+            </Typography>
 
             <Form onSubmit={handleSubmit}>
                 {Questions.map((questionData, index) => (
                     <div key={index} className="question-container">
                         <div className="question">
                             <Form.Group controlId={`question${index + 1}`}>
-                                <Form.Label>{questionData.question}</Form.Label>
+                                <Form.Label>
+                                    <Typography variant="h6">{questionData.question}</Typography>
+                                </Form.Label>
                             </Form.Group>
                         </div>
                         <Form.Group controlId={`answer${index + 1}`}>
-                            <Form.Control as="textarea" rows={3} value={questionData.userAnswer} onChange={(e) => handleUsersAnswer(index, e.target.value)} placeholder="Zadaj odpoveď"/>
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                value={questionData.userAnswer}
+                                onChange={(e) => handleUserAnswer(index, e.target.value)}
+                                placeholder="Zadaj odpoveď"
+                            />
                         </Form.Group>
                         {results.length > 0 && (
                             <div className="result-container">
-                                <p className="result-label">Result:</p>
-                                <p className="result-value">{results[index].data} / 1</p>
+                                <Typography variant="body2" className="result-label">
+                                    Result:
+                                </Typography>
+                                <Typography variant="body2" className="result-value">
+                                    {results[index].data} / 1
+                                </Typography>
                             </div>
                         )}
                     </div>
                 ))}
                 <div className="submit-container">
-                    <button type="submit" className="submit-button" disabled={!allAnswered}>Submit</button>
+                    <button
+                        type="submit"
+                        className="submit-button"
+                        disabled={!allAnswered}
+                    >
+                        Submit
+                    </button>
                 </div>
             </Form>
         </div>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv } from './file-service';
 import './GeneratedList.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDownload} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { Typography } from "@mui/material";
 
 const GeneratedList = ({ refreshTrigger }) => {
     const [fileList, setFileList] = useState([]);
@@ -54,18 +55,20 @@ const GeneratedList = ({ refreshTrigger }) => {
 
     return (
         <div className="generated-list-container">
-            <h2>Generated CSV Files</h2>
+            <Typography variant="h5" gutterBottom>
+                Generated CSV Files
+            </Typography>
             {loading ? (
-                <p>Loading files...</p>
+                <Typography>Loading files...</Typography>
             ) : error ? (
-                <p className="error">{error}</p>
+                <Typography className="error">{error}</Typography>
             ) : (
                 <div className="file-list">
                     <ul>
                         {fileList.length > 0 ? (
                             fileList.map((file, index) => (
                                 <li key={index} className="file-item">
-                                    <span className="file-name">{file}</span>
+                                    <Typography className="file-name">{file}</Typography>
                                     <div className="button-group">
                                         <button className="action-button" onClick={() => handleDownload(file)}>
                                             <FontAwesomeIcon icon={faDownload} />
@@ -74,7 +77,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                                 </li>
                             ))
                         ) : (
-                            <p>No CSV files found.</p>
+                            <Typography>No CSV files found.</Typography>
                         )}
                     </ul>
                 </div>

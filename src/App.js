@@ -5,6 +5,7 @@ import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
+import Test from "./components/test/Test";
 
 function App() {
     const [showChat, setShowChat] = useState(false);
@@ -30,7 +31,7 @@ function App() {
     return (
         <div className="App">
             <h1>Operating Systems</h1>
-
+            <Test/>
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                           onCsvCreated={handleCsvCreated}/>
