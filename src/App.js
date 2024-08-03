@@ -59,7 +59,7 @@ function App() {
 
             <div className="footer">
                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                    © {new Date().getFullYear()} Miroslav Tvrdoň. All rights reserved.
+                    © {new Date().getFullYear()} Miroslav Tvrdoň. {language === 'en' ? 'All rights reserved.' : 'Všetky práva vyhradené.'}
                 </Typography>
             </div>
         </div>
