@@ -89,9 +89,13 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                        Loading files...
+                    </Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
+                        {error}
+                    </Typography>
                 ) : (
                     <>
                         <div className="file-list">
@@ -99,7 +103,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                 {fileList.length > 0 ? (
                                     fileList.map((file, index) => (
                                         <li key={index}>
-                                            <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
+                                                {file}
+                                            </Typography>
                                             <IconButton aria-label="edit"
                                                         size="small"
                                                         className="icon-button"
@@ -112,7 +118,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                         </li>
                                     ))
                                 ) : (
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"}>No TXT files found.</Typography>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                        No TXT files found.
+                                    </Typography>
                                 )}
                             </ul>
                         </div>
@@ -135,7 +143,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                                 color="error"
                                                 onClick={handleClosePreview}
                                         >
-                                            Close
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                                Close
+                                            </Typography>
                                         </Button>
                                         <Button variant="outlined"
                                                 endIcon={<CreateIcon />}
@@ -144,7 +154,9 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                                 onClick={handleProcess}
                                                 disabled={processing || !selectedFile}
                                         >
-                                            {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                                {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
+                                            </Typography>
                                         </Button>
                                     </div>
                                 </div>

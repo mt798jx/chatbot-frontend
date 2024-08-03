@@ -60,9 +60,13 @@ const GeneratedList = ({ refreshTrigger }) => {
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                        Loading files...
+                    </Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
+                        {error}
+                    </Typography>
                 ) : (
                     <ul className="file-list">
                         {fileList.length > 0 ? (
@@ -81,7 +85,9 @@ const GeneratedList = ({ refreshTrigger }) => {
                                 </li>
                             ))
                         ) : (
-                            <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                No CSV files found.
+                            </Typography>
                         )}
                     </ul>
                 )}

@@ -156,16 +156,22 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             </Typography>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>Loading files...</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                        Loading files...
+                    </Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>{error}</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
+                        {error}
+                    </Typography>
                 ) : (
                     <>
                         <ul>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <li key={index}>
-                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
+                                            {file}
+                                        </Typography>
                                         <div className="button-group">
                                             <IconButton aria-label="edit"
                                                         size="small"
@@ -191,7 +197,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     </li>
                                 ))
                             ) : (
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>No CSV files found.</Typography>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    No CSV files found.
+                                </Typography>
                             )}
                         </ul>
                     </>
@@ -216,7 +224,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     color="error"
                                     onClick={handleClosePreview}
                             >
-                                Close
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    Close
+                                </Typography>
                             </Button>
                             <Button variant="outlined"
                                     endIcon={<PlayArrowIcon />}
@@ -225,7 +235,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     onClick={handleProcess}
                                     disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}
                             >
-                                {processing ? 'Processing...' : 'Process'}
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {processing ? 'Processing...' : 'Process'}
+                                </Typography>
                             </Button>
                         </div>
                     </div>
@@ -250,7 +262,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     color="error"
                                     onClick={handleClosePreviewFinal}
                             >
-                                Close
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    Close
+                                </Typography>
                             </Button>
                             <Button variant="outlined"
                                     endIcon={<PlayArrowIcon />}
@@ -259,7 +273,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                     onClick={handleCreateCsv}
                                     disabled={isCreating}>
                             >
-                                {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
+                                </Typography>
                             </Button>
                         </div>
                     </div>
@@ -284,7 +300,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                                   thickness={4}
                                                   sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
                             </React.Fragment>
-                            <Typography variant={isSmallScreen ? "body2" : "body1"}>Processing file: {processingFile}</Typography>
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                Processing file: {processingFile}
+                            </Typography>
                         </div>
                     </Draggable>
                 </div>
