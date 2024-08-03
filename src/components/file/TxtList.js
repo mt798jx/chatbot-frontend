@@ -112,7 +112,8 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                                         onClick={() => handlePreview(file)}>
                                                 <EditIcon
                                                     color="text.secondary"
-                                                    fontSize={isSmallScreen ? "inherit" : "small"}
+                                                    fontSize="inherit"
+                                                    style={isSmallScreen ? {}: {padding: '1px'}}
                                                 />
                                             </IconButton>
                                         </li>

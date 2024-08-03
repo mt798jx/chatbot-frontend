@@ -12,7 +12,7 @@ function App() {
     {/*const [showChat, setShowChat] = useState(false);*/}
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState('sk');
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     {/*
