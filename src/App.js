@@ -1,6 +1,5 @@
 import './App.css';
 import { useState, useCallback } from "react";
-import FileUpload from "./components/file/FileUpload";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
@@ -9,18 +8,16 @@ import {useMediaQuery} from "@mui/material";
 import './components/file/_universal_style/File.css';
 
 function App() {
-    const [showChat, setShowChat] = useState(false);
+    {/*const [showChat, setShowChat] = useState(false);*/}
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
+    {/*
     const toggleChatVisibility = () => {
         setShowChat(!showChat);
     };
-
-    const handleUploadSuccess = () => {
-        setFileListRefreshTrigger(prev => !prev);
-    };
+    */}
 
     const handleProcessingComplete = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
@@ -38,7 +35,6 @@ function App() {
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                           onCsvCreated={handleCsvCreated}/>
-                <FileUpload onUploadSuccess={handleUploadSuccess}/>
                 <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated}/>
                 <GeneratedList refreshTrigger={csvRefreshTrigger}/>
             </div>

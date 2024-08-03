@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "../services-react/_api/file-service";
-import {Button, CircularProgress, IconButton, Typography, useMediaQuery} from "@mui/material";
+import { Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import FileUpload from "./FileUpload";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
     const [fileList, setFileList] = useState([]);
@@ -149,18 +150,25 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
         }
     };
 
+    const handleUploadSuccess = () => {
+        updateFileList();
+    };
+
     return (
         <div className="file-list-container">
-            <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
-                Uploaded CSV Files
-            </Typography>
+            <div className="title-upload-container">
+                <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom className="title">
+                    Uploaded CSV Files
+                </Typography>
+                <FileUpload onUploadSuccess={handleUploadSuccess} className="file-upload"/>
+            </div>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{color: 'warning.main'}}>
                         Loading files...
                     </Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{color: 'error.main'}}>
                         {error}
                     </Typography>
                 ) : (
@@ -209,17 +217,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{fontWeight: 'bold'}}>
                             Preview of {processing ? selectedFileProcessing : selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                                    style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}
                         >
                             {processing ? previewContentProcessing : previewContent}
                         </Typography>
                         <div className="preview-buttons">
                             <Button variant="outlined"
-                                    startIcon={<CloseIcon />}
+                                    startIcon={<CloseIcon/>}
                                     className="icon-button"
                                     color="error"
                                     onClick={handleClosePreview}
@@ -229,7 +237,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                 </Typography>
                             </Button>
                             <Button variant="outlined"
-                                    endIcon={<PlayArrowIcon />}
+                                    endIcon={<PlayArrowIcon/>}
                                     className="icon-button"
                                     color="success"
                                     onClick={handleProcess}
@@ -247,17 +255,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processResults && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{fontWeight: 'bold'}}>
                             Processed Results for {selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+                                    style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}
                         >
                             {processResults}
                         </Typography>
                         <div className="preview-buttons">
                             <Button variant="outlined"
-                                    startIcon={<CloseIcon />}
+                                    startIcon={<CloseIcon/>}
                                     className="icon-button"
                                     color="error"
                                     onClick={handleClosePreviewFinal}
@@ -267,12 +275,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                 </Typography>
                             </Button>
                             <Button variant="outlined"
-                                    endIcon={<PlayArrowIcon />}
+                                    endIcon={<PlayArrowIcon/>}
                                     className="icon-button"
                                     color="success"
                                     onClick={handleCreateCsv}
                                     disabled={isCreating}>
-                            >
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                     {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
                                 </Typography>

@@ -1,3 +1,30 @@
+.title-upload-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    padding-left: 50px;
+}
+
+.file-upload {
+    margin-left: auto;
+}
+
+@media (max-width: 600px) {
+    .title-upload-container {
+        padding-right: 13px;
+    }
+    .title {
+        padding-left: 48px;
+    }
+}
+
 .processing-container {
     position: fixed;
     top: 50%;
