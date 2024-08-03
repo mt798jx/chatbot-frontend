@@ -4,7 +4,7 @@ import './GeneratedList.css';
 import {IconButton, Typography, useMediaQuery} from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 
-const GeneratedList = ({ refreshTrigger }) => {
+const GeneratedList = ({ refreshTrigger, language }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -34,7 +34,10 @@ const GeneratedList = ({ refreshTrigger }) => {
                 method: 'GET',
             });
 
-            if (!response.ok) throw new Error('Failed to fetch file');
+            if (!response.ok) {
+                const errorMessage = language === 'en' ? 'Failed to fetch file' : 'Nepodarilo sa načítať súbor';
+                throw new Error(errorMessage);
+            }
 
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
@@ -46,22 +49,25 @@ const GeneratedList = ({ refreshTrigger }) => {
             link.remove();
             window.URL.revokeObjectURL(url);
 
-            alert(`File "${fileName}" has been successfully downloaded. Check your default downloads folder.`);
-
+            const successMessage = language === 'en'
+                ? `File "${fileName}" has been successfully downloaded. Check your default downloads folder.`
+                : `Súbor "${fileName}" bol úspešne stiahnutý. Skontrolujte svoj predvolený priečinok na sťahovanie.`;
+            alert(successMessage);
         } catch (error) {
-            setError(`Error downloading file: ${error.message}`);
+            const errorDownloadMessage = language === 'en' ? `Error downloading file: ${error.message}` : `Chyba pri sťahovaní súboru: ${error.message}`;
+            setError(errorDownloadMessage);
         }
     };
 
     return (
         <div className="file-list-container">
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
-                Generated CSV Files
+                {language === 'en' ? "Generated CSV Files" : "Výsledné CSV súbory"}
             </Typography>
             <div className="file-list-content">
                 {loading ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
-                        Loading files...
+                        {language === 'en' ? "Loading files..." : "Načítavajú sa súbory..."}
                     </Typography>
                 ) : error ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
@@ -72,7 +78,9 @@ const GeneratedList = ({ refreshTrigger }) => {
                         {fileList.length > 0 ? (
                             fileList.map((file, index) => (
                                 <li key={index}>
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">{file}</Typography>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
+                                        {file}
+                                    </Typography>
                                     <IconButton aria-label="download"
                                                 size="small"
                                                 className="icon-button"
@@ -86,7 +94,7 @@ const GeneratedList = ({ refreshTrigger }) => {
                             ))
                         ) : (
                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                No CSV files found.
+                                {language === 'en' ? "No CSV files found" : "Nenašli sa žiadne súbory CSV"}
                             </Typography>
                         )}
                     </ul>
