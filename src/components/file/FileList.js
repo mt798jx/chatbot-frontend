@@ -186,8 +186,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                                         className="icon-button"
                                                         onClick={() => handlePreview(file)}>
                                                 <EditIcon
-                                                    color="primary"
-                                                    fontSize={isSmallScreen ? "inherit" : "small"}
+                                                    color="text.secondary"
+                                                    fontSize="inherit"
                                                 />
                                             </IconButton>
                                             <IconButton aria-label="delete"

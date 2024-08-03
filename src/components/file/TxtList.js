@@ -111,7 +111,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                                         className="icon-button"
                                                         onClick={() => handlePreview(file)}>
                                                 <EditIcon
-                                                    color="primary"
+                                                    color="text.secondary"
                                                     fontSize={isSmallScreen ? "inherit" : "small"}
                                                 />
                                             </IconButton>

@@ -46,7 +46,7 @@
 
 .button-group {
     display: flex;
-    gap: 10px;
+    gap: 1em;
 }
 
 .preview-modal {
