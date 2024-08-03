@@ -6,6 +6,7 @@ import GeneratedList from "./components/file/GeneratedList";
 import Typography from '@mui/material/Typography';
 import {useMediaQuery} from "@mui/material";
 import './components/file/_universal_style/File.css';
+import FlagSwitcher from "./components/file/FlagSwitcher";
 
 function App() {
     {/*const [showChat, setShowChat] = useState(false);*/}
@@ -32,6 +33,7 @@ function App() {
             <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
                 Operating Systems
             </Typography>
+            <FlagSwitcher/>
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                           onCsvCreated={handleCsvCreated}/>
