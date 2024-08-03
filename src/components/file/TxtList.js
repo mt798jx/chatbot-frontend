@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from '../services-react/_api/file-service';
 import './TxtList.css';
-import {Button, IconButton, Typography, useMediaQuery} from '@mui/material';
+import { Button, IconButton, Typography, useMediaQuery } from '@mui/material';
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from '@mui/icons-material/Create';
 
-const TxtList = ({ refreshTrigger, onCsvCreated }) => {
+const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -42,10 +42,10 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                 setSelectedFile(fileName);
                 setPreviewContent(content);
             } else {
-                setError('Failed to fetch file preview');
+                setError(language === 'en' ? 'Failed to fetch file preview' : 'Nepodarilo sa získať náhľad súboru');
             }
         } catch (error) {
-            setError('Error fetching file preview');
+            setError(language === 'en' ? 'Error fetching file preview' : 'Chyba pri načítaní náhľadu súboru');
         }
     };
 
@@ -70,13 +70,13 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                 setCsvCreated(true);
                 const baseName = selectedFile.substring(0, selectedFile.lastIndexOf('.'));
                 onCsvCreated();
-                alert(`CSV file created: ${baseName}.csv`);
+                alert(language === 'en' ? `CSV file created: ${baseName}.csv` : `CSV súbor vytvorený: ${baseName}.csv`);
                 handleClosePreview();
             } else {
-                setError('Failed to create CSV file');
+                setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');
             }
         } catch (error) {
-            setError('Error creating CSV file');
+            setError(language === 'en' ? 'Error creating CSV file' : 'Chyba pri vytváraní CSV súboru');
         } finally {
             setProcessing(false);
         }
@@ -85,12 +85,12 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
     return (
         <div className="file-list-container">
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
-                Created TXT Files
+                {language === 'en' ? 'Created TXT Files' : 'Vytvorené TXT súbory'}
             </Typography>
             <div className="file-list-content">
                 {loading ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
-                        Loading files...
+                        {language === 'en' ? 'Loading files...' : 'Načítavajú sa súbory...'}
                     </Typography>
                 ) : error ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
@@ -119,7 +119,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                     ))
                                 ) : (
                                     <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                        No TXT files found.
+                                        {language === 'en' ? 'No TXT files found.' : 'Nenašli sa žiadne TXT súbory.'}
                                     </Typography>
                                 )}
                             </ul>
@@ -129,7 +129,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                             <div className="preview-modal">
                                 <div className="preview-content">
                                     <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
-                                        Preview of {selectedFile}
+                                        {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFile}
                                     </Typography>
                                     <Typography variant={isSmallScreen ? "body2" : "body1"}
                                                 style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
@@ -144,7 +144,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                                 onClick={handleClosePreview}
                                         >
                                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                                Close
+                                                {language === 'en' ? 'Close' : 'Zavrieť'}
                                             </Typography>
                                         </Button>
                                         <Button variant="outlined"
@@ -155,7 +155,11 @@ const TxtList = ({ refreshTrigger, onCsvCreated }) => {
                                                 disabled={processing || !selectedFile}
                                         >
                                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                                {processing ? 'Creating CSV...' : (csvCreated ? 'CSV Created' : 'Create CSV')}
+                                                {processing
+                                                    ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...')
+                                                    : (csvCreated
+                                                        ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené')
+                                                        : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
                                             </Typography>
                                         </Button>
                                     </div>
