@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FileUpload from "./FileUpload";
 
-const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
+const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -51,13 +51,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                 method: 'DELETE',
             });
             if (response.ok) {
-                alert(`File deleted successfully: ${fileName}`);
+                alert(language === 'en' ? `File deleted successfully: ${fileName}` : `Súbor bol úspešne odstránený: ${fileName}`);
                 updateFileList();
             } else {
-                setError('Failed to delete file');
+                setError(language === 'en' ? 'Failed to delete file' : 'Nepodarilo sa odstrániť súbor');
             }
         } catch (error) {
-            setError('Error deleting file');
+            setError(language === 'en' ? 'Error deleting file' : 'Chyba pri odstraňovaní súboru');
         }
     };
 
@@ -77,10 +77,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                     setPreviewContentProcessing(content);
                 }
             } else {
-                setError('Failed to fetch file preview');
+                setError(language === 'en' ? 'Failed to fetch file preview' : 'Nepodarilo sa načítať náhľad súboru');
             }
         } catch (error) {
-            setError('Error fetching file preview');
+            setError(language === 'en' ? 'Error fetching file preview' : 'Chyba pri načítaní náhľadu súboru');
         }
     };
 
@@ -116,10 +116,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                 setProcessResults(content);
                 onProcessingComplete();
             } else {
-                setError('Failed to process file');
+                setError(language === 'en' ? 'Failed to process file' : 'Nepodarilo sa spracovať súbor');
             }
         } catch (error) {
-            setError('Error processing file');
+            setError(language === 'en' ? 'Error processing file' : 'Chyba pri spracovaní súboru');
         } finally {
             setProcessing(false);
         }
@@ -138,13 +138,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             if (response.ok) {
                 setCsvCreated(true);
                 onCsvCreated();
-                alert(`CSV file created: ${baseName}`);
+                alert(language === 'en' ? `CSV file created: ${baseName}` : `CSV súbor vytvorený: ${baseName}`);
                 handleClosePreviewFinal();
             } else {
-                setError('Failed to create CSV file');
+                setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');
             }
         } catch (error) {
-            setError('Error creating CSV file');
+            setError(language === 'en' ? 'Error creating CSV file' : 'Chyba pri vytváraní CSV súboru');
         } finally {
             setIsCreating(false);
         }
@@ -158,17 +158,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
         <div className="file-list-container">
             <div className="title-upload-container">
                 <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom className="title">
-                    Uploaded CSV Files
+                    {language === 'en' ? 'Uploaded CSV Files' : 'Nahrané CSV súbory'}
                 </Typography>
-                <FileUpload onUploadSuccess={handleUploadSuccess} className="file-upload"/>
+                <FileUpload onUploadSuccess={handleUploadSuccess} className="file-upload" language={language} />
             </div>
             <div className="file-list-content">
                 {loading ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{color: 'warning.main'}}>
-                        Loading files...
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                        {language === 'en' ? 'Loading files...' : 'Načítavajú sa súbory...'}
                     </Typography>
                 ) : error ? (
-                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{color: 'error.main'}}>
+                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
                         {error}
                     </Typography>
                 ) : (
@@ -206,7 +206,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                 ))
                             ) : (
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    No CSV files found.
+                                    {language === 'en' ? 'No CSV files found.' : 'Nenašli sa žiadne CSV súbory.'}
                                 </Typography>
                             )}
                         </ul>
@@ -217,34 +217,34 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{fontWeight: 'bold'}}>
-                            Preview of {processing ? selectedFileProcessing : selectedFile}
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                            {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {processing ? selectedFileProcessing : selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                    style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}
+                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                         >
                             {processing ? previewContentProcessing : previewContent}
                         </Typography>
                         <div className="preview-buttons">
                             <Button variant="outlined"
-                                    startIcon={<CloseIcon/>}
+                                    startIcon={<CloseIcon />}
                                     className="icon-button"
                                     color="error"
                                     onClick={handleClosePreview}
                             >
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    Close
+                                    {language === 'en' ? 'Close' : 'Zavrieť'}
                                 </Typography>
                             </Button>
                             <Button variant="outlined"
-                                    endIcon={<PlayArrowIcon/>}
+                                    endIcon={<PlayArrowIcon />}
                                     className="icon-button"
                                     color="success"
                                     onClick={handleProcess}
                                     disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}
                             >
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    {processing ? 'Processing...' : 'Process'}
+                                    {processing ? (language === 'en' ? 'Processing...' : 'Spracováva sa...') : (language === 'en' ? 'Process' : 'Spracovať')}
                                 </Typography>
                             </Button>
                         </div>
@@ -255,33 +255,33 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
             {processResults && (
                 <div className="preview-modal">
                     <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{fontWeight: 'bold'}}>
-                            Processed Results for {selectedFile}
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                            {language === 'en' ? 'Processed Results for' : 'Spracované výsledky pre'} {selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                    style={{whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}
+                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                         >
                             {processResults}
                         </Typography>
                         <div className="preview-buttons">
                             <Button variant="outlined"
-                                    startIcon={<CloseIcon/>}
+                                    startIcon={<CloseIcon />}
                                     className="icon-button"
                                     color="error"
                                     onClick={handleClosePreviewFinal}
                             >
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    Close
+                                    {language === 'en' ? 'Close' : 'Zavrieť'}
                                 </Typography>
                             </Button>
                             <Button variant="outlined"
-                                    endIcon={<PlayArrowIcon/>}
+                                    endIcon={<PlayArrowIcon />}
                                     className="icon-button"
                                     color="success"
                                     onClick={handleCreateCsv}
                                     disabled={isCreating}>
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    {isCreating ? 'Creating CSV...' : csvCreated ? 'CSV Created' : 'Create CSV'}
+                                    {isCreating ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...') : csvCreated ? (language === 'en' ? 'CSV Created' : 'CSV Vytvorené') : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV')}
                                 </Typography>
                             </Button>
                         </div>
@@ -297,18 +297,18 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated }) => {
                                 <svg width={0} height={0}>
                                     <defs>
                                         <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" stopColor="#e01cd5"/>
-                                            <stop offset="100%" stopColor="#1CB5E0"/>
+                                            <stop offset="0%" stopColor="#e01cd5" />
+                                            <stop offset="100%" stopColor="#1CB5E0" />
                                         </linearGradient>
                                     </defs>
                                 </svg>
                                 <CircularProgress disableShrink
                                                   size={55}
                                                   thickness={4}
-                                                  sx={{'svg circle': {stroke: 'url(#my_gradient)'}}}/>
+                                                  sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
                             </React.Fragment>
                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                Processing file: {processingFile}
+                                {language === 'en' ? 'Processing file:' : 'Spracováva sa súbor:'} {processingFile}
                             </Typography>
                         </div>
                     </Draggable>
