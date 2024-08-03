@@ -1,10 +1,9 @@
+import React, { useState } from "react";
 import Flag from 'react-world-flags';
-import {IconButton, Menu, MenuItem, Typography, useMediaQuery} from "@mui/material";
-import React, {useState} from "react";
+import { IconButton, Menu, MenuItem, Typography, useMediaQuery } from "@mui/material";
 
-const FlagSwitcher = () => {
+const FlagSwitcher = ({ language, setLanguage }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [language, setLanguage] = useState('en');
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const handleClick = (event) => {

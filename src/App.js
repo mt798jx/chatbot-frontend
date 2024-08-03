@@ -4,7 +4,7 @@ import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
 import Typography from '@mui/material/Typography';
-import {useMediaQuery} from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import './components/file/_universal_style/File.css';
 import FlagSwitcher from "./components/file/FlagSwitcher";
 
@@ -12,6 +12,7 @@ function App() {
     {/*const [showChat, setShowChat] = useState(false);*/}
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
+    const [language, setLanguage] = useState('en');
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     {/*
@@ -31,14 +32,14 @@ function App() {
     return (
         <div className="App">
             <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
-                Operating Systems
+                {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
             </Typography>
-            <FlagSwitcher/>
+            <FlagSwitcher language={language} setLanguage={setLanguage} />
             <div className="content">
                 <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
-                          onCsvCreated={handleCsvCreated}/>
-                <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated}/>
-                <GeneratedList refreshTrigger={csvRefreshTrigger}/>
+                          onCsvCreated={handleCsvCreated} language={language} />
+                <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
+                <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} />
             </div>
 
             {/*
