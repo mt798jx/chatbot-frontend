@@ -3,7 +3,7 @@ import { IconButton, styled, useMediaQuery } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import './FileUpload.css';
 
-const FileUpload = ({ onUploadSuccess }) => {
+const FileUpload = ({ onUploadSuccess, language }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const VisuallyHiddenInput = styled('input')({
@@ -31,15 +31,22 @@ const FileUpload = ({ onUploadSuccess }) => {
                 });
 
                 if (response.ok) {
-                    const result = await response.text();
-                    alert(result);
+                    const successMessage = language === 'en'
+                        ? `File "${file.name}" has been successfully uploaded.`
+                        : `Súbor "${file.name}" bol úspešne nahraný.`;
+                    alert(successMessage);
                     if (onUploadSuccess) onUploadSuccess();
                 } else {
-                    const errorText = await response.text();
-                    alert(`File upload failed: ${errorText}`);
+                    const failureMessage = language === 'en'
+                        ? "File upload failed."
+                        : "Nahrávanie súboru zlyhalo.";
+                    alert(failureMessage);
                 }
             } catch (error) {
-                alert('Error uploading file');
+                const errorMessage = language === 'en'
+                    ? 'Error uploading file.'
+                    : 'Chyba pri nahrávaní súboru.';
+                alert(errorMessage);
             }
         }
     };
