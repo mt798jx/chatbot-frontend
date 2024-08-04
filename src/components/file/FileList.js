@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "../services-react/_api/file-service";
-import { Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -155,14 +155,35 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     };
 
     return (
-        <div className="file-list-container">
+        <Box
+            sx={{
+                margin: 2,
+                padding: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 1,
+                backgroundColor: 'background.paper',
+                boxShadow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                maxHeight: 250,
+                overflow: 'hidden'
+            }}
+        >
             <div className="title-upload-container">
                 <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom className="title">
                     {language === 'en' ? 'Uploaded CSV Files' : 'Nahrané CSV súbory'}
                 </Typography>
                 <FileUpload onUploadSuccess={handleUploadSuccess} className="file-upload" language={language} />
             </div>
-            <div className="file-list-content">
+            <Box
+                sx={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    maxHeight: 200,
+                    paddingRight: 2
+                }}
+            >
                 {loading ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
                         {language === 'en' ? 'Loading files...' : 'Načítavajú sa súbory...'}
@@ -173,46 +194,47 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </Typography>
                 ) : (
                     <>
-                        <ul>
+                        <Box component="ul" sx={{ listStyle: 'none', padding: 0, margin: 0 }}>
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
-                                    <li key={index}>
-                                        <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
+                                    <Box
+                                        component="li"
+                                        key={index}
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            paddingY: 1,
+                                            borderBottom: '1px solid',
+                                            borderColor: 'divider',
+                                            backgroundColor: 'background.paper'
+                                        }}
+                                    >
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ flexGrow: 1, textAlign: 'left', marginRight: 1 }}>
                                             {file}
                                         </Typography>
                                         <div className="button-group">
-                                            <IconButton aria-label="edit"
-                                                        size="small"
-                                                        className="icon-button"
-                                                        onClick={() => handlePreview(file)}>
-                                                <EditIcon
-                                                    color="text.secondary"
-                                                    fontSize="inherit"
-                                                />
+                                            <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
+                                                <EditIcon color="text.secondary" fontSize="inherit" sx={isSmallScreen ? {} : { padding: '1px' }}/>
                                             </IconButton>
-                                            <IconButton aria-label="delete"
-                                                        size="small"
-                                                        className="icon-button"
+                                            <IconButton aria-label="delete" size="small"
                                                         onClick={() => handleDelete(file)}
                                                         disabled={processing && file === processingFile}
                                             >
-                                                <DeleteForeverIcon
-                                                    color="error"
-                                                    fontSize={isSmallScreen ? "inherit" : "small"}
-                                                />
+                                                <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
                                             </IconButton>
                                         </div>
-                                    </li>
+                                    </Box>
                                 ))
                             ) : (
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                     {language === 'en' ? 'No CSV files found.' : 'Nenašli sa žiadne CSV súbory.'}
                                 </Typography>
                             )}
-                        </ul>
+                        </Box>
                     </>
                 )}
-            </div>
+            </Box>
 
             {(previewContent || previewContentProcessing) && (
                 <div className="preview-modal">
@@ -314,7 +336,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </Draggable>
                 </div>
             )}
-        </div>
+        </Box>
     );
 };
 
