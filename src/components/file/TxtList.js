@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTxt } from '../services-react/_api/file-service';
-import './TxtList.css';
-import { Button, IconButton, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Typography, useMediaQuery } from '@mui/material';
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateIcon from '@mui/icons-material/Create';
@@ -83,11 +82,32 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
     };
 
     return (
-        <div className="file-list-container">
+        <Box
+            sx={{
+                margin: 2,
+                padding: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 1,
+                backgroundColor: 'background.paper',
+                boxShadow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                maxHeight: 250,
+                overflow: 'hidden'
+            }}
+        >
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 {language === 'en' ? 'Created TXT Files' : 'Vytvorené TXT súbory'}
             </Typography>
-            <div className="file-list-content">
+            <Box
+                sx={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    maxHeight: 200,
+                    paddingRight: 2
+                }}
+            >
                 {loading ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
                         {language === 'en' ? 'Loading files...' : 'Načítavajú sa súbory...'}
@@ -98,80 +118,86 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                     </Typography>
                 ) : (
                     <>
-                        <div className="file-list">
-                            <ul>
-                                {fileList.length > 0 ? (
-                                    fileList.map((file, index) => (
-                                        <li key={index}>
-                                            <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
-                                                {file}
-                                            </Typography>
-                                            <IconButton aria-label="edit"
-                                                        size="small"
-                                                        className="icon-button"
-                                                        onClick={() => handlePreview(file)}>
-                                                <EditIcon
-                                                    color="text.secondary"
-                                                    fontSize="inherit"
-                                                    style={isSmallScreen ? {}: {padding: '1px'}}
-                                                />
-                                            </IconButton>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                        {language === 'en' ? 'No TXT files found.' : 'Nenašli sa žiadne TXT súbory.'}
-                                    </Typography>
-                                )}
-                            </ul>
-                        </div>
+                        <Box component="ul" sx={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                            {fileList.length > 0 ? (
+                                fileList.map((file, index) => (
+                                    <Box
+                                        component="li"
+                                        key={index}
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            paddingY: 1,
+                                            borderBottom: '1px solid',
+                                            borderColor: 'divider',
+                                            backgroundColor: 'background.paper'
+                                        }}
+                                    >
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ flexGrow: 1, textAlign: 'left', marginRight: 1 }}>
+                                            {file}
+                                        </Typography>
+                                        <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
+                                            <EditIcon color="text.secondary" fontSize="inherit" sx={isSmallScreen ? {} : { padding: '1px' }} />
+                                        </IconButton>
+                                    </Box>
+                                ))
+                            ) : (
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {language === 'en' ? 'No TXT files found.' : 'Nenašli sa žiadne TXT súbory.'}
+                                </Typography>
+                            )}
+                        </Box>
 
                         {previewContent && (
-                            <div className="preview-modal">
-                                <div className="preview-content">
+                            <Box sx={{
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                zIndex: 1000
+                            }}>
+                                <Box sx={{
+                                    backgroundColor: 'background.paper',
+                                    padding: 2,
+                                    borderRadius: 1,
+                                    maxWidth: '80%',
+                                    maxHeight: '80%',
+                                    overflowY: 'auto',
+                                    boxShadow: 3,
+                                    textAlign: 'left'
+                                }}>
                                     <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                                         {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFile}
                                     </Typography>
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                                style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-                                    >
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                                         {previewContent}
                                     </Typography>
-                                    <div className="preview-buttons">
-                                        <Button variant="outlined"
-                                                startIcon={<CloseIcon />}
-                                                className="icon-button"
-                                                color="error"
-                                                onClick={handleClosePreview}
-                                        >
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                        <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreview}>
                                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                                 {language === 'en' ? 'Close' : 'Zavrieť'}
                                             </Typography>
                                         </Button>
-                                        <Button variant="outlined"
-                                                endIcon={<CreateIcon />}
-                                                className="icon-button"
-                                                color="success"
-                                                onClick={handleProcess}
-                                                disabled={processing || !selectedFile}
-                                        >
+                                        <Button variant="outlined" endIcon={<CreateIcon />} color="success" onClick={handleProcess} disabled={processing || !selectedFile}>
                                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                                {processing
-                                                    ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...')
-                                                    : (csvCreated
-                                                        ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené')
-                                                        : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
+                                                {processing ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...') : (csvCreated ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené') : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
                                             </Typography>
                                         </Button>
-                                    </div>
-                                </div>
-                            </div>
+                                    </Box>
+                                </Box>
+                            </Box>
                         )}
                     </>
                 )}
-            </div>
-        </div>
-    );
+            </Box>
+        </Box>
+    )
 };
 
 export default TxtList;
