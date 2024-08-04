@@ -155,62 +155,62 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                 </Typography>
                             )}
                         </Box>
-
-                        {previewContent && (
-                            <Box
-                                sx={{
-                                    position: 'fixed',
-                                    top: 0,
-                                    left: 0,
-                                    width: '100%',
-                                    height: '100%',
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    zIndex: 1000
-                                }}>
-                                <Box
-                                    sx={{
-                                        backgroundColor: 'background.paper',
-                                        padding: 2,
-                                        borderRadius: 1,
-                                        maxWidth: '80%',
-                                        maxHeight: '80%',
-                                        overflowY: 'auto',
-                                        boxShadow: 3,
-                                        textAlign: 'left'
-                                    }}>
-                                    <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
-                                        {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFile}
-                                    </Typography>
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                                        {previewContent}
-                                    </Typography>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            marginTop: 2
-                                        }}
-                                    >
-                                        <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreview}>
-                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                                {language === 'en' ? 'Close' : 'Zavrieť'}
-                                            </Typography>
-                                        </Button>
-                                        <Button variant="outlined" endIcon={<CreateIcon />} color="success" onClick={handleProcess} disabled={processing || !selectedFile}>
-                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                                {processing ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...') : (csvCreated ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené') : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
-                                            </Typography>
-                                        </Button>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        )}
                     </>
                 )}
             </Box>
+
+            {previewContent && (
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}>
+                    <Box
+                        sx={{
+                            backgroundColor: 'background.paper',
+                            padding: 2,
+                            borderRadius: 1,
+                            maxWidth: '90%',
+                            maxHeight: '90%',
+                            overflowY: 'auto',
+                            boxShadow: 3,
+                            textAlign: 'left'
+                        }}>
+                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                            {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFile}
+                        </Typography>
+                        <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                            {previewContent}
+                        </Typography>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                marginTop: 2
+                            }}
+                        >
+                            <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreview}>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {language === 'en' ? 'Close' : 'Zavrieť'}
+                                </Typography>
+                            </Button>
+                            <Button variant="outlined" endIcon={<CreateIcon />} color="success" onClick={handleProcess} disabled={processing || !selectedFile}>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {processing ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...') : (csvCreated ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené') : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
+                                </Typography>
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            )}
         </Box>
     )
 };

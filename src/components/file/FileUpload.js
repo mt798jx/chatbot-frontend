@@ -1,7 +1,6 @@
 import React from 'react';
 import { IconButton, styled, useMediaQuery } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import './FileUpload.css';
 
 const FileUpload = ({ onUploadSuccess, language }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
