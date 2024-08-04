@@ -28,33 +28,6 @@ html, body {
   margin-bottom: 0;
 }
 
-.chat-toggle-button {
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: white;
-  font-size: 36px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.chat-toggle-button:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.1);
-}
-
-.chat-toggle-button:focus {
-  outline: none;
-}
-
 .footer {
   text-align: center;
   padding: 15px 0;

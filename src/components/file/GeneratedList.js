@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv } from '../services-react/_api/file-service';
-import './GeneratedList.css';
-import {IconButton, Typography, useMediaQuery} from "@mui/material";
+import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 
 const GeneratedList = ({ refreshTrigger, language }) => {
@@ -60,11 +59,32 @@ const GeneratedList = ({ refreshTrigger, language }) => {
     };
 
     return (
-        <div className="file-list-container">
+        <Box
+            sx={{
+                margin: 2,
+                padding: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 1,
+                backgroundColor: 'background.paper',
+                boxShadow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                maxHeight: 250,
+                overflow: 'hidden'
+            }}
+        >
             <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                 {language === 'en' ? "Generated CSV Files" : "Výsledné CSV súbory"}
             </Typography>
-            <div className="file-list-content">
+            <Box
+                sx={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    maxHeight: 200,
+                    paddingRight: 2
+                }}
+            >
                 {loading ? (
                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
                         {language === 'en' ? "Loading files..." : "Načítavajú sa súbory..."}
@@ -74,33 +94,39 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                         {error}
                     </Typography>
                 ) : (
-                    <ul className="file-list">
+                    <Box component="ul" sx={{ listStyle: 'none', padding: 0, margin: 0 }}>
                         {fileList.length > 0 ? (
                             fileList.map((file, index) => (
-                                <li key={index}>
-                                    <Typography variant={isSmallScreen ? "body2" : "body1"} className="file-name">
+                                <Box
+                                    component="li"
+                                    key={index}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        paddingY: 1,
+                                        borderBottom: '1px solid',
+                                        borderColor: 'divider',
+                                        backgroundColor: 'background.paper'
+                                    }}
+                                >
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ flexGrow: 1, textAlign: 'left', marginRight: 1 }}>
                                         {file}
                                     </Typography>
-                                    <IconButton aria-label="download"
-                                                size="small"
-                                                className="icon-button"
-                                                onClick={() => handleDownload(file)}>
-                                        <DownloadIcon
-                                            color="success"
-                                            fontSize={isSmallScreen ? "inherit" : "small"}
-                                        />
+                                    <IconButton aria-label="download" size="small" onClick={() => handleDownload(file)}>
+                                        <DownloadIcon color="success" fontSize={isSmallScreen ? "inherit" : "small"} />
                                     </IconButton>
-                                </li>
+                                </Box>
                             ))
                         ) : (
                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                 {language === 'en' ? "No CSV files found" : "Nenašli sa žiadne súbory CSV"}
                             </Typography>
                         )}
-                    </ul>
+                    </Box>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }
 
