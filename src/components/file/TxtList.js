@@ -144,8 +144,8 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                         <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ flexGrow: 1, textAlign: 'left', marginRight: 1 }}>
                                             {file}
                                         </Typography>
-                                        <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
-                                            <EditIcon color="text.secondary" fontSize="inherit" sx={isSmallScreen ? {} : { padding: '1px' }} />
+                                        <IconButton aria-label="edit" size="small" sx={isSmallScreen ? {} : { padding: '6px' }} onClick={() => handlePreview(file)}>
+                                            <EditIcon color="text.secondary" fontSize="inherit"/>
                                         </IconButton>
                                     </Box>
                                 ))

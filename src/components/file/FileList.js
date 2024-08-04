@@ -215,7 +215,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                         </Typography>
                                         <div className="button-group">
                                             <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
-                                                <EditIcon color="text.secondary" fontSize="inherit" sx={isSmallScreen ? {} : { padding: '1px' }}/>
+                                                <EditIcon color="text.secondary" fontSize="inherit"/>
                                             </IconButton>
                                             <IconButton aria-label="delete" size="small" onClick={() => handleDelete(file)} disabled={processing && file === processingFile}>
                                                 <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
