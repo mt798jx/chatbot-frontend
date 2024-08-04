@@ -354,6 +354,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             fontWeight: 'bold',
                                             border: '1px solid #dddddd',
                                             gap: '0.5em',
+                                            zIndex: 1100
                                         }}
                                     >
                                         <React.Fragment>
