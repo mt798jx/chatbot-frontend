@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTxt } from '../services-react/_api/file-service';
+import { fetchTxt } from './services-react/_api/file-service';
 import { Box, Button, IconButton, Typography, useMediaQuery } from '@mui/material';
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
@@ -136,7 +136,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             paddingY: 1,
-                                            borderBottom: '1px solid',
+                                            borderBottom: index === fileList.length - 1 ? 'none' : '1px solid',
                                             borderColor: 'divider',
                                             backgroundColor: 'background.paper'
                                         }}

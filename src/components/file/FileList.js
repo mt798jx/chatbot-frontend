@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
-import { fetchFiles } from "../services-react/_api/file-service";
+import { fetchFiles } from "./services-react/_api/file-service";
 import { Box, Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -205,7 +205,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             paddingY: 1,
-                                            borderBottom: '1px solid',
+                                            borderBottom: index === fileList.length - 1 ? 'none' : '1px solid',
                                             borderColor: 'divider',
                                             backgroundColor: 'background.paper'
                                         }}

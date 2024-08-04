@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchCsv } from '../services-react/_api/file-service';
+import { fetchCsv } from './services-react/_api/file-service';
 import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 
@@ -105,7 +105,7 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
                                         paddingY: 1,
-                                        borderBottom: '1px solid',
+                                        borderBottom: index === fileList.length - 1 ? 'none' : '1px solid',
                                         borderColor: 'divider',
                                         backgroundColor: 'background.paper'
                                     }}
