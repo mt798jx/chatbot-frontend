@@ -166,7 +166,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 boxShadow: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                maxHeight: 250,
+                maxHeight: 260,
                 overflow: 'hidden'
             }}
         >
@@ -178,6 +178,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             </div>
             <Box
                 sx={{
+                    marginTop: 1,
                     flex: 1,
                     overflowY: 'auto',
                     maxHeight: 200,
