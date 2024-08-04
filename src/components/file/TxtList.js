@@ -118,7 +118,14 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                     </Typography>
                 ) : (
                     <>
-                        <Box component="ul" sx={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                        <Box
+                            component="ul"
+                            sx={{
+                                listStyle: 'none',
+                                padding: 0,
+                                margin: 0
+                            }}
+                        >
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => (
                                     <Box
@@ -150,35 +157,43 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                         </Box>
 
                         {previewContent && (
-                            <Box sx={{
-                                position: 'fixed',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                zIndex: 1000
-                            }}>
-                                <Box sx={{
-                                    backgroundColor: 'background.paper',
-                                    padding: 2,
-                                    borderRadius: 1,
-                                    maxWidth: '80%',
-                                    maxHeight: '80%',
-                                    overflowY: 'auto',
-                                    boxShadow: 3,
-                                    textAlign: 'left'
+                            <Box
+                                sx={{
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    zIndex: 1000
                                 }}>
+                                <Box
+                                    sx={{
+                                        backgroundColor: 'background.paper',
+                                        padding: 2,
+                                        borderRadius: 1,
+                                        maxWidth: '80%',
+                                        maxHeight: '80%',
+                                        overflowY: 'auto',
+                                        boxShadow: 3,
+                                        textAlign: 'left'
+                                    }}>
                                     <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
                                         {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFile}
                                     </Typography>
                                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                                         {previewContent}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            marginTop: 2
+                                        }}
+                                    >
                                         <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreview}>
                                             <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                                 {language === 'en' ? 'Close' : 'Zavrieť'}

@@ -217,10 +217,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
                                                 <EditIcon color="text.secondary" fontSize="inherit" sx={isSmallScreen ? {} : { padding: '1px' }}/>
                                             </IconButton>
-                                            <IconButton aria-label="delete" size="small"
-                                                        onClick={() => handleDelete(file)}
-                                                        disabled={processing && file === processingFile}
-                                            >
+                                            <IconButton aria-label="delete" size="small" onClick={() => handleDelete(file)} disabled={processing && file === processingFile}>
                                                 <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
                                             </IconButton>
                                         </div>
@@ -232,47 +229,58 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                 </Typography>
                             )}
                         </Box>
+
+                        {(previewContent || previewContentProcessing) && (
+                            <Box
+                                sx={{
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    zIndex: 1000
+                                }}>
+                                <Box
+                                    sx={{
+                                        backgroundColor: 'background.paper',
+                                        padding: 2,
+                                        borderRadius: 1,
+                                        maxWidth: '80%',
+                                        maxHeight: '80%',
+                                        overflowY: 'auto',
+                                        boxShadow: 3,
+                                        textAlign: 'left'
+                                    }}>
+                                    <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
+                                        {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {processing ? selectedFileProcessing : selectedFile}
+                                    </Typography>
+                                    <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                                        {processing ? previewContentProcessing : previewContent}
+                                    </Typography>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                        <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreview}>
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                                {language === 'en' ? 'Close' : 'Zavrieť'}
+                                            </Typography>
+                                        </Button>
+                                        <Button variant="outlined" endIcon={<PlayArrowIcon />} color="success" onClick={handleProcess} disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
+                                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                                {processing ? (language === 'en' ? 'Processing...' : 'Spracováva sa...') : (language === 'en' ? 'Process' : 'Spracovať')}
+                                            </Typography>
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        )}
+
+                        
                     </>
                 )}
             </Box>
-
-            {(previewContent || previewContentProcessing) && (
-                <div className="preview-modal">
-                    <div className="preview-content">
-                        <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold' }}>
-                            {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {processing ? selectedFileProcessing : selectedFile}
-                        </Typography>
-                        <Typography variant={isSmallScreen ? "body2" : "body1"}
-                                    style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-                        >
-                            {processing ? previewContentProcessing : previewContent}
-                        </Typography>
-                        <div className="preview-buttons">
-                            <Button variant="outlined"
-                                    startIcon={<CloseIcon />}
-                                    className="icon-button"
-                                    color="error"
-                                    onClick={handleClosePreview}
-                            >
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    {language === 'en' ? 'Close' : 'Zavrieť'}
-                                </Typography>
-                            </Button>
-                            <Button variant="outlined"
-                                    endIcon={<PlayArrowIcon />}
-                                    className="icon-button"
-                                    color="success"
-                                    onClick={handleProcess}
-                                    disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}
-                            >
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                    {processing ? (language === 'en' ? 'Processing...' : 'Spracováva sa...') : (language === 'en' ? 'Process' : 'Spracovať')}
-                                </Typography>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {processResults && (
                 <div className="preview-modal">
