@@ -42,7 +42,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Box className="App">
+            <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
                 <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                 </Typography>
