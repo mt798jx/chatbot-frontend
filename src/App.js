@@ -2,12 +2,13 @@ import './App.css';
 import { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Switch from '@mui/material/Switch';
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery, IconButton, Tooltip } from "@mui/material";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
 import FlagSwitcher from "./components/file/FlagSwitcher";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -34,6 +35,10 @@ function App() {
         },
     });
 
+    const tooltipTitle = language === 'en'
+        ? (darkMode ? 'Dark mode' : 'Light mode')
+        : (darkMode ? 'Tmavý režim' : 'Svetlý režim');
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -42,7 +47,13 @@ function App() {
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                 </Typography>
                 <FlagSwitcher language={language} setLanguage={setLanguage} />
-                <Switch checked={darkMode} onChange={handleDarkModeToggle} />
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <Tooltip title={tooltipTitle}>
+                        <IconButton onClick={handleDarkModeToggle} color="inherit">
+                            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton>
+                    </Tooltip>
+                </Box>
                 <div className="content">
                     <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                               onCsvCreated={handleCsvCreated} language={language} />

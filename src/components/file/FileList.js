@@ -324,35 +324,64 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                             </Box>
                         )}
 
+                        {processing && (
+                            <Box
+                                sx={{
+                                    position: 'fixed',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    zIndex: 1000,
+                                }}
+                            >
+                                <Draggable>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            backgroundColor: '#ffffff',
+                                            color: '#333333',
+                                            padding: '20px',
+                                            borderRadius: '12px',
+                                            boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
+                                            textAlign: 'center',
+                                            fontSize: '18px',
+                                            fontWeight: 'bold',
+                                            border: '1px solid #dddddd',
+                                            gap: '0.5em',
+                                        }}
+                                    >
+                                        <React.Fragment>
+                                            <svg width={0} height={0}>
+                                                <defs>
+                                                    <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                        <stop offset="0%" stopColor="#e01cd5" />
+                                                        <stop offset="100%" stopColor="#1CB5E0" />
+                                                    </linearGradient>
+                                                </defs>
+                                            </svg>
+                                            <CircularProgress
+                                                disableShrink
+                                                size={55}
+                                                thickness={4}
+                                                sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }}
+                                            />
+                                        </React.Fragment>
+                                        <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                            {language === 'en' ? 'Processing file:' : 'Spracováva sa súbor:'} {processingFile}
+                                        </Typography>
+                                    </Box>
+                                </Draggable>
+                            </Box>
+                        )}
                     </>
                 )}
             </Box>
-
-            {processing && (
-                <div className="processing-container">
-                    <Draggable>
-                        <div className="processing-indicator">
-                            <React.Fragment>
-                                <svg width={0} height={0}>
-                                    <defs>
-                                        <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" stopColor="#e01cd5" />
-                                            <stop offset="100%" stopColor="#1CB5E0" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                                <CircularProgress disableShrink
-                                                  size={55}
-                                                  thickness={4}
-                                                  sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
-                            </React.Fragment>
-                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                                {language === 'en' ? 'Processing file:' : 'Spracováva sa súbor:'} {processingFile}
-                            </Typography>
-                        </div>
-                    </Draggable>
-                </div>
-            )}
         </Box>
     );
 };

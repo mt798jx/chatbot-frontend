@@ -52,7 +52,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
     };
 
     return (
-        <div>
+        <>
             <IconButton aria-label="upload"
                         component="label"
                         size={isSmallScreen ? "small" : "medium"}
@@ -63,7 +63,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                     fontSize={isSmallScreen ? "small" : "medium"}
                 />
             </IconButton>
-        </div>
+        </>
     );
 };
 
