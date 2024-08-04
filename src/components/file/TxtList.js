@@ -135,7 +135,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                             display: 'flex',
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
-                                            paddingY: 1,
+                                            paddingY: 0.8,
                                             borderBottom: index === fileList.length - 1 ? 'none' : '1px solid',
                                             borderColor: 'divider',
                                             backgroundColor: 'background.paper'
