@@ -19,6 +19,7 @@ function App() {
 
     const handleProcessingComplete = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
+        setCsvRefreshTrigger(prev => !prev);
     }, []);
 
     const handleCsvCreated = useCallback(() => {
