@@ -55,8 +55,7 @@ function App() {
                     </Tooltip>
                 </Box>
                 <div className="content">
-                    <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
-                              onCsvCreated={handleCsvCreated} language={language} />
+                    <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated} language={language} />
                     <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
                     <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} />
                 </div>
