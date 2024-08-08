@@ -19,7 +19,6 @@ function App() {
 
     const handleProcessingComplete = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
-        setCsvRefreshTrigger(prev => !prev);
     }, []);
 
     const handleCsvCreated = useCallback(() => {
@@ -59,7 +58,7 @@ function App() {
                     <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                               onCsvCreated={handleCsvCreated} language={language} />
                     <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
-                    <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} />
+                    <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} onCsvCreated={handleCsvCreated}/>
                 </div>
                 <div className="footer">
                     <Typography variant={isSmallScreen ? "body2" : "body1"}>
