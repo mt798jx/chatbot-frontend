@@ -90,7 +90,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     };
 
     const handleClosePreviewFinal = () => {
-        onCsvCreated();
         setPreviewContent(null);
         setPreviewContentProcessing(null);
         setSelectedFile('');
@@ -136,8 +135,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             const baseName = selectedFile.replace('.csv', '-results.txt');
             const response = await fetch(`https://147.232.205.178:8443/create?fileName=${baseName}`);
             if (response.ok) {
-                setCsvCreated(true);
                 onCsvCreated();
+                setCsvCreated(true);
                 alert(language === 'en' ? `CSV file created: ${baseName}` : `CSV súbor vytvorený: ${baseName}`);
             } else {
                 setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');

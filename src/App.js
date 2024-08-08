@@ -57,7 +57,7 @@ function App() {
                 <div className="content">
                     <FileList onProcessingComplete={handleProcessingComplete} refreshTrigger={fileListRefreshTrigger}
                               onCsvCreated={handleCsvCreated} language={language} />
-                    <TxtList refreshTrigger={csvRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
+                    <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
                     <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} />
                 </div>
                 <div className="footer">
