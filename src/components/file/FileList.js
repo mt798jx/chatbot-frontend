@@ -139,7 +139,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 setCsvCreated(true);
                 onCsvCreated();
                 alert(language === 'en' ? `CSV file created: ${baseName}` : `CSV súbor vytvorený: ${baseName}`);
-                handleClosePreviewFinal();
             } else {
                 setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');
             }
@@ -147,6 +146,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             setError(language === 'en' ? 'Error creating CSV file' : 'Chyba pri vytváraní CSV súboru');
         } finally {
             setIsCreating(false);
+            handleClosePreviewFinal();
         }
     };
 
