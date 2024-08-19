@@ -217,7 +217,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
                                                 <EditIcon color="text.secondary" fontSize="inherit"/>
                                             </IconButton>
-                                            <IconButton aria-label="delete" size="small" onClick={() => handleDelete(file)} disabled={processing && file === processingFile}>
+                                            <IconButton
+                                                aria-label="delete"
+                                                size="small"
+                                                onClick={() => handleDelete(file)}
+                                                disabled={processing && file === processingFile}>
+                                                sx={{
+                                                    opacity: 1,
+                                                    "&.Mui-disabled": {
+                                                        opacity: 0.6,
+                                                    },
+                                                }}
                                                 <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
                                             </IconButton>
                                         </div>
