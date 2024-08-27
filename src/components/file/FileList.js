@@ -222,9 +222,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                 size="small"
                                                 onClick={() => handleDelete(file)}
                                                 disabled={processing && file === processingFile}>
-                                                sx={{
-                                                    opacity: (processing && file === processingFile) ? 0.6 : 1,
-                                                }}
                                                 <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
                                             </IconButton>
                                         </div>
