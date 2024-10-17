@@ -16,7 +16,7 @@ const MultipleScoreComparisonCharts = ({ language }) => {
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
                     const formattedData = formatComparisonData(comparisonData);
-                    return { fileName, data: formattedData };
+                    return { fileName: fileName.replace('-results.csv', ''), data: formattedData }; // Remove '-results.csv'
                 });
 
                 const allFileData = await Promise.all(fileDataPromises);
