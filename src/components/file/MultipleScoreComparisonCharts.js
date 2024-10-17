@@ -45,6 +45,7 @@ export default function ChartsOverviewDemo() {
                                         { data: data.map((d) => d.count) },
                                     ]}
                                     height={290}
+                                    width={400}
                                     xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
                                     margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
                                 />
