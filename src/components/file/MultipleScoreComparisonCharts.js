@@ -2,10 +2,13 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 export default function ChartsOverviewDemo() {
     const [fileData, setFileData] = useState([]);
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Check if it's a small screen
 
     useEffect(() => {
         const fetchFilesAndData = async () => {
@@ -47,7 +50,6 @@ export default function ChartsOverviewDemo() {
         fetchFilesAndData();
     }, []);
 
-
     return (
         <Box sx={{ padding: 4 }}>
             <Grid container spacing={3}>
@@ -63,9 +65,10 @@ export default function ChartsOverviewDemo() {
                                         { data: data?.map((d) => d.count || 0) || [] },
                                     ]}
                                     xAxis={[{ data: data?.map((d) => d.range || 'Unknown') || [], scaleType: 'band' }]}
-                                    height={400}
-                                    width={400}
-                                    margin={{ top: 20, bottom: 40, left: 50, right: 20 }}
+                                    height={isSmallScreen ? 300 : 400}
+                                    width={isSmallScreen ? 300 : 800}
+                                    barWidth={isSmallScreen ? 10 : 30}
+                                    margin={{ top: 20, bottom: isSmallScreen ? 20 : 40, left: 50, right: 20 }}
                                 />
                             </CardContent>
                         </Card>
