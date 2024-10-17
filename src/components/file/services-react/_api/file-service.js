@@ -37,9 +37,11 @@ export const fetchCsv = async () => {
     }
 };
 
-export const fetchComparisonData = async (fileName, resultFileName) => {
+export const fetchComparisonData = async () => {
     try {
-        const url = `https://147.232.205.178:8443/compare-scores?fileName=${fileName}&resultFileName=${resultFileName}`;
+        // Replace this with your hardcoded test URL or mock data for testing
+        const url = `https://147.232.205.178:8443/compare-scores`;  // Simplified to use without any fileName
+
         const response = await fetch(url);
         if (response.ok) {
             return await response.json();
