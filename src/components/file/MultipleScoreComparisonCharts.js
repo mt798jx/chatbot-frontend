@@ -2,12 +2,10 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
-import { Box, Grid, Typography, Card, CardContent, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
 
 export default function ChartsOverviewDemo() {
     const [fileData, setFileData] = useState([]);
-    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     useEffect(() => {
         const fetchFilesAndData = async () => {
@@ -64,10 +62,10 @@ export default function ChartsOverviewDemo() {
                                         { data: data?.map((d) => d.count || 0) || [] },
                                     ]}
                                     xAxis={[{ data: data?.map((d) => d.range || 'Unknown') || [], scaleType: 'band' }]}
-                                    height={isSmallScreen ? 300 : 400}
-                                    width={isSmallScreen ? 300 : 800}
-                                    barWidth={isSmallScreen ? 8 : 15}
-                                    margin={{ top: 20, bottom: isSmallScreen ? 20 : 40, left: 50, right: 20 }}
+                                    height={400}       // Fixed height for good readability
+                                    width={600}        // Fixed width suitable for both desktop and mobile
+                                    barWidth={12}      // Balanced bar width for better clarity
+                                    margin={{ top: 20, bottom: 40, left: 50, right: 20 }} // Optimal margins for both large and small screens
                                 />
                             </CardContent>
                         </Card>
