@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContaine
 import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
 import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
 
-const MultipleScoreComparisonCharts = ({ language }) => {
+const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
     const [fileData, setFileData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -30,7 +30,7 @@ const MultipleScoreComparisonCharts = ({ language }) => {
         };
 
         fetchFilesAndData();
-    }, []);
+    }, [refreshTrigger]);
 
     const formatComparisonData = (comparisonData) => {
         return Object.keys(comparisonData.uploadsScoreDistribution).map((range) => ({
