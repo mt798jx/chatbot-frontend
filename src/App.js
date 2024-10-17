@@ -68,7 +68,7 @@ function App() {
                     <Typography variant="h5" sx={{mb: 3}}>
                         {language === 'en' ? "Comparison Charts for CSV Files" : "Porovnávacie grafy pre súbory CSV"}
                     </Typography>
-                    <MultipleScoreComparisonCharts language={language} onCsvCreated={handleCsvCreated}/>
+                    <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
                 </div>
 
                 <div className="footer">
