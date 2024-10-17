@@ -34,21 +34,23 @@ export default function ChartsOverviewDemo() {
         <Box sx={{ padding: 4 }}>
             <Grid container spacing={3}>
                 {fileData.map(({ fileName, data }) => (
-                    <Grid item xs={12} md={6} lg={4} key={fileName}>
-                        <Card>
-                            <CardContent>
+                    <Grid item xs={12} md={6} lg={4} key={fileName}>  {/* Responsive grid item */}
+                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>  {/* Stretch the card */}
+                            <CardContent sx={{ flexGrow: 1 }}>  {/* Ensure the content grows */}
                                 <Typography variant="h6" gutterBottom>
                                     Comparison for {fileName}
                                 </Typography>
-                                <BarChart
-                                    series={[
-                                        { data: data.map((d) => d.count) },
-                                    ]}
-                                    height={290}
-                                    width={400}
-                                    xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
-                                    margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-                                />
+                                <Box sx={{ width: '100%', height: '100%' }}>  {/* Ensure the chart takes full width */}
+                                    <BarChart
+                                        series={[
+                                            { data: data.map((d) => d.count) },
+                                        ]}
+                                        height={290}  // Height of the chart
+                                        xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
+                                        margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+                                        width="100%"  // Allow chart to take full width of parent
+                                    />
+                                </Box>
                             </CardContent>
                         </Card>
                     </Grid>
