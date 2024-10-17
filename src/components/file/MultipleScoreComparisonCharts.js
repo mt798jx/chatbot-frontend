@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
+import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';  // Import the services
 import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
 
 export default function ChartsOverviewDemo() {
@@ -11,33 +11,16 @@ export default function ChartsOverviewDemo() {
         const fetchFilesAndData = async () => {
             try {
                 const files = await fetchCsv();
-                console.log('Files fetched:', files);
-
-                if (!files || files.length === 0) {
-                    console.error("No files found");
-                    return;
-                }
-
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
-                    console.log(`Data for ${fileName}:`, comparisonData);
-
-                    if (!comparisonData || typeof comparisonData !== 'object') {
-                        console.error(`Invalid data for file: ${fileName}`);
-                        return { fileName, data: [] };
-                    }
-
                     const formattedData = Object.keys(comparisonData).map((range) => ({
                         range,
-                        count: comparisonData[range] || 0,
+                        count: comparisonData[range],
                     }));
-                    console.log(`Formatted data for ${fileName}:`, formattedData);
-
                     return { fileName, data: formattedData };
                 });
 
                 const allFileData = await Promise.all(fileDataPromises);
-                console.log("All file data:", allFileData);
                 setFileData(allFileData);
             } catch (error) {
                 console.error('Error fetching files or comparison data', error);
@@ -51,7 +34,7 @@ export default function ChartsOverviewDemo() {
         <Box sx={{ padding: 4 }}>
             <Grid container spacing={3}>
                 {fileData.map(({ fileName, data }) => (
-                    <Grid item xs={12} md={12} lg={8} key={fileName}>
+                    <Grid item xs={12} md={6} lg={4} key={fileName}>
                         <Card>
                             <CardContent>
                                 <Typography variant="h6" gutterBottom>
@@ -59,13 +42,11 @@ export default function ChartsOverviewDemo() {
                                 </Typography>
                                 <BarChart
                                     series={[
-                                        { data: data?.map((d) => d.count || 0) || [] },
+                                        { data: data.map((d) => d.count) },
                                     ]}
-                                    xAxis={[{ data: data?.map((d) => d.range || 'Unknown') || [], scaleType: 'band' }]}
-                                    height={400}       // Fixed height for good readability
-                                    width={600}        // Fixed width suitable for both desktop and mobile
-                                    barWidth={12}      // Balanced bar width for better clarity
-                                    margin={{ top: 20, bottom: 40, left: 50, right: 20 }} // Optimal margins for both large and small screens
+                                    height={290}
+                                    xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
+                                    margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
                                 />
                             </CardContent>
                         </Card>
