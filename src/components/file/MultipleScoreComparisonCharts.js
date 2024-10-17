@@ -29,8 +29,10 @@ export default function ChartsOverviewDemo() {
 
                     const formattedData = Object.keys(comparisonData).map((range) => ({
                         range,
-                        count: comparisonData[range],
+                        count: comparisonData[range] || 0,
                     }));
+                    console.log(`Formatted data for ${fileName}:`, formattedData);
+
                     return { fileName, data: formattedData };
                 });
 
@@ -45,11 +47,12 @@ export default function ChartsOverviewDemo() {
         fetchFilesAndData();
     }, []);
 
+
     return (
         <Box sx={{ padding: 4 }}>
             <Grid container spacing={3}>
                 {fileData.map(({ fileName, data }) => (
-                    <Grid item xs={12} md={6} lg={4} key={fileName}>
+                    <Grid item xs={12} md={12} lg={8} key={fileName}>
                         <Card>
                             <CardContent>
                                 <Typography variant="h6" gutterBottom>
@@ -57,11 +60,12 @@ export default function ChartsOverviewDemo() {
                                 </Typography>
                                 <BarChart
                                     series={[
-                                        { data: data?.map((d) => d.count) || [] },
+                                        { data: data?.map((d) => d.count || 0) || [] },
                                     ]}
-                                    xAxis={[{ data: data?.map((d) => d.range) || [], scaleType: 'band' }]}
-                                    height={290}
-                                    margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+                                    xAxis={[{ data: data?.map((d) => d.range || 'Unknown') || [], scaleType: 'band' }]}
+                                    height={400}
+                                    width={400}
+                                    margin={{ top: 20, bottom: 40, left: 50, right: 20 }}
                                 />
                             </CardContent>
                         </Card>
