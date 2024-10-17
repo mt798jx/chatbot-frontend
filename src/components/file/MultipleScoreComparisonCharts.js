@@ -46,7 +46,6 @@ const MultipleScoreComparisonCharts = ({ language }) => {
             boxShadow: 1,
             display: 'flex',
             flexDirection: 'column',
-            maxHeight: 260,
             overflow: 'hidden'
         }}>
             {loading ? (
@@ -59,18 +58,7 @@ const MultipleScoreComparisonCharts = ({ language }) => {
                 </Typography>
             ) : (
                 fileData.map(({ fileName, data }) => (
-                    <Paper
-                        key={fileName}
-                        elevation={3}
-                        sx={{
-                            margin: 2,
-                            padding: 2,
-                            borderRadius: 1,
-                            backgroundColor: 'background.paper',
-                            boxShadow: 1,
-                            width: '100%',
-                        }}
-                    >
+                    <Paper>
                         <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
