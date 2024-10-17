@@ -37,18 +37,18 @@ export const fetchCsv = async () => {
     }
 };
 
-export const fetchComparisonData = async () => {
+export const fetchComparisonData = async (fileName) => {
     try {
-        // Replace this with your hardcoded test URL or mock data for testing
-        const url = `https://147.232.205.178:8443/compare-scores`;  // Simplified to use without any fileName
+        // Use the fileName as part of the request URL
+        const url = `https://147.232.205.178:8443/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
         if (response.ok) {
             return await response.json();
         } else {
-            throw new Error('Failed to fetch comparison data');
+            throw new Error(`Failed to fetch comparison data for file: ${fileName}`);
         }
     } catch (error) {
-        throw new Error('Error fetching comparison data');
+        throw new Error(`Error fetching comparison data for file: ${fileName}`);
     }
 };
