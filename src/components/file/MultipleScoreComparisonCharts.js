@@ -7,8 +7,7 @@ import { useTheme } from '@mui/material/styles';
 
 export default function ChartsOverviewDemo() {
     const [fileData, setFileData] = useState([]);
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Check if it's a small screen
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     useEffect(() => {
         const fetchFilesAndData = async () => {
