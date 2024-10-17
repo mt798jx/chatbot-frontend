@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';  // Import the services
+import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
 import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
 
 export default function ChartsOverviewDemo() {
@@ -11,8 +11,22 @@ export default function ChartsOverviewDemo() {
         const fetchFilesAndData = async () => {
             try {
                 const files = await fetchCsv();
+                console.log('Files fetched:', files);
+
+                if (!files || files.length === 0) {
+                    console.error("No files found");
+                    return;
+                }
+
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
+                    console.log(`Data for ${fileName}:`, comparisonData);
+
+                    if (!comparisonData || typeof comparisonData !== 'object') {
+                        console.error(`Invalid data for file: ${fileName}`);
+                        return { fileName, data: [] };
+                    }
+
                     const formattedData = Object.keys(comparisonData).map((range) => ({
                         range,
                         count: comparisonData[range],
@@ -21,6 +35,7 @@ export default function ChartsOverviewDemo() {
                 });
 
                 const allFileData = await Promise.all(fileDataPromises);
+                console.log("All file data:", allFileData);
                 setFileData(allFileData);
             } catch (error) {
                 console.error('Error fetching files or comparison data', error);
@@ -42,10 +57,10 @@ export default function ChartsOverviewDemo() {
                                 </Typography>
                                 <BarChart
                                     series={[
-                                        { data: data.map((d) => d.count) },
+                                        { data: data?.map((d) => d.count) || [] },
                                     ]}
+                                    xAxis={[{ data: data?.map((d) => d.range) || [], scaleType: 'band' }]}
                                     height={290}
-                                    xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
                                     margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
                                 />
                             </CardContent>
