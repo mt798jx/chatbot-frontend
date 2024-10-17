@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from "recharts";
 import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';
 import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
 
@@ -15,10 +15,7 @@ const MultipleScoreComparisonCharts = ({ language }) => {
                 const files = await fetchCsv();
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
-                    const formattedData = Object.keys(comparisonData).map((range) => ({
-                        range,
-                        count: comparisonData[range],
-                    }));
+                    const formattedData = formatComparisonData(comparisonData);
                     return { fileName, data: formattedData };
                 });
 
@@ -34,6 +31,14 @@ const MultipleScoreComparisonCharts = ({ language }) => {
 
         fetchFilesAndData();
     }, []);
+
+    const formatComparisonData = (comparisonData) => {
+        return Object.keys(comparisonData.uploadsScoreDistribution).map((range) => ({
+            range,
+            uploads: comparisonData.uploadsScoreDistribution[range],
+            results: comparisonData.resultsScoreDistribution[range],
+        }));
+    };
 
     return (
         <Box sx={{
@@ -58,18 +63,20 @@ const MultipleScoreComparisonCharts = ({ language }) => {
                 </Typography>
             ) : (
                 fileData.map(({ fileName, data }) => (
-                    <Paper>
+                    <Paper sx={{ marginBottom: 2, padding: 2 }} key={fileName}>
                         <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
                         <Box sx={{ width: '100%', height: 400, marginTop: 2 }}>
-                            <ResponsiveContainer width="100%" height={400}>  {/* Full width */}
+                            <ResponsiveContainer width="100%" height={400}>
                                 <BarChart data={data}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="range" />
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="count" fill="#8884d8" />
+                                    <Legend />
+                                    <Bar dataKey="uploads" fill="#8884d8" name={language === 'en' ? "Uploads" : "Nahrané"} />
+                                    <Bar dataKey="results" fill="#82ca9d" name={language === 'en' ? "Results" : "Výsledky"} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </Box>
