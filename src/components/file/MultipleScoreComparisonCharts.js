@@ -67,7 +67,7 @@ export default function ChartsOverviewDemo() {
                                     xAxis={[{ data: data?.map((d) => d.range || 'Unknown') || [], scaleType: 'band' }]}
                                     height={isSmallScreen ? 300 : 400}
                                     width={isSmallScreen ? 300 : 800}
-                                    barWidth={isSmallScreen ? 10 : 30}
+                                    barWidth={isSmallScreen ? 8 : 15}
                                     margin={{ top: 20, bottom: isSmallScreen ? 20 : 40, left: 50, right: 20 }}
                                 />
                             </CardContent>
