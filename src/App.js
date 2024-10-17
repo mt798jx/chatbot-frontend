@@ -9,6 +9,7 @@ import GeneratedList from "./components/file/GeneratedList";
 import FlagSwitcher from "./components/file/FlagSwitcher";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -43,25 +44,37 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
-                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
+                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{fontWeight: 'regular'}} gutterBottom
+                            className="header">
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                 </Typography>
-                <FlagSwitcher language={language} setLanguage={setLanguage} />
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <FlagSwitcher language={language} setLanguage={setLanguage}/>
+                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
                     <Tooltip title={tooltipTitle}>
                         <IconButton onClick={handleDarkModeToggle} color="inherit">
-                            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                            {darkMode ? <Brightness7Icon/> : <Brightness4Icon/>}
                         </IconButton>
                     </Tooltip>
                 </Box>
                 <div className="content">
-                    <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated} language={language} />
-                    <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated} language={language} />
-                    <GeneratedList refreshTrigger={csvRefreshTrigger} language={language} />
+                    <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated}
+                              language={language}/>
+                    <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}
+                             language={language}/>
+                    <GeneratedList refreshTrigger={csvRefreshTrigger} language={language}/>
                 </div>
+
+                <div className="content">
+                    <Typography variant="h5" sx={{mb: 3}}>
+                        {language === 'en' ? "Comparison Charts for CSV Files" : "Porovnávacie grafy pre súbory CSV"}
+                    </Typography>
+                    <MultipleScoreComparisonCharts/>
+                </div>
+
                 <div className="footer">
                     <Typography variant={isSmallScreen ? "body2" : "body1"}>
-                        © {new Date().getFullYear()} Miroslav Tvrdoň. {language === 'en' ? 'All rights reserved.' : 'Všetky práva vyhradené.'}
+                        © {new Date().getFullYear()} Miroslav
+                        Tvrdoň. {language === 'en' ? 'All rights reserved.' : 'Všetky práva vyhradené.'}
                     </Typography>
                 </div>
             </Box>

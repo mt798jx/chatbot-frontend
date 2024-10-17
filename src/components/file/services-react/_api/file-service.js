@@ -36,3 +36,17 @@ export const fetchCsv = async () => {
         throw new Error('Error fetching file list');
     }
 };
+
+export const fetchComparisonData = async (fileName, resultFileName) => {
+    try {
+        const url = `https://147.232.205.178:8443/compare-scores?fileName=${fileName}&resultFileName=${resultFileName}`;
+        const response = await fetch(url);
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Failed to fetch comparison data');
+        }
+    } catch (error) {
+        throw new Error('Error fetching comparison data');
+    }
+};
