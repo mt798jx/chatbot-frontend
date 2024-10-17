@@ -1,10 +1,8 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { BarChart } from '@mui/x-charts/BarChart';
-import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service';  // Import the services
-import { Box, Grid, Typography, Card, CardContent } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import { fetchCsv, fetchComparisonData } from './services-react/_api/file-service'; 
 
-export default function ChartsOverviewDemo() {
+const MultipleScoreComparisonCharts = () => {
     const [fileData, setFileData] = useState([]);
 
     useEffect(() => {
@@ -23,7 +21,7 @@ export default function ChartsOverviewDemo() {
                 const allFileData = await Promise.all(fileDataPromises);
                 setFileData(allFileData);
             } catch (error) {
-                console.error('Error fetching files or comparison data', error);
+                console.error("Error fetching files or comparison data", error);
             }
         };
 
@@ -31,31 +29,23 @@ export default function ChartsOverviewDemo() {
     }, []);
 
     return (
-        <Box sx={{ padding: 4 }}>
-            <Grid container spacing={3}>
-                {fileData.map(({ fileName, data }) => (
-                    <Grid item xs={12} md={6} lg={4} key={fileName}>  {/* Responsive grid item */}
-                        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>  {/* Stretch the card */}
-                            <CardContent sx={{ flexGrow: 1 }}>  {/* Ensure the content grows */}
-                                <Typography variant="h6" gutterBottom>
-                                    Comparison for {fileName}
-                                </Typography>
-                                <Box sx={{ width: '100%', height: '100%' }}>  {/* Ensure the chart takes full width */}
-                                    <BarChart
-                                        series={[
-                                            { data: data.map((d) => d.count) },
-                                        ]}
-                                        height={290}  // Height of the chart
-                                        xAxis={[{ data: data.map((d) => d.range), scaleType: 'band' }]}
-                                        margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
-                                        width="100%"  // Allow chart to take full width of parent
-                                    />
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
-        </Box>
+        <div>
+            {fileData.map(({ fileName, data }) => (
+                <div key={fileName} style={{ marginBottom: "50px" }}>
+                    <h3>Comparison for {fileName}</h3>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="range" />
+                            <YAxis />
+                            <Tooltip />
+                            <Bar dataKey="count" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            ))}
+        </div>
     );
-}
+};
+
+export default MultipleScoreComparisonCharts;
