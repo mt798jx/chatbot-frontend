@@ -60,8 +60,8 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                         <Typography variant={isSmallScreen ? "body2" : "body1"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
-                        <Box sx={{ width: '100%', height: 400 }}>
-                            <ResponsiveContainer width="100%" height={400}>
+                        <Box sx={{ width: '100%', height: 300 }}>
+                            <ResponsiveContainer width="100%" height={300}>
                                 <BarChart data={data}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="range" />
