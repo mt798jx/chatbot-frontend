@@ -48,12 +48,11 @@ html, body {
 }
 
 .graph-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   width: 90%;
-  margin: 0 auto;
-  padding: 20px;
+  gap: 20px;
 }
 
 @media (max-width: 1024px) {
@@ -65,5 +64,12 @@ html, body {
 @media (max-width: 768px) {
   .graph-container {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .graph-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
