@@ -70,7 +70,7 @@ function App() {
 
                 <div className="graph-container">
                     <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
-                        {language === 'en' ? "Comparison Charts for CSV Files" : "Porovnávacie grafy pre súbory CSV"}
+                        {language === 'en' ? "Comparison Charts" : "Porovnávacie grafy"}
                     </Typography>
                     <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
                 </div>
