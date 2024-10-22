@@ -53,8 +53,9 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
                             GeminiAI
                         </Button>
                     </Box>
+
                 </DialogContent>
-                
+
                 <DialogActions sx={{ justifyContent: 'center' }}>
                     <Button onClick={handleClose} color="error">
                         {language === 'en' ? 'Cancel' : 'Zrušiť'}

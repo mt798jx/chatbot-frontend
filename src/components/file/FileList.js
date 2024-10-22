@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "./services-react/_api/file-service";
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FileUpload from "./FileUpload";
+import ConfirmationDialog from "../ConfirmationDialog";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language }) => {
     const [fileList, setFileList] = useState([]);
