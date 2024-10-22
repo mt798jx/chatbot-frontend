@@ -16,11 +16,8 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
 
-                    if (!comparisonData ||
-                        !comparisonData.uploadsScoreDistribution ||
-                        !comparisonData.resultsScoreDistribution) {
+                    if (!comparisonData || !comparisonData.uploadsScoreDistribution || !comparisonData.resultsScoreDistribution)
                         return null;
-                    }
 
                     const formattedData = formatComparisonData(comparisonData);
                     return { fileName: fileName.replace('-results.csv', ''), data: formattedData };
@@ -60,7 +57,7 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
             ) : (
                 fileData.map(({ fileName, data }) => (
                     <Paper sx={{ padding: 2 }} key={fileName}>
-                        <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
+                        <Typography variant={isSmallScreen ? "body2" : "body1"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
                         <Box sx={{ width: '100%', height: 400 }}>
