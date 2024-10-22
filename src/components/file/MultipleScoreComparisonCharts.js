@@ -15,11 +15,18 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 const files = await fetchCsv();
                 const fileDataPromises = files.map(async (fileName) => {
                     const comparisonData = await fetchComparisonData(fileName);
+
+                    if (!comparisonData ||
+                        !comparisonData.uploadsScoreDistribution ||
+                        !comparisonData.resultsScoreDistribution) {
+                        return null;
+                    }
+
                     const formattedData = formatComparisonData(comparisonData);
-                    return { fileName: fileName.replace('-results.csv', ''), data: formattedData }; // Remove '-results.csv'
+                    return { fileName: fileName.replace('-results.csv', ''), data: formattedData };
                 });
 
-                const allFileData = await Promise.all(fileDataPromises);
+                const allFileData = (await Promise.all(fileDataPromises)).filter(data => data !== null);
                 setFileData(allFileData);
                 setError('');
             } catch (error) {
