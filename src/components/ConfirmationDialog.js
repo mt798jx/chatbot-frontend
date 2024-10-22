@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography, Dialog, DialogActions, DialogContent, DialogTitle, useMediaQuery, IconButton } from "@mui/material";
+import { Box, Button, Typography, Dialog, DialogContent, DialogTitle, useMediaQuery, IconButton } from "@mui/material";
 import ChatIcon from '@mui/icons-material/Chat';
 import MemoryIcon from '@mui/icons-material/Memory';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,7 +10,6 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
             <Box sx={{ position: 'relative', padding: 2 }}>
-                {/* Close Button */}
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
@@ -55,12 +54,6 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
                     </Box>
 
                 </DialogContent>
-
-                <DialogActions sx={{ justifyContent: 'center' }}>
-                    <Button onClick={handleClose} color="error">
-                        {language === 'en' ? 'Cancel' : 'Zrušiť'}
-                    </Button>
-                </DialogActions>
             </Box>
         </Dialog>
     );
