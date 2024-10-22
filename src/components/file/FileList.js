@@ -314,25 +314,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Box>
             )}
 
-            <Dialog open={confirmOpen} onClose={handleCloseConfirm}>
-                <DialogTitle>{language === 'en' ? 'Process File Using' : 'Spracovať súbor pomocou'}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {language === 'en' ? 'Choose the AI system to process this file.' : 'Vyberte systém AI pre spracovanie tohto súboru.'}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleProcessChatGPT} color="primary">
-                        {language === 'en' ? 'ChatGPT' : 'ChatGPT'}
-                    </Button>
-                    <Button onClick={handleProcessGemini} color="success">
-                        {language === 'en' ? 'GeminiAI' : 'GeminiAI'}
-                    </Button>
-                    <Button onClick={handleCloseConfirm} color="error">
-                        {language === 'en' ? 'Cancel' : 'Zrušiť'}
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ConfirmationDialog open={confirmOpen} handleClose={handleCloseConfirm}
+                                handleProcessChatGPT={handleProcessChatGPT}
+                                handleProcessGemini={handleProcessGemini}
+                                language={language}/>
 
             {processResults && (
                 <Box
