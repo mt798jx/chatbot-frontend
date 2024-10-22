@@ -103,6 +103,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     };
 
     const handleProcessChatGPT = async () => {
+        setConfirmOpen(false);
         if (processing) return;
         setProcessing(true);
         setProcessingFile(selectedFileProcessing);
@@ -124,6 +125,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     };
 
     const handleProcessGemini = async () => {
+        setConfirmOpen(false);
         if (processing) return;
         setProcessing(true);
         setProcessingFile(selectedFileProcessing);
