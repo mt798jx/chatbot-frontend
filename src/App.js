@@ -30,6 +30,10 @@ function App() {
         setDarkMode(prev => !prev);
     };
 
+    const handleFileDeleted = useCallback(() => {
+        setCsvRefreshTrigger(prev => !prev);
+    }, []);
+
     const theme = createTheme({
         palette: {
             mode: darkMode ? 'dark' : 'light',
@@ -58,7 +62,7 @@ function App() {
 
                 <div className="content">
                     <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated}
-                              language={language}/>
+                              language={language} onFileDeleted={handleFileDeleted}/>
                     <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}
                              language={language}/>
                     <GeneratedList refreshTrigger={csvRefreshTrigger} language={language}/>

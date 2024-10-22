@@ -10,7 +10,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FileUpload from "./FileUpload";
 import ConfirmationDialog from "../ConfirmationDialog";
 
-const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language }) => {
+const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -55,6 +55,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             if (response.ok) {
                 alert(language === 'en' ? `File deleted successfully: ${fileName}` : `Súbor bol úspešne odstránený: ${fileName}`);
                 updateFileList();
+                if (onFileDeleted) {
+                    onFileDeleted();
+                }
             } else {
                 setError(language === 'en' ? 'Failed to delete file' : 'Nepodarilo sa odstrániť súbor');
             }
