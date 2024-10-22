@@ -185,6 +185,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
 
     const handleUploadSuccess = () => {
         updateFileList();
+        if (onCsvCreated) {
+            onCsvCreated();
+        }
     };
 
     return (
