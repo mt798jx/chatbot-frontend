@@ -44,8 +44,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
-                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{fontWeight: 'regular'}} gutterBottom
-                            className="header">
+                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{fontWeight: 'regular'}} gutterBottom className="header">
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                 </Typography>
                 <FlagSwitcher language={language} setLanguage={setLanguage}/>
@@ -56,6 +55,7 @@ function App() {
                         </IconButton>
                     </Tooltip>
                 </Box>
+
                 <div className="content">
                     <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated}
                               language={language}/>
@@ -64,16 +64,12 @@ function App() {
                     <GeneratedList refreshTrigger={csvRefreshTrigger} language={language}/>
                 </div>
 
-                <div className="graph-section">
+                <div className="graph-container">
                     <Typography variant="h5" sx={{mb: 3}}>
                         {language === 'en' ? "Comparison Charts for CSV Files" : "Porovnávacie grafy pre súbory CSV"}
                     </Typography>
-                    <div className="graph-container">
-                        <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
-                        {/* Ak máte ďalšie grafy, môžete ich tu pridať */}
-                    </div>
+                    <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
                 </div>
-
 
                 <div className="footer">
                     <Typography variant={isSmallScreen ? "body2" : "body1"}>
