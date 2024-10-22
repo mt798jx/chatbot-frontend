@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "./services-react/_api/file-service";
-import { Box, Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,6 +22,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false); // State for dialog confirmation
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const updateFileList = async () => {
@@ -101,27 +102,54 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setCsvCreated(false);
     };
 
-    const handleProcess = async () => {
-        if (processing) {
-            return;
-        }
+    const handleProcessChatGPT = async () => {
+        if (processing) return;
         setProcessing(true);
         setProcessingFile(selectedFileProcessing);
         try {
             const encodedFileName = encodeURIComponent(selectedFileProcessing);
-            const response = await fetch(`https://147.232.205.178:8443/process?fileName=${encodedFileName}`);
+            const response = await fetch(`https://147.232.205.178:8443/process-chatgpt?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
                 onProcessingComplete();
             } else {
-                setError(language === 'en' ? 'Failed to process file' : 'Nepodarilo sa spracovať súbor');
+                setError(language === 'en' ? 'Failed to process file using ChatGPT' : 'Nepodarilo sa spracovať súbor pomocou ChatGPT');
             }
         } catch (error) {
-            setError(language === 'en' ? 'Error processing file' : 'Chyba pri spracovaní súboru');
+            setError(language === 'en' ? 'Error processing file using ChatGPT' : 'Chyba pri spracovaní súboru pomocou ChatGPT');
         } finally {
             setProcessing(false);
         }
+    };
+
+    const handleProcessGemini = async () => {
+        if (processing) return;
+        setProcessing(true);
+        setProcessingFile(selectedFileProcessing);
+        try {
+            const encodedFileName = encodeURIComponent(selectedFileProcessing);
+            const response = await fetch(`https://147.232.205.178:8443/process-gemini?fileName=${encodedFileName}`);
+            if (response.ok) {
+                const content = await response.json();
+                setProcessResults(content);
+                onProcessingComplete();
+            } else {
+                setError(language === 'en' ? 'Failed to process file using GeminiAI' : 'Nepodarilo sa spracovať súbor pomocou GeminiAI');
+            }
+        } catch (error) {
+            setError(language === 'en' ? 'Error processing file using GeminiAI' : 'Chyba pri spracovaní súboru pomocou GeminiAI');
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+    const handleOpenConfirm = () => {
+        setConfirmOpen(true);
+    };
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
     };
 
     const handleCreateCsv = async () => {
@@ -274,7 +302,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                     {language === 'en' ? 'Close' : 'Zavrieť'}
                                 </Typography>
                             </Button>
-                            <Button variant="outlined" endIcon={<PlayArrowIcon />} color="success" onClick={handleProcess} disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
+                            <Button variant="outlined" endIcon={<PlayArrowIcon />} color="success" onClick={handleOpenConfirm} disabled={processing || !selectedFile || (processing && selectedFile !== selectedFileProcessing)}>
                                 <Typography variant={isSmallScreen ? "body2" : "body1"}>
                                     {processing ? (language === 'en' ? 'Processing...' : 'Spracováva sa...') : (language === 'en' ? 'Process' : 'Spracovať')}
                                 </Typography>
@@ -283,6 +311,26 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </Box>
                 </Box>
             )}
+
+            <Dialog open={confirmOpen} onClose={handleCloseConfirm}>
+                <DialogTitle>{language === 'en' ? 'Process File Using' : 'Spracovať súbor pomocou'}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {language === 'en' ? 'Choose the AI system to process this file.' : 'Vyberte systém AI pre spracovanie tohto súboru.'}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleProcessChatGPT} color="primary">
+                        {language === 'en' ? 'ChatGPT' : 'ChatGPT'}
+                    </Button>
+                    <Button onClick={handleProcessGemini} color="success">
+                        {language === 'en' ? 'GeminiAI' : 'GeminiAI'}
+                    </Button>
+                    <Button onClick={handleCloseConfirm} color="error">
+                        {language === 'en' ? 'Cancel' : 'Zrušiť'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
             {processResults && (
                 <Box
