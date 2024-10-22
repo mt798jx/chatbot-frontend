@@ -64,12 +64,16 @@ function App() {
                     <GeneratedList refreshTrigger={csvRefreshTrigger} language={language}/>
                 </div>
 
-                <div className="content">
+                <div className="graph-section">
                     <Typography variant="h5" sx={{mb: 3}}>
                         {language === 'en' ? "Comparison Charts for CSV Files" : "Porovnávacie grafy pre súbory CSV"}
                     </Typography>
-                    <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
+                    <div className="graph-container">
+                        <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
+                        {/* Ak máte ďalšie grafy, môžete ich tu pridať */}
+                    </div>
                 </div>
+
 
                 <div className="footer">
                     <Typography variant={isSmallScreen ? "body2" : "body1"}>
