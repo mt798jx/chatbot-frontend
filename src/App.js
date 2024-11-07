@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Typography, useMediaQuery, IconButton, Tooltip } from "@mui/material";
@@ -11,6 +11,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
 import Chatbox from "./components/chatbot/Chatbox";
+import ChatIcon from "@mui/icons-material/Chat";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -59,7 +60,7 @@ function App() {
                 </div>
             ) : (
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
-                    💭
+                    <ChatIcon />
                 </button>
                 )}
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>

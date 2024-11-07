@@ -60,3 +60,7 @@ export const fetchResult = question => gsAxios.get('/bot/chatGemini', { params: 
 export const fetchChatHistory = async () => {
     return gsAxios.get('/bot/historyGemini');
 };
+
+export const clearChatHistory = async () => {
+    return gsAxios.post('/bot/clearHistoryGemini');
+};

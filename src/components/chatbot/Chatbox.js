@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import CloseIcon from '@mui/icons-material/Close';
+import ChatIcon from '@mui/icons-material/Chat';
+import SendIcon from '@mui/icons-material/Send';
 import './Chatbot.css';
-import { fetchResult, fetchChatHistory } from '../file/services-react/_api/file-service';
+import { fetchResult, fetchChatHistory, clearChatHistory } from '../file/services-react/_api/file-service';
 
 function Chatbox({ toggleChatVisibility }) {
     const [messages, setMessages] = useState([]);
@@ -29,23 +33,33 @@ function Chatbox({ toggleChatVisibility }) {
         }
     };
 
-    useEffect(() => {
-        const loadChatHistory = async () => {
-            try {
-                const response = await fetchChatHistory();
-                if (Array.isArray(response.data)) {
-                    const historyMessages = response.data
-                        .filter(msg => msg.role !== "system")
-                        .map(msg => ({
-                            from: msg.role,
-                            text: msg.content
-                        }));
-                    setMessages(historyMessages);
-                }
-            } catch (error) {
-                console.error("Error loading chat history:", error);
+    const loadChatHistory = async () => {
+        try {
+            const response = await fetchChatHistory();
+            if (Array.isArray(response.data)) {
+                const historyMessages = response.data
+                    .filter(msg => msg.role !== "system")
+                    .map(msg => ({
+                        from: msg.role,
+                        text: msg.content
+                    }));
+                setMessages(historyMessages);
             }
-        };
+        } catch (error) {
+            console.error("Error loading chat history:", error);
+        }
+    };
+
+    const handleNewChat = async () => {
+        try {
+            await clearChatHistory();
+            loadChatHistory();
+        } catch (error) {
+            console.error("Error clearing chat history:", error);
+        }
+    };
+
+    useEffect(() => {
         loadChatHistory();
     }, []);
 
@@ -53,9 +67,16 @@ function Chatbox({ toggleChatVisibility }) {
         <div className="chat-container">
             <div className="chat-header">
                 <Typography variant="h6" className="chat-title">
-                    <span role="img" aria-label="Chat">💭</span> ChatBot
+                    <ChatIcon style={{ marginRight: "8px" }} /> ChatBot
                 </Typography>
-                <button className="chat-header-close" onClick={toggleChatVisibility}>✖</button>
+                <div>
+                    <button className="chat-header-new-chat" onClick={handleNewChat}>
+                        <RefreshIcon style={{ color: "white" }} />
+                    </button>
+                    <button className="chat-header-close" onClick={toggleChatVisibility}>
+                        <CloseIcon style={{ color: "white" }} />
+                    </button>
+                </div>
             </div>
             <div className="messages">
                 {Array.isArray(messages) && messages.map((msg, index) => (
@@ -74,7 +95,9 @@ function Chatbox({ toggleChatVisibility }) {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
                 />
-                <button onClick={handleSend}>↑</button>
+                <button onClick={handleSend}>
+                    <SendIcon />
+                </button>
             </div>
         </div>
     )
