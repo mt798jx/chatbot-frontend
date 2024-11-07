@@ -10,12 +10,16 @@ import { fetchResult, fetchChatHistory, clearChatHistory } from '../file/service
 function Chatbox({ toggleChatVisibility }) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
 
     const handleSend = async () => {
         if (input.trim() === "") return;
 
         const userMessage = { from: "user", text: input };
         setMessages(prevMessages => [...prevMessages, userMessage]);
+        setInput("");
+
+        setIsTyping(true);
 
         try {
             const response = await fetchResult(input);
@@ -23,8 +27,9 @@ function Chatbox({ toggleChatVisibility }) {
             setMessages(prevMessages => [...prevMessages, botMessage]);
         } catch (error) {
             console.error('Error fetching response:', error);
+        } finally {
+            setIsTyping(false);
         }
-        setInput("");
     };
 
     const handleKeyPress = (e) => {
@@ -86,6 +91,13 @@ function Chatbox({ toggleChatVisibility }) {
                         </Typography>
                     </div>
                 ))}
+                {isTyping && (
+                    <div className="message bot typing-indicator">
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                    </div>
+                )}
             </div>
             <div className="input-container">
                 <input
