@@ -1,3 +1,5 @@
+import gsAxios from "./index";
+
 export const fetchFiles = async () => {
     try {
         const response = await fetch('https://147.232.205.178:8443/list');
@@ -51,4 +53,10 @@ export const fetchComparisonData = async (fileName) => {
     } catch (error) {
         throw new Error(`Error fetching comparison data for file: ${fileName}`);
     }
+};
+
+export const fetchResult = question => gsAxios.get('/bot/chatGemini', { params: { question } });
+
+export const fetchChatHistory = async () => {
+    return gsAxios.get('/bot/historyGemini');
 };

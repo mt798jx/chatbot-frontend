@@ -10,6 +10,7 @@ import FlagSwitcher from "./components/file/FlagSwitcher";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
+import Chatbox from "./components/chatbot/Chatbox";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -17,6 +18,7 @@ function App() {
     const [language, setLanguage] = useState('sk');
     const [darkMode, setDarkMode] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const [showChat, setShowChat] = useState(false);
 
     const handleProcessingComplete = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
@@ -44,9 +46,22 @@ function App() {
         ? (darkMode ? 'Dark mode' : 'Light mode')
         : (darkMode ? 'Tmavý režim' : 'Svetlý režim');
 
+    const toggleChatVisibility = () => {
+        setShowChat(!showChat);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            {showChat ? (
+                <div className="content">
+                    <Chatbox toggleChatVisibility={toggleChatVisibility}/>
+                </div>
+            ) : (
+                <button className="chat-toggle-button" onClick={toggleChatVisibility}>
+                    💭
+                </button>
+                )}
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
                 <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{fontWeight: 'regular'}} gutterBottom className="header">
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
