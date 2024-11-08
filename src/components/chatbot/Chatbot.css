@@ -98,6 +98,15 @@ body {
     padding-right: 7px;
 }
 
+.message.assistant{
+    align-self: flex-start;
+    background-color: #2A2A2A;
+    color: #CCCCCC;
+    border-radius: 15px 15px 15px 0;
+    text-align: left;
+    padding-right: 7px;
+}
+
 .typing-indicator {
     display: flex;
     gap: 5px;

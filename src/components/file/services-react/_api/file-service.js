@@ -41,7 +41,6 @@ export const fetchCsv = async () => {
 
 export const fetchComparisonData = async (fileName) => {
     try {
-        // Use the fileName as part of the request URL
         const url = `https://147.232.205.178:8443/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
@@ -64,3 +63,15 @@ export const fetchChatHistory = async () => {
 export const clearChatHistory = async () => {
     return gsAxios.post('/bot/clearHistoryGemini');
 };
+
+/*
+export const fetchResult = question => gsAxios.get('/bot/chatChatGPT', { params: { question } });
+
+export const fetchChatHistory = async () => {
+    return gsAxios.get('/bot/historyChatGPT');
+};
+
+export const clearChatHistory = async () => {
+    return gsAxios.post('/bot/clearHistoryChatGPT');
+};
+ */
