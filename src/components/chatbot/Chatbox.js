@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,6 +11,7 @@ function Chatbox({ toggleChatVisibility }) {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const messagesEndRef = useRef(null);
 
     const handleSend = async () => {
         if (input.trim() === "") return;
@@ -68,6 +69,10 @@ function Chatbox({ toggleChatVisibility }) {
         loadChatHistory();
     }, []);
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, isTyping]);
+
     return (
         <div className="chat-container">
             <div className="chat-header">
@@ -98,6 +103,7 @@ function Chatbox({ toggleChatVisibility }) {
                         <div className="dot"></div>
                     </div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
             <div className="input-container">
                 <input
