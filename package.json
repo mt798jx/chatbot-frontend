@@ -25,6 +25,7 @@
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
+    "react-markdown": "^9.0.1",
     "react-scripts": "5.0.1",
     "react-world-flags": "^1.6.0",
     "recharts": "^2.13.0",

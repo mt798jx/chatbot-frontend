@@ -4,6 +4,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from '@mui/icons-material/Chat';
 import SendIcon from '@mui/icons-material/Send';
+import ReactMarkdown from 'react-markdown';
 import './Chatbot.css';
 import { fetchResult, fetchChatHistory, clearChatHistory } from '../file/services-react/_api/file-service';
 
@@ -92,7 +93,9 @@ function Chatbox({ toggleChatVisibility }) {
                 {Array.isArray(messages) && messages.map((msg, index) => (
                     <div key={index} className={`message ${msg.from}`}>
                         <Typography variant="body1" className="message-text">
-                            {msg.text}
+                            <ReactMarkdown>
+                                {msg.text}
+                            </ReactMarkdown>
                         </Typography>
                     </div>
                 ))}
