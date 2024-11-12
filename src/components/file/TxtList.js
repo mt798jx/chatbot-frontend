@@ -35,7 +35,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
     const handlePreview = async (fileName) => {
         try {
             const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://147.232.205.178:8443/previewtext?fileName=${encodedFileName}`);
+            const response = await fetch(`https://100.119.248.77:8445/previewtext?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
                 setSelectedFile(fileName);
@@ -64,7 +64,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
 
         try {
             const encodedFileName = encodeURIComponent(selectedFile);
-            const response = await fetch(`https://147.232.205.178:8443/create?fileName=${encodedFileName}`);
+            const response = await fetch(`https://100.119.248.77:8445/create?fileName=${encodedFileName}`);
             if (response.ok) {
                 setCsvCreated(true);
                 const baseName = selectedFile.substring(0, selectedFile.lastIndexOf('.'));
