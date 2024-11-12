@@ -18,33 +18,36 @@ const FileUpload = ({ onUploadSuccess, language }) => {
     });
 
     const handleFileChange = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
+        const files = event.target.files;
+        if (files.length > 0) {
             const formData = new FormData();
-            formData.append('file', file);
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
 
             try {
-                const response = await fetch('https://147.232.205.178:8443/upload', {
+                const response = await fetch('https://100.119.248.77:8445/upload', {
                     method: 'POST',
                     body: formData,
                 });
 
                 if (response.ok) {
                     const successMessage = language === 'en'
-                        ? `File "${file.name}" has been successfully uploaded.`
-                        : `Súbor "${file.name}" bol úspešne nahraný.`;
+                        ? `Files have been successfully uploaded.`
+                        : `Súbory boli úspešne nahrané.`;
                     alert(successMessage);
                     if (onUploadSuccess) onUploadSuccess();
                 } else {
                     const failureMessage = language === 'en'
                         ? "File upload failed."
-                        : "Nahrávanie súboru zlyhalo.";
+                        : "Nahrávanie súborov zlyhalo.";
                     alert(failureMessage);
                 }
             } catch (error) {
                 const errorMessage = language === 'en'
-                    ? 'Error uploading file.'
-                    : 'Chyba pri nahrávaní súboru.';
+                    ? 'Error uploading files.'
+                    : 'Chyba pri nahrávaní súborov.';
                 alert(errorMessage);
             }
         }
@@ -56,7 +59,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                         component="label"
                         size={isSmallScreen ? "small" : "medium"}
             >
-                <VisuallyHiddenInput type="file" accept=".csv" onChange={handleFileChange} />
+                <VisuallyHiddenInput type="file" accept=".csv" multiple onChange={handleFileChange} />
                 <CloudUploadIcon
                     color="success"
                     fontSize={isSmallScreen ? "small" : "medium"}

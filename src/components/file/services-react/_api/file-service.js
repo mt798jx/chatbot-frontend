@@ -2,7 +2,7 @@ import gsAxios from "./index";
 
 export const fetchFiles = async () => {
     try {
-        const response = await fetch('https://147.232.205.178:8443/list');
+        const response = await fetch('https://100.119.248.77:8445/list');
         if (response.ok) {
             return await response.json();
         } else {
@@ -15,7 +15,7 @@ export const fetchFiles = async () => {
 
 export const fetchTxt = async () => {
     try {
-        const response = await fetch('https://147.232.205.178:8443/text');
+        const response = await fetch('https://100.119.248.77:8445/text');
         if (response.ok) {
             return await response.json();
         } else {
@@ -28,7 +28,7 @@ export const fetchTxt = async () => {
 
 export const fetchCsv = async () => {
     try {
-        const response = await fetch('https://147.232.205.178:8443/generatedlist');
+        const response = await fetch('https://100.119.248.77:8445/generatedlist');
         if (response.ok) {
             return await response.json();
         } else {

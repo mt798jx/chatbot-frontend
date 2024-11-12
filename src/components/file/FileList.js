@@ -49,7 +49,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
         try {
             const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://147.232.205.178:8443/delete?fileName=${encodedFileName}`, {
+            const response = await fetch(`https://100.119.248.77:8445/delete?fileName=${encodedFileName}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
