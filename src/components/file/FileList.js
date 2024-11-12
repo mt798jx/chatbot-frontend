@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
 import { fetchFiles } from "./services-react/_api/file-service";
-import { Box, Button, CircularProgress, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,8 +23,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const [processingFile, setProcessingFile] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
-    const [confirmOpen, setConfirmOpen] = useState(false); // State for dialog confirmation
+    const [confirmOpen, setConfirmOpen] = useState(false);
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const [deleteFileName, setDeleteFileName] = useState('');
+    const [confirmOpenDelete, setConfirmOpenDelete] = useState(false);
 
     const updateFileList = async () => {
         setLoading(true);
@@ -43,17 +45,26 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         updateFileList();
     }, [refreshTrigger]);
 
-    const handleDelete = async (fileName) => {
-        if (processing && fileName === processingFile) {
+    const handleOpenConfirmDelete = (fileName) => {
+        setDeleteFileName(fileName);
+        setConfirmOpenDelete(true);
+    };
+
+    const handleCloseConfirmDelete = () => {
+        setConfirmOpenDelete(false);
+        setDeleteFileName(''); // Reset file name when canceling
+    };
+
+    const handleDelete = async () => {
+        if (processing && deleteFileName === processingFile) {
             return;
         }
         try {
-            const encodedFileName = encodeURIComponent(fileName);
+            const encodedFileName = encodeURIComponent(deleteFileName);
             const response = await fetch(`https://100.119.248.77:8445/delete?fileName=${encodedFileName}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
-                alert(language === 'en' ? `File deleted successfully: ${fileName}` : `Súbor bol úspešne odstránený: ${fileName}`);
                 updateFileList();
                 if (onFileDeleted) {
                     onFileDeleted();
@@ -63,6 +74,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             }
         } catch (error) {
             setError(language === 'en' ? 'Error deleting file' : 'Chyba pri odstraňovaní súboru');
+        } finally {
+            setConfirmOpenDelete(false);
         }
     };
 
@@ -257,7 +270,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             <IconButton
                                                 aria-label="delete"
                                                 size="small"
-                                                onClick={() => handleDelete(file)}
+                                                onClick={() => handleOpenConfirmDelete(file)}
                                                 disabled={processing && file === processingFile}>
                                                 <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
                                             </IconButton>
@@ -429,6 +442,27 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </Draggable>
                 </Box>
             )}
+
+            <Dialog open={confirmOpenDelete} onClose={handleCloseConfirmDelete}>
+                <DialogTitle>
+                    {language === 'en' ? 'Delete File' : 'Odstrániť súbor'}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {language === 'en'
+                            ? `Are you sure you want to delete the file "${deleteFileName}"?`
+                            : `Ste si istí, že chcete odstrániť súbor "${deleteFileName}"?`}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseConfirmDelete} color="primary">
+                        {language === 'en' ? 'Cancel' : 'Zrušiť'}
+                    </Button>
+                    <Button onClick={handleDelete} color="error" autoFocus>
+                        {language === 'en' ? 'Delete' : 'Odstrániť'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
