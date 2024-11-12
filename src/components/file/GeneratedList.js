@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv } from './services-react/_api/file-service';
-import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
 
 const GeneratedList = ({ refreshTrigger, language }) => {
@@ -8,6 +8,8 @@ const GeneratedList = ({ refreshTrigger, language }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const [confirmOpenDownload, setConfirmOpenDownload] = useState(false);
+    const [selectedFile, setSelectedFile] = useState('');
 
     const updateFileList = async () => {
         setLoading(true);
@@ -26,10 +28,10 @@ const GeneratedList = ({ refreshTrigger, language }) => {
         updateFileList();
     }, [refreshTrigger]);
 
-    const handleDownload = async (fileName) => {
+    const handleDownload = async () => {
         try {
-            const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://147.232.205.178:8443/download?fileName=${encodedFileName}`, {
+            const encodedFileName = encodeURIComponent(selectedFile);
+            const response = await fetch(`https://100.119.248.77:8445/download?fileName=${encodedFileName}`, {
                 method: 'GET',
             });
 
@@ -42,20 +44,30 @@ const GeneratedList = ({ refreshTrigger, language }) => {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = fileName;
+            link.download = selectedFile;
             document.body.appendChild(link);
             link.click();
-            link.remove();
+            document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
 
-            const successMessage = language === 'en'
-                ? `File "${fileName}" has been successfully downloaded. Check your default downloads folder.`
-                : `Súbor "${fileName}" bol úspešne stiahnutý. Skontrolujte svoj predvolený priečinok na sťahovanie.`;
-            alert(successMessage);
         } catch (error) {
-            const errorDownloadMessage = language === 'en' ? `Error downloading file: ${error.message}` : `Chyba pri sťahovaní súboru: ${error.message}`;
-            setError(errorDownloadMessage);
+            setError(language === 'en'
+                ? `Error downloading file: ${error.message}`
+                : `Chyba pri sťahovaní súboru: ${error.message}`
+            );
+        } finally {
+            setConfirmOpenDownload(false);
         }
+    };
+
+    const handleOpenConfirmDownload = (fileName) => {
+        setSelectedFile(fileName);
+        setConfirmOpenDownload(true);
+    };
+
+    const handleCloseConfirmDownload = () => {
+        setConfirmOpenDownload(false);
+        setSelectedFile('');
     };
 
     return (
@@ -114,7 +126,7 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                                     <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ flexGrow: 1, textAlign: 'left', marginRight: 1 }}>
                                         {file}
                                     </Typography>
-                                    <IconButton aria-label="download" size="small" onClick={() => handleDownload(file)}>
+                                    <IconButton aria-label="download" size="small" onClick={() => handleOpenConfirmDownload(file)}>
                                         <DownloadIcon color="success" fontSize={isSmallScreen ? "inherit" : "small"} />
                                     </IconButton>
                                 </Box>
@@ -127,6 +139,24 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                     </Box>
                 )}
             </Box>
+
+            <Dialog open={confirmOpenDownload} onClose={handleCloseConfirmDownload}>
+                <DialogTitle>{language === 'en' ? 'Download File' : 'Stiahnuť súbor'}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {language === 'en' ? `Are you sure you want to download the file "${selectedFile}"?` : `Ste si istí, že chcete stiahnuť súbor "${selectedFile}"?`}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseConfirmDownload} color="primary">
+                        {language === 'en' ? 'Cancel' : 'Zrušiť'}
+                    </Button>
+                    <Button onClick={handleDownload} color="error" autoFocus>
+                        {language === 'en' ? 'Download' : 'Stiahnuť'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
         </Box>
     );
 }
