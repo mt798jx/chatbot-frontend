@@ -45,29 +45,29 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
     };
 
     return (
-        <Box className="graph-container">
+        <Box className="graph-container" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {loading ? (
-                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
+                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main', textAlign: 'center' }}>
                     {language === 'en' ? "Loading charts..." : "Načítavajú sa grafy..."}
                 </Typography>
             ) : error ? (
-                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main' }}>
+                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main', textAlign: 'center' }}>
                     {error}
                 </Typography>
             ) : (
                 fileData.map(({ fileName, data }) => (
-                    <Paper sx={{ padding: 2 }} key={fileName}>
-                        <Typography variant={isSmallScreen ? "body2" : "body1"} gutterBottom>
+                    <Paper sx={{ padding: isSmallScreen ? 1 : 2, borderRadius: 2, boxShadow: 3 }} key={fileName}>
+                        <Typography variant={isSmallScreen ? "body2" : "h6"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
-                        <Box sx={{ width: '100%', height: 300 }}>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <BarChart data={data}>
-                                    <CartesianGrid strokeDasharray="3 3" />
+                        <Box sx={{ width: '100%', maxWidth: "600px", height: isSmallScreen ? 200 : 300 }}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={data} margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
+                                    <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
                                     <XAxis dataKey="range" />
                                     <YAxis />
                                     <Tooltip />
-                                    <Legend />
+                                    <Legend verticalAlign="top" wrapperStyle={{ paddingBottom: 10 }} />
                                     <Bar dataKey="uploads" fill="#8884d8" name={language === 'en' ? "Uploads" : "Nahrané"} />
                                     <Bar dataKey="results" fill="#82ca9d" name={language === 'en' ? "Results" : "Výsledky"} />
                                 </BarChart>

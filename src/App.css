@@ -51,7 +51,8 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  width: 90%;
+  width: 97%;
+  max-width: 600px;
   gap: 20px;
 }
 
