@@ -51,8 +51,9 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 3,
-                maxHeight: isSmallScreen ? '70vh' : '80vh',
+                maxHeight: '80vh',
                 overflowY: 'auto',
+                padding: 2,
             }}
         >
             {loading ? (
