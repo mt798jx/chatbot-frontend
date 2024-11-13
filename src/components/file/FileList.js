@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FileUpload from "./FileUpload";
 import ConfirmationDialog from "../ConfirmationDialog";
+import ReactMarkdown from "react-markdown";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     const [fileList, setFileList] = useState([]);
@@ -82,7 +83,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const handlePreview = async (fileName) => {
         try {
             const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://147.232.205.178:8443/preview?fileName=${encodedFileName}`);
+            const response = await fetch(`https://100.119.248.77:8445/preview?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
                 if (processing) {
@@ -126,7 +127,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setProcessingFile(selectedFileProcessing);
         try {
             const encodedFileName = encodeURIComponent(selectedFileProcessing);
-            const response = await fetch(`https://147.232.205.178:8443/process-chatgpt?fileName=${encodedFileName}`);
+            const response = await fetch(`https://100.119.248.77:8445/process-chatgpt?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
@@ -148,7 +149,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setProcessingFile(selectedFileProcessing);
         try {
             const encodedFileName = encodeURIComponent(selectedFileProcessing);
-            const response = await fetch(`https://147.232.205.178:8443/process-gemini?fileName=${encodedFileName}`);
+            const response = await fetch(`https://100.119.248.77:8445/process-gemini?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
@@ -180,7 +181,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
 
         try {
             const baseName = selectedFile.replace('.csv', '-results.txt');
-            const response = await fetch(`https://147.232.205.178:8443/create?fileName=${baseName}`);
+            const response = await fetch(`https://100.119.248.77:8445/create?fileName=${baseName}`);
             if (response.ok) {
                 onCsvCreated();
                 setCsvCreated(true);
@@ -368,7 +369,9 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                             {language === 'en' ? 'Processed Results for' : 'Spracované výsledky pre'} {selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                            {processResults}
+                            <ReactMarkdown>
+                                {processResults}
+                            </ReactMarkdown>
                         </Typography>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                             <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreviewFinal}>

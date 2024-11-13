@@ -41,7 +41,7 @@ export const fetchCsv = async () => {
 
 export const fetchComparisonData = async (fileName) => {
     try {
-        const url = `https://147.232.205.178:8443/compare-scores?fileName=${fileName}`;
+        const url = `https://100.119.248.77:8445/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
         if (response.ok) {
