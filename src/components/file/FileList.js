@@ -369,9 +369,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                             {language === 'en' ? 'Processed Results for' : 'Spracované výsledky pre'} {selectedFile}
                         </Typography>
                         <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                            <ReactMarkdown>
                                 {processResults}
-                            </ReactMarkdown>
                         </Typography>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                             <Button variant="outlined" startIcon={<CloseIcon />} color="error" onClick={handleClosePreviewFinal}>
