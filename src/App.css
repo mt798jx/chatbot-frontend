@@ -56,25 +56,6 @@ html, body {
   gap: 20px;
 }
 
-@media (max-width: 1024px) {
-  .graph-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .graph-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
-  .graph-container {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
 .chat-toggle-button {
   border: none;
   cursor: pointer;

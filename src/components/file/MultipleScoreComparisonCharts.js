@@ -45,7 +45,17 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
     };
 
     return (
-        <Box className="graph-container" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box
+            className="graph-container"
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 3,
+                maxHeight: '80vh',
+                overflowY: 'auto',
+                padding: 2,
+            }}
+        >
             {loading ? (
                 <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main', textAlign: 'center' }}>
                     {language === 'en' ? "Loading charts..." : "Načítavajú sa grafy..."}
@@ -56,11 +66,11 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 </Typography>
             ) : (
                 fileData.map(({ fileName, data }) => (
-                    <Paper sx={{ padding: isSmallScreen ? 1 : 2, borderRadius: 2, boxShadow: 3 }} key={fileName}>
+                    <Paper sx={{ padding: isSmallScreen ? 1 : 2, borderRadius: 2, boxShadow: 3, width: '100%' }} key={fileName}>
                         <Typography variant={isSmallScreen ? "body2" : "h6"} gutterBottom>
                             {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
                         </Typography>
-                        <Box sx={{ width: '100%', maxWidth: "600px", height: isSmallScreen ? 200 : 300 }}>
+                        <Box sx={{ width: '100%', height: isSmallScreen ? 200 : 300 }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={data} margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
                                     <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
