@@ -53,25 +53,24 @@ export const fetchComparisonData = async (fileName) => {
         throw new Error(`Error fetching comparison data for file: ${fileName}`);
     }
 };
-
-export const fetchResult = question => gsAxios.get('/bot/chatGemini', { params: { question } });
-
-export const fetchChatHistory = async () => {
-    return gsAxios.get('/bot/historyGemini');
-};
-
-export const clearChatHistory = async () => {
-    return gsAxios.post('/bot/clearHistoryGemini');
-};
-
 /*
-export const fetchResult = question => gsAxios.get('/bot/chatChatGPT', { params: { question } });
+export const fetchResult = question => gsAxios.get('/chatGemini', { params: { question } });
 
 export const fetchChatHistory = async () => {
-    return gsAxios.get('/bot/historyChatGPT');
+    return gsAxios.get('/historyGemini');
 };
 
 export const clearChatHistory = async () => {
-    return gsAxios.post('/bot/clearHistoryChatGPT');
+    return gsAxios.post('/clearHistoryGemini');
 };
- */
+*/
+
+export const fetchResult = question => gsAxios.get('/chatChatGPT', { params: { question } });
+
+export const fetchChatHistory = async () => {
+    return gsAxios.get('/historyChatGPT');
+};
+
+export const clearChatHistory = async () => {
+    return gsAxios.post('/clearHistoryChatGPT');
+};

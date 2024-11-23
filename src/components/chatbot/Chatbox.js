@@ -25,7 +25,7 @@ function Chatbox({ toggleChatVisibility }) {
 
         try {
             const response = await fetchResult(input);
-            const botMessage = { from: "bot", text: response.data };
+            const botMessage = { from: "bot", text: response.data.answer };
             setMessages(prevMessages => [...prevMessages, botMessage]);
         } catch (error) {
             console.error('Error fetching response:', error);
@@ -43,8 +43,9 @@ function Chatbox({ toggleChatVisibility }) {
     const loadChatHistory = async () => {
         try {
             const response = await fetchChatHistory();
-            if (Array.isArray(response.data)) {
-                const historyMessages = response.data
+            console.log(response.data.history)
+            if (Array.isArray(response.data.history)) {
+                const historyMessages = response.data.history
                     .filter(msg => msg.role !== "system")
                     .map(msg => ({
                         from: msg.role,
@@ -92,11 +93,11 @@ function Chatbox({ toggleChatVisibility }) {
             <div className="messages">
                 {Array.isArray(messages) && messages.map((msg, index) => (
                     <div key={index} className={`message ${msg.from}`}>
-                        <Typography variant="body1" className="message-text">
+                        <div className="message-text">
                             <ReactMarkdown>
                                 {msg.text}
                             </ReactMarkdown>
-                        </Typography>
+                        </div>
                     </div>
                 ))}
                 {isTyping && (
