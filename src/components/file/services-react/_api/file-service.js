@@ -53,7 +53,8 @@ export const fetchComparisonData = async (fileName) => {
         throw new Error(`Error fetching comparison data for file: ${fileName}`);
     }
 };
-/*
+
+
 export const fetchResult = question => gsAxios.get('/chatGemini', { params: { question } });
 
 export const fetchChatHistory = async () => {
@@ -63,8 +64,8 @@ export const fetchChatHistory = async () => {
 export const clearChatHistory = async () => {
     return gsAxios.post('/clearHistoryGemini');
 };
-*/
 
+/*
 export const fetchResult = question => gsAxios.get('/chatChatGPT', { params: { question } });
 
 export const fetchChatHistory = async () => {
@@ -74,3 +75,4 @@ export const fetchChatHistory = async () => {
 export const clearChatHistory = async () => {
     return gsAxios.post('/clearHistoryChatGPT');
 };
+*/

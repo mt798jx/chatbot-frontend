@@ -132,7 +132,7 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                                 </Box>
                             ))
                         ) : (
-                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                            <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
                                 {language === 'en' ? "No CSV files found" : "Nenašli sa žiadne súbory CSV"}
                             </Typography>
                         )}

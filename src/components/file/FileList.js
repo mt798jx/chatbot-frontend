@@ -9,7 +9,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FileUpload from "./FileUpload";
 import ConfirmationDialog from "../ConfirmationDialog";
-import ReactMarkdown from "react-markdown";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     const [fileList, setFileList] = useState([]);
@@ -279,7 +278,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                     </Box>
                                 ))
                             ) : (
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                <Typography sx={{ color: 'warning.main' }} variant={isSmallScreen ? "body2" : "body1"} >
                                     {language === 'en' ? 'No CSV files found.' : 'Nenašli sa žiadne CSV súbory.'}
                                 </Typography>
                             )}

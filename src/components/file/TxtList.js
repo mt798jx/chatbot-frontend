@@ -151,7 +151,7 @@ const TxtList = ({ refreshTrigger, onCsvCreated, language }) => {
                                     </Box>
                                 ))
                             ) : (
-                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main' }}>
                                     {language === 'en' ? 'No TXT files found.' : 'Nenašli sa žiadne TXT súbory.'}
                                 </Typography>
                             )}
