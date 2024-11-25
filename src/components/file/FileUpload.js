@@ -115,8 +115,9 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                 p: 2,
                 textAlign: 'center',
                 backgroundColor: isDragging > 0 ? '#d0f0c0' : undefined,
+                color: isDragging > 0 ? '#000' : undefined,
                 cursor: 'pointer',
-                transition: 'background-color 0.3s ease',
+                transition: 'background-color 0.3s ease, color 0.3s ease',
             }}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
