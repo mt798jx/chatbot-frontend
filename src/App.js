@@ -12,6 +12,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
 import Chatbox from "./components/chatbot/Chatbox";
 import ChatIcon from "@mui/icons-material/Chat";
+import FileUpload from "./components/file/FileUpload";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
