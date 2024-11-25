@@ -7,7 +7,6 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import FileUpload from "./FileUpload";
 import ConfirmationDialog from "../ConfirmationDialog";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
@@ -223,7 +222,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom className="title">
                     {language === 'en' ? 'Uploaded CSV Files' : 'Nahrané CSV súbory'}
                 </Typography>
-                <FileUpload onUploadSuccess={handleUploadSuccess} className="file-upload" language={language} />
             </div>
             <Box
                 sx={{

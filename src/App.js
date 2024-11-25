@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useCallback, useEffect} from "react";
+import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Typography, useMediaQuery, IconButton, Tooltip } from "@mui/material";
@@ -22,7 +22,7 @@ function App() {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
     const [showChat, setShowChat] = useState(false);
 
-    const handleProcessingComplete = useCallback(() => {
+    const handleFileListUpdate = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
     }, []);
 
@@ -33,10 +33,6 @@ function App() {
     const handleDarkModeToggle = () => {
         setDarkMode(prev => !prev);
     };
-
-    const handleFileDeleted = useCallback(() => {
-        setCsvRefreshTrigger(prev => !prev);
-    }, []);
 
     const theme = createTheme({
         palette: {
@@ -65,24 +61,36 @@ function App() {
                 </button>
                 )}
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
-                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{fontWeight: 'regular'}} gutterBottom className="header">
+                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
                     {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                 </Typography>
-                <FlagSwitcher language={language} setLanguage={setLanguage}/>
-                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                <FlagSwitcher language={language} setLanguage={setLanguage} />
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                     <Tooltip title={tooltipTitle}>
                         <IconButton onClick={handleDarkModeToggle} color="inherit">
-                            {darkMode ? <Brightness7Icon/> : <Brightness4Icon/>}
+                            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                         </IconButton>
                     </Tooltip>
                 </Box>
 
+                <FileUpload onUploadSuccess={handleFileListUpdate} language={language} />
+
                 <div className="content">
-                    <FileList onProcessingComplete={handleProcessingComplete} onCsvCreated={handleCsvCreated}
-                              language={language} onFileDeleted={handleFileDeleted}/>
-                    <TxtList refreshTrigger={fileListRefreshTrigger} onCsvCreated={handleCsvCreated}
-                             language={language}/>
-                    <GeneratedList refreshTrigger={csvRefreshTrigger} language={language}/>
+                    <FileList
+                        refreshTrigger={fileListRefreshTrigger}
+                        onProcessingComplete={handleFileListUpdate}
+                        onFileDeleted={handleFileListUpdate}
+                        language={language}
+                    />
+                    <TxtList
+                        refreshTrigger={fileListRefreshTrigger}
+                        onCsvCreated={handleCsvCreated}
+                        language={language}
+                    />
+                    <GeneratedList
+                        refreshTrigger={csvRefreshTrigger}
+                        language={language}
+                    />
                 </div>
 
                 <div className="graph-container">

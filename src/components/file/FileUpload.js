@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const FileUpload = ({ onUploadSuccess, language }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
     const [files, setFiles] = useState([]);
-    const [isDragging, setIsDragging] = useState(0); // Counter to track drag events
+    const [isDragging, setIsDragging] = useState(0);
     const fileInputRef = useRef(null);
 
     const handleFileChange = (event) => {
