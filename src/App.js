@@ -2,17 +2,15 @@ import './App.css';
 import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Box, Typography, useMediaQuery, IconButton, Tooltip } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
 import GeneratedList from "./components/file/GeneratedList";
-import FlagSwitcher from "./components/file/FlagSwitcher";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
 import Chatbox from "./components/chatbot/Chatbox";
 import ChatIcon from "@mui/icons-material/Chat";
 import FileUpload from "./components/file/FileUpload";
+import HeaderSection from "./components/file/HeaderSection";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -40,10 +38,6 @@ function App() {
         },
     });
 
-    const tooltipTitle = language === 'en'
-        ? (darkMode ? 'Dark mode' : 'Light mode')
-        : (darkMode ? 'Tmavý režim' : 'Svetlý režim');
-
     const toggleChatVisibility = () => {
         setShowChat(!showChat);
     };
@@ -59,19 +53,15 @@ function App() {
                 <button className="chat-toggle-button" onClick={toggleChatVisibility}>
                     <ChatIcon />
                 </button>
-                )}
+            )}
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
-                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ fontWeight: 'regular' }} gutterBottom className="header">
-                    {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
-                </Typography>
-                <FlagSwitcher language={language} setLanguage={setLanguage} />
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <Tooltip title={tooltipTitle}>
-                        <IconButton onClick={handleDarkModeToggle} color="inherit">
-                            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-                        </IconButton>
-                    </Tooltip>
-                </Box>
+
+                <HeaderSection
+                    language={language}
+                    setLanguage={setLanguage}
+                    darkMode={darkMode}
+                    toggleDarkMode={handleDarkModeToggle}
+                />
 
                 <FileUpload onUploadSuccess={handleFileListUpdate} language={language} />
 
