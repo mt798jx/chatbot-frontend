@@ -130,10 +130,11 @@ const FileUpload = ({ onUploadSuccess, language }) => {
             <Button
                 variant="contained"
                 component="label"
-                size={isSmallScreen ? "small" : "medium"}
-                sx={{ mb: 2 }}
+                color="success"
             >
-                {language === 'en' ? 'Choose Files' : 'Vybrať súbory'}
+                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                    {language === 'en' ? 'Choose Files' : 'Vybrať súbory'}
+                </Typography>
                 <input
                     type="file"
                     hidden
@@ -173,12 +174,24 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                             </ListItem>
                         ))}
                     </List>
-                    <Box sx={{ mt: 2 }}>
-                        <Button variant="contained" color="error" onClick={clearFiles} sx={{ mr: 2 }}>
-                            {language === 'en' ? 'Clear All' : 'Vymazať všetko'}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={clearFiles}
+                        >
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                {language === 'en' ? 'Clear All' : 'Vymazať všetko'}
+                            </Typography>
                         </Button>
-                        <Button variant="contained" color="primary" onClick={uploadAllFiles}>
-                            {language === 'en' ? 'Upload All' : 'Nahrať všetko'}
+                        <Button
+                            variant="outlined"
+                            color="success"
+                            onClick={uploadAllFiles}
+                        >
+                            <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                {language === 'en' ? 'Upload All' : 'Nahrať všetko'}
+                            </Typography>
                         </Button>
                     </Box>
                 </Box>
