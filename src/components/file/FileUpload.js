@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Box, Button, IconButton, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, useMediaQuery } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const FileUpload = ({ onUploadSuccess, language }) => {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -150,20 +150,18 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                             <ListItem key={index} sx={{ borderBottom: '1px solid #ccc' }}>
                                 <ListItemText primary={file.name} />
                                 <ListItemSecondaryAction>
-                                    <IconButton
-                                        edge="end"
-                                        aria-label="upload"
-                                        onClick={() => uploadSingleFile(file, index)}
-                                    >
-                                        <CloudUploadIcon color="primary" />
-                                    </IconButton>
-                                    <IconButton
-                                        edge="end"
-                                        aria-label="delete"
-                                        onClick={() => removeFile(index)}
-                                    >
-                                        <DeleteIcon color="error" />
-                                    </IconButton>
+                                    <div className="button-group">
+                                        <IconButton aria-label="edit" size="small" onClick={() => uploadSingleFile(file, index)}>
+                                            <CloudUploadIcon color="primary" fontSize="inherit"/>
+                                        </IconButton>
+                                        <IconButton
+                                            aria-label="delete"
+                                            size="small"
+                                            onClick={() => removeFile(index)}>
+                                            <DeleteForeverIcon color="error"
+                                                               fontSize={isSmallScreen ? "inherit" : "small"}/>
+                                        </IconButton>
+                                    </div>
                                 </ListItemSecondaryAction>
                             </ListItem>
                         ))}
