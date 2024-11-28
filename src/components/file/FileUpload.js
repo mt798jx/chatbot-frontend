@@ -145,7 +145,14 @@ const FileUpload = ({ onUploadSuccess, language }) => {
             </Button>
             {files.length > 0 && (
                 <Box>
-                    <List>
+                    <List
+                        sx={{
+                            maxHeight: '200px',
+                            overflowY: 'auto',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                        }}
+                    >
                         {files.map((file, index) => (
                             <ListItem key={index} sx={{ borderBottom: '1px solid #ccc' }}>
                                 <ListItemText primary={file.name} />
