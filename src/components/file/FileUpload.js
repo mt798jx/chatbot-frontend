@@ -152,10 +152,13 @@ const FileUpload = ({ onUploadSuccess, language }) => {
                             overflowY: 'auto',
                             border: '1px solid #ccc',
                             borderRadius: '4px',
+                            mt: 2
                         }}
                     >
                         {files.map((file, index) => (
-                            <ListItem key={index} sx={{ borderBottom: '1px solid #ccc' }}>
+                            <ListItem key={index} sx={{
+                                borderBottom: index !== files.length - 1 ? '1px solid #ccc' : 'none',
+                            }}>
                                 <ListItemText primary={file.name} />
                                 <ListItemSecondaryAction>
                                     <div className="button-group">
