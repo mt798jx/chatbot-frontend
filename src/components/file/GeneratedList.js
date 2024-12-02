@@ -151,7 +151,7 @@ const GeneratedList = ({ refreshTrigger, language }) => {
                     <Button onClick={handleCloseConfirmDownload} color="primary">
                         {language === 'en' ? 'Cancel' : 'Zrušiť'}
                     </Button>
-                    <Button onClick={handleDownload} color="error" autoFocus>
+                    <Button onClick={handleDownload} color="success" autoFocus>
                         {language === 'en' ? 'Download' : 'Stiahnuť'}
                     </Button>
                 </DialogActions>
