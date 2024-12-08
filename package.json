@@ -1,6 +1,7 @@
 {
   "name": "chatbot-frontend",
   "version": "0.1.0",
+  "homepage": "https://mt798jx.github.io/chatbot-frontend",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.0",
@@ -37,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +61,7 @@
     ]
   },
   "devDependencies": {
-    "@mui/system": "^5.16.6"
+    "@mui/system": "^5.16.6",
+    "gh-pages": "^6.2.0"
   }
 }
