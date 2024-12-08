@@ -12,15 +12,30 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
     useEffect(() => {
         const fetchFilesAndData = async () => {
             try {
-                const files = await fetchCsv();
+                const files = (await fetchCsv()) || [];
+                if (!Array.isArray(files)) {
+                    throw new Error(language === 'en' ? "Invalid file data received." : "Neplatné dáta súborov.");
+                }
+
+                if (files.length === 0) {
+                    setFileData([]);
+                    setError(language === 'en' ? "No files available for comparison." : "Nie sú dostupné žiadne súbory na porovnanie.");
+                    return;
+                }
+
                 const fileDataPromises = files.map(async (fileName) => {
-                    const comparisonData = await fetchComparisonData(fileName);
+                    try {
+                        const comparisonData = await fetchComparisonData(fileName);
 
-                    if (!comparisonData || !comparisonData.uploadsScoreDistribution || !comparisonData.resultsScoreDistribution)
+                        if (!comparisonData || !comparisonData.uploadsScoreDistribution || !comparisonData.resultsScoreDistribution)
+                            return null;
+
+                        const formattedData = formatComparisonData(comparisonData);
+                        return { fileName: fileName.replace('-results.csv', ''), data: formattedData };
+                    } catch (fetchError) {
+                        console.error(`Error processing file ${fileName}:`, fetchError);
                         return null;
-
-                    const formattedData = formatComparisonData(comparisonData);
-                    return { fileName: fileName.replace('-results.csv', ''), data: formattedData };
+                    }
                 });
 
                 const allFileData = (await Promise.all(fileDataPromises)).filter(data => data !== null);
@@ -63,6 +78,10 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
             ) : error ? (
                 <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'error.main', textAlign: 'center' }}>
                     {error}
+                </Typography>
+            ) : fileData.length === 0 ? (
+                <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'info.main', textAlign: 'center' }}>
+                    {language === 'en' ? "No files available for comparison." : "Nie sú dostupné žiadne súbory na porovnanie."}
                 </Typography>
             ) : (
                 fileData.map(({ fileName, data }) => (
