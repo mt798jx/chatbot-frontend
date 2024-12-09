@@ -71,6 +71,7 @@ function App() {
                         onProcessingComplete={handleFileListUpdate}
                         onFileDeleted={handleFileListUpdate}
                         language={language}
+                        onCsvCreated={handleCsvCreated}
                     />
                     <TxtList
                         refreshTrigger={fileListRefreshTrigger}
