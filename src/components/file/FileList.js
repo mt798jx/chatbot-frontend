@@ -170,28 +170,40 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setConfirmOpen(false);
     };
 
-    const handleCreateCsv = async () => {
+    const handleCreateCsv = async (fileName) => {
         if (isCreating) {
             return;
         }
         setIsCreating(true);
         setCsvCreated(false);
+        setError('');
 
         try {
-            const baseName = selectedFile.replace('.csv', '-results.txt');
-            const response = await fetch(`https://100.119.248.77:8445/create?fileName=${baseName}`);
-            if (response.ok) {
+            const baseName = fileName.replace('.csv', '-results.txt');
+            const response = await fetch(`https://100.119.248.77:8445/create?fileName=${encodeURIComponent(baseName)}`);
+
+            if (!response.ok) {
+                const errorText = await response.json(); // Parse response as JSON
+                setError(errorText.error || (language === 'en' ? 'Failed to create CSV file.' : 'Nepodarilo sa vytvoriť CSV súbor.'));
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.success && Array.isArray(result.data) && result.data.length > 0) {
                 onCsvCreated();
                 setCsvCreated(true);
-                alert(language === 'en' ? `CSV file created: ${baseName}` : `CSV súbor vytvorený: ${baseName}`);
+                alert(language === 'en' ? `CSV file created successfully.` : `CSV súbor úspešne vytvorený.`);
+            } else if (result.error) {
+                setError(language === 'en' ? result.error : `Chyba: ${result.error}`);
             } else {
-                setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');
+                alert(language === 'en' ? `CSV file created successfully.` : `CSV súbor úspešne vytvorený.`);
             }
-        } catch (error) {
-            setError(language === 'en' ? 'Error creating CSV file' : 'Chyba pri vytváraní CSV súboru');
+        } catch (networkError) {
+            console.error("Network error:", networkError);
+            setError(language === 'en' ? 'Error creating CSV file.' : 'Chyba pri vytváraní CSV súboru.');
         } finally {
             setIsCreating(false);
-            handleClosePreviewFinal();
         }
     };
 
@@ -262,15 +274,27 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             {file}
                                         </Typography>
                                         <div className="button-group">
+                                            {/* Edit Button */}
                                             <IconButton aria-label="edit" size="small" onClick={() => handlePreview(file)}>
-                                                <EditIcon color="text.secondary" fontSize="inherit"/>
+                                                <EditIcon color="text.secondary" fontSize="inherit" />
                                             </IconButton>
+
+                                            {/* Create CSV Button */}
+                                            <IconButton
+                                                aria-label="create-csv"
+                                                size="small"
+                                                onClick={() => handleCreateCsv(file)}
+                                                disabled={isCreating && file === selectedFile}>
+                                                <PlayArrowIcon color="success" fontSize={isSmallScreen ? "inherit" : "small"} />
+                                            </IconButton>
+
+                                            {/* Delete Button */}
                                             <IconButton
                                                 aria-label="delete"
                                                 size="small"
                                                 onClick={() => handleOpenConfirmDelete(file)}
                                                 disabled={processing && file === processingFile}>
-                                                <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"}/>
+                                                <DeleteForeverIcon color="error" fontSize={isSmallScreen ? "inherit" : "small"} />
                                             </IconButton>
                                         </div>
                                     </Box>
