@@ -170,7 +170,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setConfirmOpen(false);
     };
 
-    const handleCreateCsv = async (fileName) => {
+    const handleCreateCsv = async () => {
         if (isCreating) {
             return;
         }
@@ -179,7 +179,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setError('');
 
         try {
-            const baseName = fileName.replace('.csv', '-results.txt');
+            const encodedFileName = encodeURIComponent(selectedFile);
+            const baseName = encodedFileName.replace('.csv', '-results.txt');
             const response = await fetch(`https://100.119.248.77:8445/create?fileName=${encodeURIComponent(baseName)}`);
 
             if (!response.ok) {
@@ -194,6 +195,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 onCsvCreated();
                 setCsvCreated(true);
                 alert(language === 'en' ? `CSV file created successfully.` : `CSV súbor úspešne vytvorený.`);
+                handleClosePreviewFinal();
             } else if (result.error) {
                 setError(language === 'en' ? result.error : `Chyba: ${result.error}`);
             } else {
