@@ -256,7 +256,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             const result = await response.json();
 
             if (result.success && Array.isArray(result.data) && result.data.length > 0) {
-                onCsvCreated?.();
+                onCsvCreated();
                 setCsvCreated(true);
                 alert(language === 'en'
                     ? `CSV file created successfully.`

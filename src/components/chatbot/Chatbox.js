@@ -72,7 +72,7 @@ function Chatbox({ toggleChatVisibility }) {
     }, []);
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }, [messages, isTyping]);
 
     return (

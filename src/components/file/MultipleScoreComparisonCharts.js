@@ -49,7 +49,7 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
         };
 
         fetchFilesAndData();
-    }, [refreshTrigger]);
+    }, [refreshTrigger, language]);
 
     const formatComparisonData = (comparisonData) => {
         return Object.keys(comparisonData.uploadsScoreDistribution).map((range) => ({
