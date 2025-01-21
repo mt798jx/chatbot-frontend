@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
-import GeneratedList from "./components/file/GeneratedList";
 import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
 import Chatbox from "./components/chatbot/Chatbox";
 import ChatIcon from "@mui/icons-material/Chat";
@@ -76,10 +75,6 @@ function App() {
                     <TxtList
                         refreshTrigger={fileListRefreshTrigger}
                         onCsvCreated={handleCsvCreated}
-                        language={language}
-                    />
-                    <GeneratedList
-                        refreshTrigger={csvRefreshTrigger}
                         language={language}
                     />
                 </div>
