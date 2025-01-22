@@ -34,20 +34,18 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
                     <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
                         <Button
                             variant="outlined"
-                            color="primary"
                             onClick={handleProcessChatGPT}
                             startIcon={<ChatIcon />}
-                            sx={{ width: '40%', textTransform: 'none' }}
+                            sx={{ width: '40%', textTransform: 'none', color: '#007bff' }}
                         >
                             ChatGPT
                         </Button>
 
                         <Button
                             variant="outlined"
-                            color="success"
                             onClick={handleProcessGemini}
                             startIcon={<MemoryIcon />}
-                            sx={{ width: '40%', textTransform: 'none' }}
+                            sx={{ width: '40%', textTransform: 'none', color: '#28a745' }}
                         >
                             GeminiAI
                         </Button>

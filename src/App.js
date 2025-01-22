@@ -2,18 +2,16 @@ import './App.css';
 import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Divider, Box, Paper, Tooltip } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Divider, Box, Tooltip } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from "@mui/icons-material/Chat";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import FileList from "./components/file/FileList";
-import TxtList from "./components/file/TxtList";
-import MultipleScoreComparisonCharts from "./components/MultipleScoreComparisonCharts";
+import HomePage from './components/page/HomePage';
+import AboutPage from "./components/page/AboutPage";
+import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
-import FileUpload from "./components/file/FileUpload";
-import AboutPage from "./components/AboutPage";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -53,9 +51,9 @@ function App() {
         setDrawerOpen(false);
     };
 
-
     const menuItems = [
         { key: 'home', text: language === 'en' ? 'Home' : 'Domov' },
+        { key: 'results', text: language === 'en' ? 'Results' : 'Výsledky' },
         { key: 'about', text: language === 'en' ? 'About' : 'O aplikácii' }
     ];
 
@@ -136,40 +134,15 @@ function App() {
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
                 {selectedPage === 'about' ? (
                     <AboutPage language={language} />
+                ) : selectedPage === 'results' ? (
+                    <ResultsPage language={language} csvRefreshTrigger={csvRefreshTrigger} />
                 ) : (
-                    <>
-                        <Paper elevation={4} sx={{ margin: 2, padding: 2, borderRadius: 2 }}>
-                            <FileUpload onUploadSuccess={handleFileListUpdate} language={language} />
-                        </Paper>
-
-                        <div className="content">
-                            <FileList
-                                refreshTrigger={fileListRefreshTrigger}
-                                onProcessingComplete={handleFileListUpdate}
-                                onFileDeleted={handleFileListUpdate}
-                                language={language}
-                                onCsvCreated={handleCsvCreated}
-                            />
-                            <TxtList
-                                refreshTrigger={fileListRefreshTrigger}
-                                onCsvCreated={handleCsvCreated}
-                                language={language}
-                            />
-                        </div>
-
-                        <div className="graph-container">
-                            <Typography variant="h5" gutterBottom>
-                                {language === 'en' ? "Comparison Charts" : "Porovnávacie grafy"}
-                            </Typography>
-                            <MultipleScoreComparisonCharts language={language} refreshTrigger={csvRefreshTrigger}/>
-                        </div>
-
-                        <div className="footer">
-                            <Typography variant="body1">
-                                © {new Date().getFullYear()} Miroslav Tvrdoň. {language === 'en' ? 'All rights reserved.' : 'Všetky práva vyhradené.'}
-                            </Typography>
-                        </div>
-                    </>
+                    <HomePage
+                        language={language}
+                        fileListRefreshTrigger={fileListRefreshTrigger}
+                        handleFileListUpdate={handleFileListUpdate}
+                        handleCsvCreated={handleCsvCreated}
+                    />
                 )}
             </Box>
         </ThemeProvider>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/page/LoginPage';
 
 const RootComponent = () => {
     const [loggedIn, setLoggedIn] = useState(false);
