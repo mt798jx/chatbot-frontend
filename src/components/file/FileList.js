@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import DownloadIcon from '@mui/icons-material/Download';
-import ConfirmationDialog from "../ConfirmationDialog";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     // --- STAVY pre HLAVNÝ zoznam nahraných CSV súborov ---

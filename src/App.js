@@ -10,7 +10,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import FileList from "./components/file/FileList";
 import TxtList from "./components/file/TxtList";
-import MultipleScoreComparisonCharts from "./components/file/MultipleScoreComparisonCharts";
+import MultipleScoreComparisonCharts from "./components/MultipleScoreComparisonCharts";
 import Chatbox from "./components/chatbot/Chatbox";
 import FileUpload from "./components/file/FileUpload";
 import AboutPage from "./components/AboutPage";
