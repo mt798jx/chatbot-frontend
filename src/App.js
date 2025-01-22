@@ -12,6 +12,7 @@ import HomePage from './components/page/HomePage';
 import AboutPage from "./components/page/AboutPage";
 import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
+import FlagSwitcher from "./components/FlagSwitcher";
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -109,12 +110,7 @@ function App() {
                                 {language === 'en' ? "Language" : "Jazyk"}
                             </Typography>
                             <Box>
-                                <IconButton onClick={() => setLanguage('en')} color={language === 'en' ? 'primary' : 'default'}>
-                                    🇬🇧
-                                </IconButton>
-                                <IconButton onClick={() => setLanguage('sk')} color={language === 'sk' ? 'primary' : 'default'}>
-                                    🇸🇰
-                                </IconButton>
+                                <FlagSwitcher language={language} setLanguage={setLanguage}/>
                             </Box>
                         </Box>
                     </Box>
