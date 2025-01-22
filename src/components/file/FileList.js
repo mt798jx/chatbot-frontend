@@ -350,6 +350,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
 
     // -- Zavretie náhľadu TXT súboru a reset stavov --
     const handleClosePreviewTXT = () => {
+        updateGeneratedFileList();
         setPreviewContentTXT(null);
         setSelectedFileTXT('');
         setProcessingTXT(false);
