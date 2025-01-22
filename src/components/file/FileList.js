@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './FileList.css';
-import { fetchCsv, fetchFiles } from "./services-react/_api/file-service";
+import { fetchCsv, fetchFiles, fetchTxt } from "./services-react/_api/file-service";
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import DownloadIcon from '@mui/icons-material/Download';
 import ConfirmationDialog from "./ConfirmationDialog";
+import CreateIcon from "@mui/icons-material/Create";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     // --- STAVY pre HLAVNÝ zoznam nahraných CSV súborov ---
@@ -16,8 +17,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // --- STAVY pre ZOZNAM vygenerovaných (spracovaných) CSV súborov ---
+    // --- STAVY pre ZOZNAM vygenerovaných (spracovaných) CSV a TXT súborov ---
     const [generatedFileList, setGeneratedFileList] = useState([]);
+    const [selectedFileTXT, setSelectedFileTXT] = useState('');
+    const [previewContentTXT, setPreviewContentTXT] = useState(null);
+    const [generatedTxtFiles, setGeneratedTxtFiles] = useState([]);
+    const [processingTXT, setProcessingTXT] = useState(false);
+    const [csvCreatedTXT, setCsvCreatedTXT] = useState(false);
 
     // --- STAVY pre náhľad súboru (Preview) ---
     const [previewContent, setPreviewContent] = useState(null);
@@ -50,7 +56,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     // Rozlíšenie menšieho displeja
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-    // Načítanie zoznamu nahraných CSV
+    // Načítanie zoznamu nahraných CSV súborov zo servera
     const updateFileList = async () => {
         setLoading(true);
         try {
@@ -64,7 +70,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // Načítanie zoznamu vygenerovaných (spracovaných) CSV
+    // Načítanie zoznamu vygenerovaných (spracovaných) CSV súborov zo servera
     const updateGeneratedFileList = async () => {
         try {
             const generatedFiles = await fetchCsv();
@@ -74,23 +80,36 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // Načítanie oboch zoznamov pri mountnutí a pri refreshTrigger
+    // Načítanie zoznamu vygenerovaných TXT súborov zo servera
+    const loadTXTfile = async () => {
+        try {
+            const txts = await fetchTxt();
+            setGeneratedTxtFiles(txts);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    // Volanie funkcií na načítanie súborov pri mountnutí komponentu a pri zmene refreshTrigger
     useEffect(() => {
         updateFileList();
         updateGeneratedFileList();
+        loadTXTfile();
     }, [refreshTrigger]);
 
-    // -- Handler pre dialóg zmazania súboru --
+    // -- Handler pre otváranie dialógu na potvrdenie zmazania súboru --
     const handleOpenConfirmDelete = (fileName) => {
         setDeleteFileName(fileName);
         setConfirmOpenDelete(true);
     };
 
+    // Zavretie dialógu na zmazanie a resetovanie stavu
     const handleCloseConfirmDelete = () => {
         setConfirmOpenDelete(false);
         setDeleteFileName(''); // Reset
     };
 
+    // Funkcia na zmazanie súboru zo servera
     const handleDelete = async () => {
         if (processing && deleteFileName === processingFile) {
             return;
@@ -101,7 +120,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 method: 'DELETE',
             });
             if (response.ok) {
-                // Po zmazaní znova načítam zoznam
+                // Po úspešnom zmazaní obnov zoznamy súborov
                 updateFileList();
                 updateGeneratedFileList();
 
@@ -122,17 +141,19 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // -- Handler pre náhľad obsahu súboru --
+    // -- Handler pre získanie náhľadu obsahu súboru --
     const handlePreview = async (fileName) => {
         try {
             const encodedFileName = encodeURIComponent(fileName);
             const response = await fetch(`https://100.119.248.77:8445/preview?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
+                // Ak sa súbor spracováva, uložím ho do spracovacej časti
                 if (processing) {
                     setSelectedFileProcessing(fileName);
                     setPreviewContentProcessing(content);
                 } else {
+                    // Inak nastavím štandardný náhľad
                     setSelectedFile(fileName);
                     setPreviewContent(content);
                     setSelectedFileProcessing(fileName);
@@ -156,7 +177,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setPreviewContentProcessing(null);
     };
 
-    // -- Zatvorenie náhľadu úplne (aj keď sú už spracované výsledky) --
+    // -- Kompletné zatvorenie náhľadu a resetovanie príslušných stavov --
     const handleClosePreviewFinal = () => {
         setPreviewContent(null);
         setPreviewContentProcessing(null);
@@ -169,7 +190,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setCsvCreated(false);
     };
 
-    // -- Spracovanie súboru ChatGPT --
+    // -- Spracovanie súboru pomocou ChatGPT --
     const handleProcessChatGPT = async () => {
         setConfirmOpen(false);
         if (processing) return;
@@ -196,7 +217,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // -- Spracovanie súboru Gemini --
+    // -- Spracovanie súboru pomocou Gemini --
     const handleProcessGemini = async () => {
         setConfirmOpen(false);
         if (processing) return;
@@ -223,7 +244,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // -- Otvorenie dialógu potvrdzujúceho spracovanie ChatGPT/Gemini --
+    // -- Otvorenie dialógu na potvrdenie spracovania (ChatGPT/Gemini) --
     const handleOpenConfirm = () => {
         setConfirmOpen(true);
     };
@@ -231,7 +252,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setConfirmOpen(false);
     };
 
-    // -- Po spracovaní textu vytvorí výsledné CSV (server-side) --
+    // -- Vytvorenie výsledného CSV súboru na základe spracovaných dát --
     const handleCreateCsv = async () => {
         if (isCreating) {
             return;
@@ -261,7 +282,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 alert(language === 'en'
                     ? `CSV file created successfully.`
                     : `CSV súbor úspešne vytvorený.`);
-                // Keďže som vytvoril nový CSV, obnov zoznam vygenerovaných
+                // Obnov zoznam vygenerovaných CSV súborov po vytvorení nového súboru
                 updateGeneratedFileList();
                 handleClosePreviewFinal();
             } else if (result.error) {
@@ -284,7 +305,58 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
-    // -- DOWNLOAD vygenerovaného CSV súboru (prevzaté z GeneratedList) --
+    // -- Náhľad TXT súboru --
+    const handlePreviewTXT = async (fileName) => {
+        try {
+            const encodedFileName = encodeURIComponent(fileName);
+            const response = await fetch(`https://100.119.248.77:8445/previewtext?fileName=${encodedFileName}`);
+            if (response.ok) {
+                const content = await response.text();
+                setSelectedFileTXT(fileName);
+                setPreviewContentTXT(content);
+            } else {
+                setError(language === 'en' ? 'Failed to fetch file preview' : 'Nepodarilo sa získať náhľad súboru');
+            }
+        } catch (error) {
+            setError(language === 'en' ? 'Error fetching file preview' : 'Chyba pri načítaní náhľadu súboru');
+        }
+    };
+
+    // -- Spracovanie TXT súboru na vytvorenie CSV --
+    const handleProcess = async () => {
+        if (processingTXT) {
+            return;
+        }
+        setProcessingTXT(true);
+        setCsvCreatedTXT(false);
+
+        try {
+            const encodedFileName = encodeURIComponent(selectedFileTXT);
+            const response = await fetch(`https://100.119.248.77:8445/create?fileName=${encodedFileName}`);
+            if (response.ok) {
+                setCsvCreatedTXT(true);
+                const baseName = selectedFileTXT.substring(0, selectedFileTXT.lastIndexOf('.'));
+                alert(language === 'en' ? `CSV file created: ${baseName}.csv` : `CSV súbor vytvorený: ${baseName}.csv`);
+                handleClosePreviewTXT();
+            } else {
+                setError(language === 'en' ? 'Failed to create CSV file' : 'Nepodarilo sa vytvoriť CSV súbor');
+            }
+        } catch (error) {
+            setError(language === 'en' ? 'Error creating CSV file' : 'Chyba pri vytváraní CSV súboru');
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+    // -- Zavretie náhľadu TXT súboru a reset stavov --
+    const handleClosePreviewTXT = () => {
+        setPreviewContentTXT(null);
+        setSelectedFileTXT('');
+        setProcessingTXT(false);
+        setCsvCreatedTXT(false);
+    };
+
+    // -- DOWNLOAD vygenerovaného CSV súboru --
     const handleOpenConfirmDownload = (fileName) => {
         setSelectedFileDownload(fileName);
         setConfirmOpenDownload(true);
@@ -295,6 +367,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setSelectedFileDownload('');
     };
 
+    // -- Sťahovanie vybraného súboru zo servera --
     const handleDownload = async () => {
         try {
             const encodedFileName = encodeURIComponent(selectedFileDownload);
@@ -345,6 +418,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 overflow: 'hidden'
             }}
         >
+            {/* Nadpis sekcie */}
             <div className="title-upload-container">
                 <Typography
                     variant={isSmallScreen ? "h6" : "h5"}
@@ -357,6 +431,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Typography>
             </div>
 
+            {/* Zoznam nahraných súborov */}
             <Box
                 sx={{
                     marginTop: 1,
@@ -390,9 +465,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                         >
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => {
-                                    // Skontrolujem, či je "file" aj vo vygenerovaných
+                                    // Kontrola, či súbor má vygenerovaný CSV výsledok
                                     const downloadfile = file.replace('.csv', '-results.csv');
                                     const canDownload = generatedFileList.includes(downloadfile);
+
+                                    // Kontrola, či súbor má vygenerovaný TXT výsledok
+                                    const relatedTxtFile = `${file.replace('.csv', '')}-results.txt`;
+                                    const canPreview = generatedTxtFiles.includes(relatedTxtFile);
 
                                     return (
                                         <Box
@@ -422,7 +501,13 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                 {file}
                                             </Typography>
                                             <div className="button-group">
-                                                {/* Download CSV Button (len ak existuje vo vygenerovaných) */}
+                                                {/* Tlačidlo pre náhľad TXT výsledku */}
+                                                {canPreview && (
+                                                    <IconButton onClick={() => handlePreviewTXT(relatedTxtFile)}>
+                                                        <EditIcon color="primary" />
+                                                    </IconButton>
+                                                )}
+                                                {/* Tlačidlo pre stiahnutie CSV súboru */}
                                                 {canDownload && (
                                                     <IconButton
                                                         aria-label="download"
@@ -435,8 +520,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         />
                                                     </IconButton>
                                                 )}
-
-                                                {/* Edit / Preview Button */}
+                                                {/* Tlačidlo pre náhľad/editáciu CSV súboru */}
                                                 <IconButton
                                                     aria-label="edit"
                                                     size="small"
@@ -447,8 +531,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         fontSize="inherit"
                                                     />
                                                 </IconButton>
-
-                                                {/* Delete Button */}
+                                                {/* Tlačidlo na zmazanie súboru */}
                                                 <IconButton
                                                     aria-label="delete"
                                                     size="small"
@@ -479,7 +562,88 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 )}
             </Box>
 
-            {/* -- PREVIEW OBSAH SÚBORU (AK JE VYBRATÝ) -- */}
+            {/* Náhľad TXT súboru v modálnom okne */}
+            {previewContentTXT && (
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}>
+                    <Box
+                        sx={{
+                            backgroundColor: 'background.paper',
+                            borderRadius: 1,
+                            maxWidth: '90%',
+                            maxHeight: '90%',
+                            overflow: 'hidden',
+                            boxShadow: 3,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            position: 'relative',
+                            textAlign: 'left'
+                        }}>
+                        <IconButton
+                            sx={{
+                                position: 'absolute',
+                                top: 10,
+                                right: 20,
+                                zIndex: 1001
+                            }}
+                            onClick={handleClosePreviewTXT}
+                            color="error">
+                            <CloseIcon />
+                        </IconButton>
+
+                        <Box
+                            sx={{
+                                flex: 1,
+                                overflowY: 'auto',
+                                padding: 2
+                            }}>
+                            <Typography variant={isSmallScreen ? "h7" : "h6"} sx={{ fontWeight: 'bold', marginBottom: 2 }}>
+                                {language === 'en' ? 'Preview of' : 'Náhľad súboru'} {selectedFileTXT}
+                            </Typography>
+                            <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                                {previewContentTXT}
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            sx={{
+                                borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+                                padding: '8px 16px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                backgroundColor: 'background.paper'
+                            }}>
+                            <Button
+                                variant="outlined"
+                                endIcon={<CreateIcon />}
+                                color="success"
+                                onClick={handleProcess}
+                                disabled={processingTXT || !selectedFileTXT}>
+                                <Typography variant={isSmallScreen ? "body2" : "body1"}>
+                                    {processingTXT
+                                        ? (language === 'en' ? 'Creating CSV...' : 'Vytvára sa CSV...')
+                                        : (csvCreatedTXT
+                                            ? (language === 'en' ? 'CSV Created' : 'CSV vytvorené')
+                                            : (language === 'en' ? 'Create CSV' : 'Vytvoriť CSV'))}
+                                </Typography>
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            )}
+
+            {/* Náhľad obsahu CSV súboru (v modálnom okne) */}
             {(previewContent || previewContentProcessing) && (
                 <Box
                     sx={{
@@ -583,7 +747,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Box>
             )}
 
-            {/* -- CONFIRM DIALÓG pre ChatGPT/Gemini -- */}
+            {/* Potvrdzovací dialóg pre výber ChatGPT/Gemini */}
             <ConfirmationDialog
                 open={confirmOpen}
                 handleClose={handleCloseConfirm}
@@ -592,7 +756,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 language={language}
             />
 
-            {/* -- AK SÚ SPRACOVANÉ VÝSLEDKY, zobrazíme dialóg s result textom a tlačidlom na create CSV -- */}
+            {/* Zobrazenie spracovaných výsledkov a tlačidla na vytvorenie CSV */}
             {processResults && (
                 <Box
                     sx={{
@@ -694,7 +858,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Box>
             )}
 
-            {/* -- LOADER pri spracovaní (draggable okno) -- */}
+            {/* Zobrazenie draggable loaderu počas spracovania */}
             {processing && (
                 <Box
                     sx={{
@@ -755,7 +919,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Box>
             )}
 
-            {/* -- CONFIRM DIALÓG pre zmazanie súboru -- */}
+            {/* CONFIRM DIALÓG pre zmazanie súboru */}
             <Dialog open={confirmOpenDelete} onClose={handleCloseConfirmDelete}>
                 <DialogTitle>
                     {language === 'en'
@@ -779,7 +943,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </DialogActions>
             </Dialog>
 
-            {/* -- CONFIRM DIALÓG pre stiahnutie vygenerovaného CSV -- */}
+            {/* CONFIRM DIALÓG pre stiahnutie vygenerovaného CSV */}
             <Dialog
                 open={confirmOpenDownload}
                 onClose={handleCloseConfirmDownload}
