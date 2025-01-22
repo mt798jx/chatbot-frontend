@@ -770,7 +770,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseConfirmDelete} color="primary">
+                    <Button onClick={handleCloseConfirmDelete} sx={{ color: theme => theme.palette.grey[800] }}>
                         {language === 'en' ? 'Cancel' : 'Zrušiť'}
                     </Button>
                     <Button onClick={handleDelete} color="error" autoFocus>
@@ -797,7 +797,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseConfirmDownload} color="primary">
+                    <Button onClick={handleCloseConfirmDownload} sx={{ color: theme => theme.palette.grey[800] }}>
                         {language === 'en' ? 'Cancel' : 'Zrušiť'}
                     </Button>
                     <Button onClick={handleDownload} color="success" autoFocus>
