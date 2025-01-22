@@ -18,7 +18,7 @@ function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
     const [language, setLanguage] = useState('sk');
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
     const [showChat, setShowChat] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedPage, setSelectedPage] = useState('home');

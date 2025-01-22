@@ -485,11 +485,11 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                 fileList.map((file, index) => {
                                     // Kontrola, či súbor má vygenerovaný CSV výsledok
                                     const downloadfile = file.replace('.csv', '-results.csv');
-                                    const canDownload = generatedFileList.includes(downloadfile);
+                                    const canDownload = Array.isArray(generatedFileList) && generatedFileList.includes(downloadfile);
 
                                     // Kontrola, či súbor má vygenerovaný TXT výsledok
                                     const relatedTxtFile = `${file.replace('.csv', '')}-results.txt`;
-                                    const canPreview = generatedTxtFiles.includes(relatedTxtFile);
+                                    const canPreview = Array.isArray(generatedTxtFiles) && generatedTxtFiles.includes(relatedTxtFile);
 
                                     return (
                                         <Box
