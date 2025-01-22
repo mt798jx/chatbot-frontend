@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
-import './FileList.css';
 import { fetchCsv, fetchFiles, fetchTxt } from "./services-react/_api/file-service";
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, IconButton, Typography, useMediaQuery, Menu, MenuItem } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,6 +10,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import DownloadIcon from '@mui/icons-material/Download';
 import ConfirmationDialog from "./ConfirmationDialog";
 import CreateIcon from "@mui/icons-material/Create";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     // --- STAVY pre HLAVNÝ zoznam nahraných CSV súborov ---
@@ -52,6 +53,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     // --- STAVY pre Confirm dialóg na stiahnutie vygenerovaného CSV ---
     const [confirmOpenDownload, setConfirmOpenDownload] = useState(false);
     const [selectedFileDownload, setSelectedFileDownload] = useState('');
+
+    // --- STAVY pre Menu ---
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [currentFile, setCurrentFile] = useState(null);
 
     // Rozlíšenie menšieho displeja
     const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -106,7 +111,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     // Zavretie dialógu na zmazanie a resetovanie stavu
     const handleCloseConfirmDelete = () => {
         setConfirmOpenDelete(false);
-        setDeleteFileName(''); // Reset
+        setDeleteFileName('');
     };
 
     // Funkcia na zmazanie súboru zo servera
@@ -403,6 +408,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
     };
 
+    // --- Handlery pre menu ---
+    const handleMenuOpen = (event, file) => {
+        setAnchorEl(event.currentTarget);
+        setCurrentFile(file);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        setCurrentFile(null);
+    };
+
     return (
         <Box
             sx={{
@@ -415,16 +431,17 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 boxShadow: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                maxHeight: 260,
+                maxHeight: 600,
                 overflow: 'hidden'
             }}
         >
             {/* Nadpis sekcie */}
-            <div className="title-upload-container">
+            <div>
                 <Typography
                     variant={isSmallScreen ? "h6" : "h5"}
                     gutterBottom
                     className="title"
+                    sx = {{ paddingBottom: '10px' }}
                 >
                     {language === 'en'
                         ? 'Uploaded CSV Files'
@@ -438,7 +455,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     marginTop: 1,
                     flex: 1,
                     overflowY: 'auto',
-                    maxHeight: 200,
+                    maxHeight: 380,
                     paddingRight: 2
                 }}
             >
@@ -501,49 +518,69 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                             >
                                                 {file}
                                             </Typography>
-                                            <div className="button-group">
-                                                {/* Tlačidlo pre náhľad TXT výsledku */}
-                                                {canPreview && (
-                                                    <IconButton onClick={() => handlePreviewTXT(relatedTxtFile)}>
-                                                        <EditIcon color="primary" />
-                                                    </IconButton>
-                                                )}
-                                                {/* Tlačidlo pre stiahnutie CSV súboru */}
-                                                {canDownload && (
-                                                    <IconButton
-                                                        aria-label="download"
-                                                        size="small"
-                                                        onClick={() => handleOpenConfirmDownload(downloadfile)}
+                                            <div>
+                                                {/* Tlačidlo pre Menu */}
+                                                <IconButton
+                                                    aria-label="more"
+                                                    onClick={(e) => handleMenuOpen(e, file)}
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                    anchorEl={anchorEl}
+                                                    open={Boolean(anchorEl) && currentFile === file}
+                                                    onClose={handleMenuClose}
+                                                    anchorOrigin={{
+                                                        vertical: 'top',
+                                                        horizontal: 'right',
+                                                    }}
+                                                    transformOrigin={{
+                                                        vertical: 'top',
+                                                        horizontal: 'right',
+                                                    }}
+                                                >
+                                                    {canPreview && (
+                                                        <MenuItem
+                                                            onClick={() => {
+                                                                handlePreviewTXT(relatedTxtFile);
+                                                                handleMenuClose();
+                                                            }}
+                                                        >
+                                                            <EditIcon fontSize="small" sx={{ marginRight: 1 }} />
+                                                            {language === 'en' ? 'Preview/Edit TXT' : 'Náhľad/Edit TXT'}
+                                                        </MenuItem>
+                                                    )}
+                                                    {canDownload && (
+                                                        <MenuItem
+                                                            onClick={() => {
+                                                                handleOpenConfirmDownload(downloadfile);
+                                                                handleMenuClose();
+                                                            }}
+                                                        >
+                                                            <DownloadIcon fontSize="small" sx={{ marginRight: 1 }} color='success'/>
+                                                            {language === 'en' ? 'Download CSV' : 'Stiahnuť CSV'}
+                                                        </MenuItem>
+                                                    )}
+                                                    <MenuItem
+                                                        onClick={() => {
+                                                            handlePreview(file);
+                                                            handleMenuClose();
+                                                        }}
                                                     >
-                                                        <DownloadIcon
-                                                            color="success"
-                                                            fontSize={isSmallScreen ? "inherit" : "small"}
-                                                        />
-                                                    </IconButton>
-                                                )}
-                                                {/* Tlačidlo pre náhľad/editáciu CSV súboru */}
-                                                <IconButton
-                                                    aria-label="edit"
-                                                    size="small"
-                                                    onClick={() => handlePreview(file)}
-                                                >
-                                                    <EditIcon
-                                                        color="text.secondary"
-                                                        fontSize="inherit"
-                                                    />
-                                                </IconButton>
-                                                {/* Tlačidlo na zmazanie súboru */}
-                                                <IconButton
-                                                    aria-label="delete"
-                                                    size="small"
-                                                    onClick={() => handleOpenConfirmDelete(file)}
-                                                    disabled={processing && file === processingFile}
-                                                >
-                                                    <DeleteForeverIcon
-                                                        color="error"
-                                                        fontSize={isSmallScreen ? "inherit" : "small"}
-                                                    />
-                                                </IconButton>
+                                                        <EditIcon fontSize="small" sx={{ marginRight: 1 }} />
+                                                        {language === 'en' ? 'Preview/Edit CSV' : 'Náhľad/Edit CSV'}
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        onClick={() => {
+                                                            handleOpenConfirmDelete(file);
+                                                            handleMenuClose();
+                                                        }}
+                                                        disabled={processing && file === processingFile}
+                                                    >
+                                                        <DeleteForeverIcon fontSize="small" sx={{ marginRight: 1 }} color='error'/>
+                                                        {language === 'en' ? 'Delete' : 'Odstrániť'}
+                                                    </MenuItem>
+                                                </Menu>
                                             </div>
                                         </Box>
                                     );
