@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, TextField, Button, Typography, Fade } from '@mui/material';
+import { Box, TextField, Button, Typography, Fade, useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -16,6 +16,7 @@ const LoginPage = ({ language = 'en', onLogin }) => {
     const [error, setError] = useState('');
     const [showForm, setShowForm] = useState(false);
     const passwordRef = useRef(null);
+    const isMobile = useMediaQuery('(max-width:600px)');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -89,7 +90,7 @@ const LoginPage = ({ language = 'en', onLogin }) => {
                     <Fade in={showForm} timeout={800}>
                         <Box
                             sx={{
-                                width: '100%',
+                                width: '100vh',
                                 maxWidth: 400,
                                 px: 4,
                                 py: 6,
@@ -98,6 +99,8 @@ const LoginPage = ({ language = 'en', onLogin }) => {
                                 boxShadow: '0 0 20px rgba(0,0,0,0.5)',
                                 textAlign: 'center',
                                 zIndex: 1,
+                                position: isMobile ? 'absolute' : 'static',
+                                top: isMobile ? '10%' : 'auto',
                             }}
                         >
                             <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold', color: '#fff' }}>
