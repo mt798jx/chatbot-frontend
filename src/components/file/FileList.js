@@ -572,7 +572,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         }}
                                                     >
                                                         <VisibilityIcon color="info" fontSize="small" sx={{ marginRight: 1 }} />
-                                                        {language === 'en' ? 'Preview upload CSV' : 'Náhľad CSV'}
+                                                        {language === 'en' ? 'Preview upload CSV' : 'Náhľad nahraný CSV'}
                                                         <NoteAddIcon color="secondary" fontSize="small" sx={{ marginRight: 0.6, marginLeft: 0.6 }} />
                                                         {language === 'en' ? 'Create result TXT' : 'Vytvoriť výsledný TXT'}
                                                     </MenuItem>
