@@ -2,8 +2,10 @@ import './App.css';
 import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText,
-    Divider, Box, Tooltip, Fab } from "@mui/material";
+import {
+    AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText,
+    Divider, Box, Tooltip, Fab, useMediaQuery
+} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from "@mui/icons-material/Chat";
@@ -23,6 +25,8 @@ function App() {
     const [showChat, setShowChat] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedPage, setSelectedPage] = useState('home');
+
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const handleFileListUpdate = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
@@ -64,7 +68,7 @@ function App() {
             <CssBaseline />
 
             {/* AppBar */}
-            <AppBar position="static">
+            <AppBar position="static" sx={{ paddingX: isSmallScreen ? '1em' :'9em' }}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
                         <MenuIcon />
