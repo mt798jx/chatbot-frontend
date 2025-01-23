@@ -14,7 +14,6 @@ import AboutPage from "./components/page/AboutPage";
 import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
 import FlagSwitcher from "./components/FlagSwitcher";
-import AddIcon from '@mui/icons-material/Add';
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);

@@ -61,7 +61,6 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
 
     return (
         <Box
-            className="graph-container"
             sx={{
                 display: 'flex',
                 flexDirection: 'column',

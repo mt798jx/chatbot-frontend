@@ -6,23 +6,6 @@ body {
   /*user-select: none;*/
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.content {
-  text-align: center;
-  border: none;
-  max-width: 600px;
-  width: 100%;
-  margin: 0 0 20px;
-  flex: 1;
-}
-
 :root {
   --footer-bg-color: #f1f1f1;
   --footer-text-color: #333;
@@ -31,13 +14,4 @@ body {
 [data-theme='dark'] {
   --footer-bg-color: #333;
   --footer-text-color: #f1f1f1;
-}
-
-.graph-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 600px;
-  gap: 20px;
 }
