@@ -4,13 +4,15 @@ import { fetchCsv, fetchFiles, fetchTxt } from "./services-react/_api/file-servi
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
     DialogTitle, IconButton, Typography, useMediaQuery, Menu, MenuItem } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import DownloadIcon from '@mui/icons-material/Download';
 import ConfirmationDialog from "./ConfirmationDialog";
 import CreateIcon from "@mui/icons-material/Create";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
     // --- STAVY pre HLAVNÝ zoznam nahraných CSV súborov ---
@@ -546,8 +548,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                                 handleMenuClose();
                                                             }}
                                                         >
-                                                            <EditIcon fontSize="small" sx={{ marginRight: 1 }} />
-                                                            {language === 'en' ? 'Preview/Edit TXT' : 'Náhľad/Edit TXT'}
+                                                            <VisibilityIcon color="info" fontSize="small" sx={{ marginRight: 1 }} />
+                                                            {language === 'en' ? 'Preview result TXT' : 'Náhľad výsledný TXT'}
+                                                            <NoteAddIcon color="secondary" fontSize="small" sx={{ marginRight: 0.6, marginLeft: 0.6 }} />
+                                                            {language === 'en' ? 'Create result CSV' : 'Vytvor výsledný CSV'}
                                                         </MenuItem>
                                                     )}
                                                     {canDownload && (
@@ -567,8 +571,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                             handleMenuClose();
                                                         }}
                                                     >
-                                                        <EditIcon fontSize="small" sx={{ marginRight: 1 }} />
-                                                        {language === 'en' ? 'Preview/Edit CSV' : 'Náhľad/Edit CSV'}
+                                                        <VisibilityIcon color="info" fontSize="small" sx={{ marginRight: 1 }} />
+                                                        {language === 'en' ? 'Preview upload CSV' : 'Náhľad CSV'}
+                                                        <NoteAddIcon color="secondary" fontSize="small" sx={{ marginRight: 0.6, marginLeft: 0.6 }} />
+                                                        {language === 'en' ? 'Create result TXT' : 'Vytvoriť výsledný TXT'}
                                                     </MenuItem>
                                                     <MenuItem
                                                         onClick={() => {
@@ -578,7 +584,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         disabled={processing && file === processingFile}
                                                     >
                                                         <DeleteForeverIcon fontSize="small" sx={{ marginRight: 1 }} color='error'/>
-                                                        {language === 'en' ? 'Delete' : 'Odstrániť'}
+                                                        {language === 'en' ? 'Delete file' : 'Odstrániť súbor'}
                                                     </MenuItem>
                                                 </Menu>
                                             </div>
