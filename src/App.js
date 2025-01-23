@@ -2,7 +2,8 @@ import './App.css';
 import React, { useState, useCallback } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Divider, Box, Tooltip } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText,
+    Divider, Box, Tooltip, Fab } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from "@mui/icons-material/Chat";
@@ -13,6 +14,7 @@ import AboutPage from "./components/page/AboutPage";
 import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
 import FlagSwitcher from "./components/FlagSwitcher";
+import AddIcon from '@mui/icons-material/Add';
 
 function App() {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
@@ -62,6 +64,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
 
+            {/* AppBar */}
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
@@ -73,6 +76,7 @@ function App() {
                 </Toolbar>
             </AppBar>
 
+            {/* Drawer */}
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
                 <Box sx={{ width: 250 }} role="presentation">
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
@@ -93,6 +97,7 @@ function App() {
                         <Typography variant="h6" gutterBottom>
                             {language === 'en' ? "Settings" : "Nastavenia"}
                         </Typography>
+                        {/* Dark Mode Toggle */}
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                             <Typography variant="body2">
                                 {language === 'en' ? "Dark Mode" : "Tmavý režim"}
@@ -105,28 +110,50 @@ function App() {
                                 </IconButton>
                             </Tooltip>
                         </Box>
+                        {/* Language Switcher */}
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Typography variant="body2">
                                 {language === 'en' ? "Language" : "Jazyk"}
                             </Typography>
                             <Box>
-                                <FlagSwitcher language={language} setLanguage={setLanguage}/>
+                                <FlagSwitcher language={language} setLanguage={setLanguage} />
                             </Box>
                         </Box>
                     </Box>
                 </Box>
             </Drawer>
 
-            {showChat ? (
-                <div className="content">
-                    <Chatbox toggleChatVisibility={toggleChatVisibility}/>
-                </div>
-            ) : (
-                <button className="chat-toggle-button" onClick={toggleChatVisibility}>
-                    <ChatIcon />
-                </button>
+            {/* Chatbox */}
+            {showChat && (
+                <Box sx={{ position: 'fixed', bottom: 80, right: 20, zIndex: 1300 }}>
+                    <Chatbox toggleChatVisibility={toggleChatVisibility} language={language} />
+                </Box>
             )}
 
+            {/* Floating Action Button (Fab) for Chat Toggle */}
+            {!showChat && (
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        bottom: 20,
+                        right: 20,
+                        zIndex: 1300
+                    }}
+                >
+                    <Tooltip title={language === 'en' ? "Open Chat" : "Otvoriť Chat"}>
+                        <Fab
+                            color="primary"
+                            aria-label="chat"
+                            onClick={toggleChatVisibility}
+                            size="large"
+                        >
+                            <ChatIcon />
+                        </Fab>
+                    </Tooltip>
+                </Box>
+            )}
+
+            {/* Main Content */}
             <Box className="App" data-theme={darkMode ? 'dark' : 'light'}>
                 {selectedPage === 'about' ? (
                     <AboutPage language={language} />
