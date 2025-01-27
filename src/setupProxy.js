@@ -24,4 +24,12 @@ module.exports = function(app) {
             changeOrigin: true,
         })
     );
+
+    app.use(
+        ['/bot', '/api'],
+        createProxyMiddleware({
+            target: 'https://34.107.119.159:443',
+            changeOrigin: true,
+        })
+    );
 };

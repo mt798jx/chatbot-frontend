@@ -47,7 +47,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('https://100.119.248.77:8445/upload', {
+            const response = await fetch('https://34.107.119.159:443/upload', {
                 method: 'POST',
                 body: formData,
             });
@@ -80,7 +80,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
             files.forEach((file) => formData.append('file', file));
 
             try {
-                const response = await fetch('https://100.119.248.77:8445/upload', {
+                const response = await fetch('https://34.107.119.159:443/upload', {
                     method: 'POST',
                     body: formData,
                 });

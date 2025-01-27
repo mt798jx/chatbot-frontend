@@ -1,8 +1,10 @@
 import gsAxios from "./index";
 
+// https://100.119.248.77:8445
+
 export const fetchFiles = async () => {
     try {
-        const response = await fetch('https://100.119.248.77:8445/list');
+        const response = await fetch('https://34.107.119.159:443/list');
         if (response.ok) {
             return await response.json();
         } else {
@@ -15,7 +17,7 @@ export const fetchFiles = async () => {
 
 export const fetchTxt = async () => {
     try {
-        const response = await fetch('https://100.119.248.77:8445/text');
+        const response = await fetch('https://34.107.119.159:443/text');
         if (response.ok) {
             return await response.json();
         } else {
@@ -28,7 +30,7 @@ export const fetchTxt = async () => {
 
 export const fetchCsv = async () => {
     try {
-        const response = await fetch('https://100.119.248.77:8445/generatedlist');
+        const response = await fetch('https://34.107.119.159:443/generatedlist');
         if (response.ok) {
             return await response.json();
         } else {
@@ -41,7 +43,7 @@ export const fetchCsv = async () => {
 
 export const fetchComparisonData = async (fileName) => {
     try {
-        const url = `https://100.119.248.77:8445/compare-scores?fileName=${fileName}`;
+        const url = `https://https://34.107.119.159:443/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
         if (response.ok) {
