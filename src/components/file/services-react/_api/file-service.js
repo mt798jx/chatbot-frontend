@@ -4,7 +4,7 @@ import gsAxios from "./index";
 
 export const fetchFiles = async () => {
     try {
-        const response = await fetch('https://34.107.119.159:443/list');
+        const response = await fetch('https://api.mtvrdon.com/list');
         if (response.ok) {
             return await response.json();
         } else {
@@ -17,7 +17,7 @@ export const fetchFiles = async () => {
 
 export const fetchTxt = async () => {
     try {
-        const response = await fetch('https://34.107.119.159:443/text');
+        const response = await fetch('https://api.mtvrdon.com/text');
         if (response.ok) {
             return await response.json();
         } else {
@@ -30,7 +30,7 @@ export const fetchTxt = async () => {
 
 export const fetchCsv = async () => {
     try {
-        const response = await fetch('https://34.107.119.159:443/generatedlist');
+        const response = await fetch('https://api.mtvrdon.com/generatedlist');
         if (response.ok) {
             return await response.json();
         } else {
@@ -43,7 +43,7 @@ export const fetchCsv = async () => {
 
 export const fetchComparisonData = async (fileName) => {
     try {
-        const url = `https://https://34.107.119.159:443/compare-scores?fileName=${fileName}`;
+        const url = `https://https://api.mtvrdon.com/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
         if (response.ok) {

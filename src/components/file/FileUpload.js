@@ -47,7 +47,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('https://34.107.119.159:443/upload', {
+            const response = await fetch('https://api.mtvrdon.com/upload', {
                 method: 'POST',
                 body: formData,
             });
@@ -80,7 +80,7 @@ const FileUpload = ({ onUploadSuccess, language }) => {
             files.forEach((file) => formData.append('file', file));
 
             try {
-                const response = await fetch('https://34.107.119.159:443/upload', {
+                const response = await fetch('https://api.mtvrdon.com/upload', {
                     method: 'POST',
                     body: formData,
                 });

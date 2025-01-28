@@ -123,7 +123,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         }
         try {
             const encodedFileName = encodeURIComponent(deleteFileName);
-            const response = await fetch(`https://34.107.119.159:443/delete?fileName=${encodedFileName}`, {
+            const response = await fetch(`https://api.mtvrdon.com/delete?fileName=${encodedFileName}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
@@ -152,7 +152,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const handlePreview = async (fileName) => {
         try {
             const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://34.107.119.159:443/preview?fileName=${encodedFileName}`);
+            const response = await fetch(`https://api.mtvrdon.com/preview?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
                 // Ak sa súbor spracováva, uložím ho do spracovacej časti
@@ -205,7 +205,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setProcessingFile(selectedFileProcessing);
         try {
             const encodedFileName = encodeURIComponent(selectedFileProcessing);
-            const response = await fetch(`https://34.107.119.159:443/process-chatgpt?fileName=${encodedFileName}`);
+            const response = await fetch(`https://api.mtvrdon.com/process-chatgpt?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
@@ -232,7 +232,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         setProcessingFile(selectedFileProcessing);
         try {
             const encodedFileName = encodeURIComponent(selectedFileProcessing);
-            const response = await fetch(`https://34.107.119.159:443/process-gemini?fileName=${encodedFileName}`);
+            const response = await fetch(`https://api.mtvrdon.com/process-gemini?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.json();
                 setProcessResults(content);
@@ -271,7 +271,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
         try {
             const encodedFileName = encodeURIComponent(selectedFile);
             const baseName = encodedFileName.replace('.csv', '-results.txt');
-            const response = await fetch(`https://34.107.119.159:443/create?fileName=${encodeURIComponent(baseName)}`);
+            const response = await fetch(`https://api.mtvrdon.com/create?fileName=${encodeURIComponent(baseName)}`);
 
             if (!response.ok) {
                 const errorText = await response.json();
@@ -316,7 +316,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const handlePreviewTXT = async (fileName) => {
         try {
             const encodedFileName = encodeURIComponent(fileName);
-            const response = await fetch(`https://34.107.119.159:443/previewtext?fileName=${encodedFileName}`);
+            const response = await fetch(`https://api.mtvrdon.com/previewtext?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
                 setSelectedFileTXT(fileName);
@@ -339,7 +339,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
 
         try {
             const encodedFileName = encodeURIComponent(selectedFileTXT);
-            const response = await fetch(`https://34.107.119.159:443/create?fileName=${encodedFileName}`);
+            const response = await fetch(`https://api.mtvrdon.com/create?fileName=${encodedFileName}`);
             if (response.ok) {
                 setCsvCreatedTXT(true);
                 const baseName = selectedFileTXT.substring(0, selectedFileTXT.lastIndexOf('.'));
@@ -379,7 +379,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
     const handleDownload = async () => {
         try {
             const encodedFileName = encodeURIComponent(selectedFileDownload);
-            const response = await fetch(`https://34.107.119.159:443/download?fileName=${encodedFileName}`, {
+            const response = await fetch(`https://api.mtvrdon.com/download?fileName=${encodedFileName}`, {
                 method: 'GET',
             });
 

@@ -32,4 +32,12 @@ module.exports = function(app) {
             changeOrigin: true,
         })
     );
+
+    app.use(
+        ['/bot', '/api'],
+        createProxyMiddleware({
+            target: 'https://api.mtvrdon.com',
+            changeOrigin: true,
+        })
+    );
 };
