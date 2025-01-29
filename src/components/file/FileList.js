@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCsv, fetchFiles, fetchTxt } from "./services-react/_api/file-service";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText,
-    DialogTitle, IconButton, Typography, useMediaQuery, Menu, MenuItem } from "@mui/material";
+import {
+    Box, Button, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, IconButton, Typography, useMediaQuery, Menu, MenuItem
+} from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,53 +12,44 @@ import DownloadIcon from '@mui/icons-material/Download';
 import ConfirmationDialog from "./ConfirmationDialog";
 import CreateIcon from "@mui/icons-material/Create";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import ProcessingOverlay from "./ProcessingOverlay";
 
-const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language, onFileDeleted }) => {
-    // --- STAVY pre HLAVNÝ zoznam nahraných CSV súborov ---
-    const [fileList, setFileList] = useState([]);
+// Import the custom hook
+import usePersistedState from '../hooks/usePersistedState'
+
+const FileList = ({
+                      onProcessingComplete,
+                      refreshTrigger,
+                      onCsvCreated,
+                      language,
+                      onFileDeleted
+                  }) => {
+    // --- Persistent States ---
+    const [fileList, setFileList] = usePersistedState('fileList', []);
+    const [generatedFileList, setGeneratedFileList] = usePersistedState('generatedFileList', []);
+    const [generatedTxtFiles, setGeneratedTxtFiles] = usePersistedState('generatedTxtFiles', []);
+    const [selectedFile, setSelectedFile] = usePersistedState('selectedFile', '');
+    const [selectedFileTXT, setSelectedFileTXT] = usePersistedState('selectedFileTXT', '');
+    const [previewContent, setPreviewContent] = usePersistedState('previewContent', null);
+    const [previewContentTXT, setPreviewContentTXT] = usePersistedState('previewContentTXT', null);
+    const [previewContentProcessing, setPreviewContentProcessing] = usePersistedState('previewContentProcessing', null);
+    const [selectedFileProcessing, setSelectedFileProcessing] = usePersistedState('selectedFileProcessing', '');
+    const [processResults, setProcessResults] = usePersistedState('processResults', null);
+    const [processingFile, setProcessingFile] = usePersistedState('processingFile', '');
+    const [selectedFileDownload, setSelectedFileDownload] = usePersistedState('selectedFileDownload', '');
+
+    // --- Non-persistent States ---
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-
-    // --- STAVY pre ZOZNAM vygenerovaných (spracovaných) CSV a TXT súborov ---
-    const [generatedFileList, setGeneratedFileList] = useState([]);
-    const [selectedFileTXT, setSelectedFileTXT] = useState('');
-    const [previewContentTXT, setPreviewContentTXT] = useState(null);
-    const [generatedTxtFiles, setGeneratedTxtFiles] = useState([]);
     const [processingTXT, setProcessingTXT] = useState(false);
     const [csvCreatedTXT, setCsvCreatedTXT] = useState(false);
-
-    // --- STAVY pre náhľad súboru (Preview) ---
-    const [previewContent, setPreviewContent] = useState(null);
-    const [selectedFile, setSelectedFile] = useState('');
-
-    // --- STAVY pre náhľad pri spracúvaní (aby sa dalo spracovať po otvorení Preview) ---
-    const [previewContentProcessing, setPreviewContentProcessing] = useState(null);
-    const [selectedFileProcessing, setSelectedFileProcessing] = useState('');
-
-    // --- STAVY ohľadom spracovania súborov (ChatGPT / Gemini) ---
-    const [processResults, setProcessResults] = useState(null);
     const [processing, setProcessing] = useState(false);
-    const [processingFile, setProcessingFile] = useState('');
-
-    // --- STAVY pre vytváranie výsledného CSV ---
     const [isCreating, setIsCreating] = useState(false);
     const [csvCreated, setCsvCreated] = useState(false);
-
-    // --- STAVY pre Confirm dialóg na spracovanie (ChatGPT / Gemini) ---
     const [confirmOpen, setConfirmOpen] = useState(false);
-
-    // --- STAVY pre Confirm dialóg na zmazanie súboru ---
     const [deleteFileName, setDeleteFileName] = useState('');
     const [confirmOpenDelete, setConfirmOpenDelete] = useState(false);
-
-    // --- STAVY pre Confirm dialóg na stiahnutie vygenerovaného CSV ---
     const [confirmOpenDownload, setConfirmOpenDownload] = useState(false);
-    const [selectedFileDownload, setSelectedFileDownload] = useState('');
-
-    // --- STAVY pre Menu ---
     const [anchorEl, setAnchorEl] = useState(null);
     const [currentFile, setCurrentFile] = useState(null);
 
@@ -127,9 +120,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 method: 'DELETE',
             });
             if (response.ok) {
-                // Po úspešnom zmazaní obnov zoznamy súborov
-                updateFileList();
-                updateGeneratedFileList();
+                await updateFileList();
+                await updateGeneratedFileList();
 
                 if (onFileDeleted) {
                     onFileDeleted();
@@ -155,12 +147,10 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
             const response = await fetch(`https://api.mtvrdon.com/preview?fileName=${encodedFileName}`);
             if (response.ok) {
                 const content = await response.text();
-                // Ak sa súbor spracováva, uložím ho do spracovacej časti
                 if (processing) {
                     setSelectedFileProcessing(fileName);
                     setPreviewContentProcessing(content);
                 } else {
-                    // Inak nastavím štandardný náhľad
                     setSelectedFile(fileName);
                     setPreviewContent(content);
                     setSelectedFileProcessing(fileName);
@@ -290,7 +280,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                     ? `CSV file created successfully.`
                     : `CSV súbor úspešne vytvorený.`);
                 // Obnov zoznam vygenerovaných CSV súborov po vytvorení nového súboru
-                updateGeneratedFileList();
+                await updateGeneratedFileList();
                 handleClosePreviewFinal();
             } else if (result.error) {
                 setError(language === 'en'
@@ -300,7 +290,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 alert(language === 'en'
                     ? `CSV file created successfully.`
                     : `CSV súbor úspešne vytvorený.`);
-                updateGeneratedFileList();
+                await updateGeneratedFileList();
             }
         } catch (networkError) {
             console.error("Network error:", networkError);
@@ -486,8 +476,8 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                             {fileList.length > 0 ? (
                                 fileList.map((file, index) => {
                                     // Kontrola, či súbor má vygenerovaný CSV výsledok
-                                    const downloadfile = file.replace('.csv', '-results.csv');
-                                    const canDownload = Array.isArray(generatedFileList) && generatedFileList.includes(downloadfile);
+                                    const downloadFile = file.replace('.csv', '-results.csv');
+                                    const canDownload = Array.isArray(generatedFileList) && generatedFileList.includes(downloadFile);
 
                                     // Kontrola, či súbor má vygenerovaný TXT výsledok
                                     const relatedTxtFile = `${file.replace('.csv', '')}-results.txt`;
@@ -550,18 +540,16 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         >
                                                             <VisibilityIcon color="info" fontSize="small" sx={{ marginRight: 1 }} />
                                                             {language === 'en' ? 'Preview result TXT' : 'Náhľad výsledný TXT'}
-                                                            <NoteAddIcon color="secondary" fontSize="small" sx={{ marginRight: 0.6, marginLeft: 0.6 }} />
-                                                            {language === 'en' ? 'Create result CSV' : 'Vytvor výsledný CSV'}
                                                         </MenuItem>
                                                     )}
                                                     {canDownload && (
                                                         <MenuItem
                                                             onClick={() => {
-                                                                handleOpenConfirmDownload(downloadfile);
+                                                                handleOpenConfirmDownload(downloadFile);
                                                                 handleMenuClose();
                                                             }}
                                                         >
-                                                            <DownloadIcon fontSize="small" sx={{ marginRight: 1 }} color='success'/>
+                                                            <DownloadIcon fontSize="small" sx={{ marginRight: 1 }} color='success' />
                                                             {language === 'en' ? 'Download CSV' : 'Stiahnuť CSV'}
                                                         </MenuItem>
                                                     )}
@@ -573,8 +561,6 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                     >
                                                         <VisibilityIcon color="info" fontSize="small" sx={{ marginRight: 1 }} />
                                                         {language === 'en' ? 'Preview upload CSV' : 'Náhľad nahraný CSV'}
-                                                        <NoteAddIcon color="secondary" fontSize="small" sx={{ marginRight: 0.6, marginLeft: 0.6 }} />
-                                                        {language === 'en' ? 'Create result TXT' : 'Vytvoriť výsledný TXT'}
                                                     </MenuItem>
                                                     <MenuItem
                                                         onClick={() => {
@@ -583,7 +569,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                                                         }}
                                                         disabled={processing && file === processingFile}
                                                     >
-                                                        <DeleteForeverIcon fontSize="small" sx={{ marginRight: 1 }} color='error'/>
+                                                        <DeleteForeverIcon fontSize="small" sx={{ marginRight: 1 }} color='error' />
                                                         {language === 'en' ? 'Delete file' : 'Odstrániť súbor'}
                                                     </MenuItem>
                                                 </Menu>
@@ -902,6 +888,7 @@ const FileList = ({ onProcessingComplete, refreshTrigger, onCsvCreated, language
                 </Box>
             )}
 
+            {/* Processing Overlay */}
             <ProcessingOverlay
                 processing={processing}
                 processingFile={processingFile}
