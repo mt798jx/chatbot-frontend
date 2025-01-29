@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Button, Typography, Dialog, DialogContent, DialogTitle, useMediaQuery, IconButton } from "@mui/material";
+import { Box, Button, Typography, Dialog, DialogContent, DialogTitle, useMediaQuery, IconButton, useTheme } from "@mui/material";
 import ChatIcon from '@mui/icons-material/Chat';
 import MemoryIcon from '@mui/icons-material/Memory';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handleProcessGemini, language }) => {
-    const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
@@ -17,7 +18,7 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
                         position: 'absolute',
                         right: 8,
                         top: 8,
-                        color: (theme) => theme.palette.grey[500],
+                        color: theme.palette.grey[500],
                     }}
                 >
                     <CloseIcon />
@@ -50,7 +51,6 @@ const ConfirmationDialog = ({ open, handleClose, handleProcessChatGPT, handlePro
                             GeminiAI
                         </Button>
                     </Box>
-
                 </DialogContent>
             </Box>
         </Dialog>
