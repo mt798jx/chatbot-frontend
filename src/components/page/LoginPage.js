@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, TextField, Button, Typography, Fade, useMediaQuery } from '@mui/material';
+import { Box, TextField, Button, Typography, Fade, useMediaQuery, Snackbar, Alert } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -17,14 +17,25 @@ const LoginPage = ({ language = 'en', onLogin }) => {
     const [showForm, setShowForm] = useState(false);
     const passwordRef = useRef(null);
     const isMobile = useMediaQuery('(max-width:600px)');
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === 'admin') {
             setError('');
             if (onLogin) onLogin();
+            setSnackbar({
+                open: true,
+                message: language === 'en' ? 'Successfully logged in!' : 'Úspešne prihlásený!',
+                severity: 'success'
+            });
         } else {
             setError(language === 'en' ? 'Invalid password' : 'Neplatné heslo');
+            setSnackbar({
+                open: true,
+                message: language === 'en' ? 'Invalid password' : 'Neplatné heslo',
+                severity: 'error'
+            });
         }
     };
 
@@ -33,6 +44,10 @@ const LoginPage = ({ language = 'en', onLogin }) => {
             passwordRef.current.focus();
         }
     }, [showForm]);
+
+    const handleCloseSnackbar = () => {
+        setSnackbar({ ...snackbar, open: false });
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -104,7 +119,7 @@ const LoginPage = ({ language = 'en', onLogin }) => {
                             }}
                         >
                             <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold', color: '#fff' }}>
-                                admin
+                                {language === 'en' ? 'Admin Login' : 'Prihlásenie Admin'}
                             </Typography>
                             <form onSubmit={handleSubmit}>
                                 <TextField
@@ -150,6 +165,18 @@ const LoginPage = ({ language = 'en', onLogin }) => {
                         </Box>
                     </Fade>
                 )}
+
+                {/* Snackbar pre notifikácie */}
+                <Snackbar
+                    open={snackbar.open}
+                    autoHideDuration={6000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+                        {snackbar.message}
+                    </Alert>
+                </Snackbar>
             </Box>
         </ThemeProvider>
     );

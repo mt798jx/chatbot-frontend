@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {
@@ -17,10 +17,9 @@ import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
 import FlagSwitcher from "./components/FlagSwitcher";
 
-function App() {
+function App({ language, setLanguage, onLogout }) {
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
-    const [language, setLanguage] = useState('sk');
     const [darkMode, setDarkMode] = useState(true);
     const [showChat, setShowChat] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -44,7 +43,7 @@ function App() {
         setDrawerOpen(!drawerOpen);
     };
 
-    const theme = createTheme({
+    const muiTheme = createTheme({
         palette: {
             mode: darkMode ? 'dark' : 'light',
             primary: { main: '#4caf50' },
@@ -63,12 +62,48 @@ function App() {
         { key: 'about', text: language === 'en' ? 'About' : 'O aplikácii' }
     ];
 
+    const logoutTimer = useRef(null);
+
+    // Funkcia na nastavenie alebo resetovanie timeoutu
+    const resetLogoutTimer = useCallback(() => {
+        if (logoutTimer.current) {
+            clearTimeout(logoutTimer.current);
+        }
+        // Nastavenie timeoutu na 5 minút (300000 ms)
+        logoutTimer.current = setTimeout(() => {
+            onLogout();
+            alert(language === 'en' ? 'You have been logged out due to inactivity.' : 'Bol ste odhlásený kvôli nečinnosti.');
+        }, 300000);
+    }, [onLogout, language]);
+
+    useEffect(() => {
+        const events = ['mousemove', 'keydown', 'scroll', 'touchstart'];
+
+        // Pridanie poslucháčov udalostí
+        events.forEach(event => {
+            window.addEventListener(event, resetLogoutTimer);
+        });
+
+        // Nastavenie počiatku timeoutu
+        resetLogoutTimer();
+
+        // Vyčistenie poslucháčov udalostí pri odchode komponentu
+        return () => {
+            events.forEach(event => {
+                window.removeEventListener(event, resetLogoutTimer);
+            });
+            if (logoutTimer.current) {
+                clearTimeout(logoutTimer.current);
+            }
+        };
+    }, [resetLogoutTimer]);
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={muiTheme}>
             <CssBaseline />
 
             {/* AppBar */}
-            <AppBar position="static" sx={{ paddingX: isSmallScreen ? '1em' :'9em' }}>
+            <AppBar position="static" sx={{ paddingX: isSmallScreen ? '1em' : '9em' }}>
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
                         <MenuIcon />
@@ -76,6 +111,12 @@ function App() {
                     <Typography variant="h6" sx={{ flexGrow: 1 }}>
                         {language === 'en' ? "Operating Systems" : "Operačné Systémy"}
                     </Typography>
+                    {/* Logout Button */}
+                    <Tooltip title={language === 'en' ? "Logout" : "Odhlásiť sa"}>
+                        <IconButton color="inherit" onClick={onLogout}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
 
