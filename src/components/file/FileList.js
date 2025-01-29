@@ -90,6 +90,7 @@ const FileList = ({
     };
 
     // Volanie funkcií na načítanie súborov pri mountnutí komponentu a pri zmene refreshTrigger
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         updateFileList();
         updateGeneratedFileList();
