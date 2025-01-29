@@ -43,7 +43,7 @@ export const fetchCsv = async () => {
 
 export const fetchComparisonData = async (fileName) => {
     try {
-        const url = `https://https://api.mtvrdon.com/compare-scores?fileName=${fileName}`;
+        const url = `https://api.mtvrdon.com/compare-scores?fileName=${fileName}`;
 
         const response = await fetch(url);
         if (response.ok) {
