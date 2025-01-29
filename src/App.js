@@ -23,7 +23,11 @@ function App({ language, setLanguage, onLogout }) {
     const [darkMode, setDarkMode] = useState(true);
     const [showChat, setShowChat] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const [selectedPage, setSelectedPage] = useState('home');
+
+    // Inicializácia selectedPage z localStorage alebo default na 'home'
+    const [selectedPage, setSelectedPage] = useState(() => {
+        return localStorage.getItem('selectedPage') || 'home';
+    });
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
@@ -62,6 +66,7 @@ function App({ language, setLanguage, onLogout }) {
         { key: 'about', text: language === 'en' ? 'About' : 'O aplikácii' }
     ];
 
+    // Ref pre uloženie timeout ID
     const logoutTimer = useRef(null);
 
     // Funkcia na nastavenie alebo resetovanie timeoutu
@@ -97,6 +102,11 @@ function App({ language, setLanguage, onLogout }) {
             }
         };
     }, [resetLogoutTimer]);
+
+    // Uloženie selectedPage do localStorage vždy, keď sa zmení
+    useEffect(() => {
+        localStorage.setItem('selectedPage', selectedPage);
+    }, [selectedPage]);
 
     return (
         <ThemeProvider theme={muiTheme}>
