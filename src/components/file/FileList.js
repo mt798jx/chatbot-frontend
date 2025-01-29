@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { fetchCsv, fetchFiles, fetchTxt } from "./services-react/_api/file-service";
 import {
     Box, Button, Dialog, DialogActions, DialogContent, DialogContentText,
@@ -56,7 +56,7 @@ const FileList = ({
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     // Načítanie zoznamu nahraných CSV súborov zo servera
-    const updateFileList = async () => {
+    const updateFileList = useCallback(async () => {
         setLoading(true);
         try {
             const files = await fetchFiles();
@@ -67,35 +67,34 @@ const FileList = ({
         } finally {
             setLoading(false);
         }
-    };
+    }, [setFileList, setLoading, setError]);
 
     // Načítanie zoznamu vygenerovaných (spracovaných) CSV súborov zo servera
-    const updateGeneratedFileList = async () => {
+    const updateGeneratedFileList = useCallback(async () => {
         try {
             const generatedFiles = await fetchCsv();
             setGeneratedFileList(generatedFiles);
         } catch (error) {
             setError(error.message);
         }
-    };
+    }, [setGeneratedFileList, setError]);
 
     // Načítanie zoznamu vygenerovaných TXT súborov zo servera
-    const loadTXTfile = async () => {
+    const loadTXTfile = useCallback(async () => {
         try {
             const txts = await fetchTxt();
             setGeneratedTxtFiles(txts);
         } catch (error) {
             setError(error.message);
         }
-    };
+    }, [setGeneratedTxtFiles, setError]);
 
     // Volanie funkcií na načítanie súborov pri mountnutí komponentu a pri zmene refreshTrigger
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         updateFileList();
         updateGeneratedFileList();
         loadTXTfile();
-    }, [refreshTrigger]);
+    }, [refreshTrigger, updateFileList, updateGeneratedFileList, loadTXTfile]);
 
     // -- Handler pre otváranie dialógu na potvrdenie zmazania súboru --
     const handleOpenConfirmDelete = (fileName) => {
