@@ -14,8 +14,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ProcessingOverlay from "./ProcessingOverlay";
 
-// Import the custom hook
-import usePersistedState from '../hooks/usePersistedState'
+import usePersistedState from '../../hooks/usePersistedState'
 
 const FileList = ({
                       onProcessingComplete,

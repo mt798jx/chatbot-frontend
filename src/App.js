@@ -17,32 +17,37 @@ import ResultsPage from "./components/page/ResultsPage";
 import Chatbox from "./components/chatbot/Chatbox";
 import FlagSwitcher from "./components/FlagSwitcher";
 
+import usePersistedState from './hooks/usePersistedState';
+
 function App({ language, setLanguage, onLogout }) {
+    // Persistent States
+    const [selectedPage, setSelectedPage] = usePersistedState('selectedPage', 'home');
+    const [darkMode, setDarkMode] = usePersistedState('darkMode', true);
+
+    // Non-persistent States
     const [fileListRefreshTrigger, setFileListRefreshTrigger] = useState(false);
     const [csvRefreshTrigger, setCsvRefreshTrigger] = useState(false);
-    const [darkMode, setDarkMode] = useState(true);
     const [showChat, setShowChat] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
-
-    // Inicializácia selectedPage z localStorage alebo default na 'home'
-    const [selectedPage, setSelectedPage] = useState(() => {
-        return localStorage.getItem('selectedPage') || 'home';
-    });
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const handleFileListUpdate = useCallback(() => {
         setFileListRefreshTrigger(prev => !prev);
     }, []);
+
     const handleCsvCreated = useCallback(() => {
         setCsvRefreshTrigger(prev => !prev);
     }, []);
+
     const handleDarkModeToggle = () => {
         setDarkMode(prev => !prev);
     };
+
     const toggleChatVisibility = () => {
         setShowChat(!showChat);
     };
+
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
     };
@@ -102,11 +107,6 @@ function App({ language, setLanguage, onLogout }) {
             }
         };
     }, [resetLogoutTimer]);
-
-    // Uloženie selectedPage do localStorage vždy, keď sa zmení
-    useEffect(() => {
-        localStorage.setItem('selectedPage', selectedPage);
-    }, [selectedPage]);
 
     return (
         <ThemeProvider theme={muiTheme}>
