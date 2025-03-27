@@ -34,7 +34,6 @@ const CustomTooltip = ({ active, payload, label, language }) => {
             </Box>
         );
     }
-
     return null;
 };
 
@@ -53,20 +52,16 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 if (!Array.isArray(files)) {
                     throw new Error(language === 'en' ? "Invalid file data received." : "Neplatné dáta súborov.");
                 }
-
                 if (files.length === 0) {
                     setFileData([]);
                     setError(language === 'en' ? "No files available for comparison." : "Nie sú dostupné žiadne súbory na porovnanie.");
                     return;
                 }
-
                 const fileDataPromises = files.map(async (fileName) => {
                     try {
                         const comparisonData = await fetchComparisonData(fileName);
-
-                        if (!comparisonData || !comparisonData.uploadsScoreDistribution || !comparisonData.resultsScoreDistribution)
+                        if (!comparisonData?.uploadsScoreDistribution || !comparisonData?.resultsScoreDistribution)
                             return null;
-
                         const formattedData = formatComparisonData(comparisonData);
                         return { fileName: fileName.replace('-results.csv', ''), data: formattedData };
                     } catch (fetchError) {
@@ -74,8 +69,7 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                         return null;
                     }
                 });
-
-                const allFileData = (await Promise.all(fileDataPromises)).filter(data => data !== null);
+                const allFileData = (await Promise.all(fileDataPromises)).filter(Boolean);
                 setFileData(allFileData);
             } catch (error) {
                 setError(error.message);
@@ -95,15 +89,10 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
         }));
     };
 
-    // Memoizácia formátovaných dát pre optimalizáciu výkonu
     const memoizedFileData = useMemo(() => fileData, [fileData]);
 
     return (
-        <Box
-            sx={{
-                padding: 2,
-            }}
-        >
+        <Box sx={{ padding: 2 }}>
             {loading ? (
                 <Typography variant={isSmallScreen ? "body2" : "body1"} sx={{ color: 'warning.main', textAlign: 'center' }}>
                     {language === 'en' ? "Loading charts..." : "Načítavajú sa grafy..."}
@@ -120,60 +109,77 @@ const MultipleScoreComparisonCharts = ({ refreshTrigger, language }) => {
                 <Grid container spacing={isSmallScreen ? 2 : 4}>
                     {memoizedFileData.map(({ fileName, data }) => (
                         <Grid item xs={12} md={6} key={fileName}>
-                            <StyledPaper>
-                                <Typography variant={isSmallScreen ? "h6" : "h5"} gutterBottom>
-                                    {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
-                                </Typography>
-                                <Box sx={{ width: '100%', height: isSmallScreen ? 250 : 400 }}>
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
-                                            <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
-                                            <XAxis dataKey="range">
-                                                <Label value={language === 'en' ? "Range" : "Rozsah"} offset={-10} position="insideBottom" />
-                                            </XAxis>
-                                            <YAxis>
-                                                <Label
-                                                    angle={-90}
-                                                    position="insideLeft"
-                                                    style={{ textAnchor: 'middle' }}
-                                                    value={language === 'en' ? "Score" : "Skóre"}
-                                                />
-                                            </YAxis>
-                                            <Tooltip
-                                                content={<CustomTooltip language={language} />}
-                                            />
-                                            <Legend verticalAlign="top" height={36} />
-                                            <Bar
-                                                dataKey="uploads"
-                                                name={language === 'en' ? "Uploads" : "Nahrané"}
-                                                fill="url(#colorUploads)"
-                                                barSize={isSmallScreen ? 20 : 30}
-                                                animationDuration={1500}
-                                            />
-                                            <Bar
-                                                dataKey="results"
-                                                name={language === 'en' ? "Results" : "Výsledky"}
-                                                fill="url(#colorResults)"
-                                                barSize={isSmallScreen ? 20 : 30}
-                                                animationDuration={1500}
-                                            />
-                                        </BarChart>
-                                    </ResponsiveContainer>
-                                    {/* Definície gradientov */}
-                                    <svg width={0} height={0}>
-                                        <defs>
-                                            <linearGradient id="colorUploads" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                                                <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                                            </linearGradient>
-                                            <linearGradient id="colorResults" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                                                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </Box>
-                            </StyledPaper>
+                            {isSmallScreen ? (
+                                <>
+                                    <Typography variant="h6" gutterBottom>
+                                        {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
+                                    </Typography>
+                                    <Box sx={{ width: '100%', height: 300 }}>
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
+                                                <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
+                                                <XAxis dataKey="range">
+                                                    <Label value={language === 'en' ? "Range" : "Rozsah"} offset={-10} position="insideBottom" />
+                                                </XAxis>
+                                                <YAxis>
+                                                    <Label angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} value={language === 'en' ? "Score" : "Skóre"} />
+                                                </YAxis>
+                                                <Tooltip content={<CustomTooltip language={language} />} />
+                                                <Legend verticalAlign="top" height={36} />
+                                                <Bar dataKey="uploads" name={language === 'en' ? "Uploads" : "Nahrané"} fill="url(#colorUploads)" barSize={20} animationDuration={1500} />
+                                                <Bar dataKey="results" name={language === 'en' ? "Results" : "Výsledky"} fill="url(#colorResults)" barSize={20} animationDuration={1500} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                        <svg width={0} height={0}>
+                                            <defs>
+                                                <linearGradient id="colorUploads" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                                                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                                                </linearGradient>
+                                                <linearGradient id="colorResults" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                                                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </Box>
+                                </>
+                            ) : (
+                                <StyledPaper>
+                                    <Typography variant="h5" gutterBottom>
+                                        {language === 'en' ? `Comparison for ${fileName}` : `Porovnanie pre ${fileName}`}
+                                    </Typography>
+                                    <Box sx={{ width: '100%', height: 400 }}>
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 40 }}>
+                                                <CartesianGrid strokeDasharray="3 3" opacity={0.5} />
+                                                <XAxis dataKey="range">
+                                                    <Label value={language === 'en' ? "Range" : "Rozsah"} offset={-10} position="insideBottom" />
+                                                </XAxis>
+                                                <YAxis>
+                                                    <Label angle={-90} position="insideLeft" style={{ textAnchor: 'middle' }} value={language === 'en' ? "Score" : "Skóre"} />
+                                                </YAxis>
+                                                <Tooltip content={<CustomTooltip language={language} />} />
+                                                <Legend verticalAlign="top" height={36} />
+                                                <Bar dataKey="uploads" name={language === 'en' ? "Uploads" : "Nahrané"} fill="url(#colorUploads)" barSize={30} animationDuration={1500} />
+                                                <Bar dataKey="results" name={language === 'en' ? "Results" : "Výsledky"} fill="url(#colorResults)" barSize={30} animationDuration={1500} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                        <svg width={0} height={0}>
+                                            <defs>
+                                                <linearGradient id="colorUploads" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                                                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                                                </linearGradient>
+                                                <linearGradient id="colorResults" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                                                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </Box>
+                                </StyledPaper>
+                            )}
                         </Grid>
                     ))}
                 </Grid>
